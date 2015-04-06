@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" id="mQa-pF-JFO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="342"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="343"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                     </view>

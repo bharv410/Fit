@@ -156,8 +156,6 @@
 		6B1D24D01A95BC4E003D9EB5 /* LayerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1D24CB1A95BBEF003D9EB5 /* LayerKit.framework */; };
 		6B1D25251A96B209003D9EB5 /* WLINearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D25241A96B209003D9EB5 /* WLINearbyViewController.m */; };
 		6B1D25271A96B212003D9EB5 /* WLINearbyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B1D25261A96B212003D9EB5 /* WLINearbyViewController.xib */; };
-		6B1D253D1A9FD3BE003D9EB5 /* Fitovate_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1D253C1A9FD3BE003D9EB5 /* Fitovate_background.png */; };
-		6B1D254C1AA10460003D9EB5 /* chatapp-ios-icon_1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1D254B1AA10460003D9EB5 /* chatapp-ios-icon_1x.png */; };
 		6B1D25521AAB823C003D9EB5 /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D25511AAB823C003D9EB5 /* NIDropDown.m */; };
 		6B267D321A65ED3B00F0C056 /* tabbartimeline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B267D301A65ED3B00F0C056 /* tabbartimeline@2x.png */; };
 		6B267D331A65ED3B00F0C056 /* tabbartimeline.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B267D311A65ED3B00F0C056 /* tabbartimeline.png */; };
@@ -191,6 +189,7 @@
 		6BDEA6991A7846380077651F /* nav-btn-edit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDEA6971A7846380077651F /* nav-btn-edit@2x.png */; };
 		6BDEA69C1A7847070077651F /* nav-btn-reload.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDEA69A1A7847070077651F /* nav-btn-reload.png */; };
 		6BDEA69D1A7847070077651F /* nav-btn-reload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDEA69B1A7847070077651F /* nav-btn-reload@2x.png */; };
+		6BEC00741AB1088F00ED4B7C /* Fitovate_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BEC00731AB1088F00ED4B7C /* Fitovate_background.png */; };
 		6F2154DF4C2A89AFB0C493C0 /* libPods-Fitovate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FF9C4FCD2BBA02E32AB0947 /* libPods-Fitovate.a */; };
 		AD7160191A38B9A90043E740 /* AWSiOSSDKv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7160181A38B9A90043E740 /* AWSiOSSDKv2.framework */; };
 		AD71601B1A38B9D60043E740 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AD71601A1A38B9D60043E740 /* libsqlite3.dylib */; };
@@ -496,6 +495,7 @@
 		6BDEA6971A7846380077651F /* nav-btn-edit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-btn-edit@2x.png"; sourceTree = "<group>"; };
 		6BDEA69A1A7847070077651F /* nav-btn-reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-btn-reload.png"; sourceTree = "<group>"; };
 		6BDEA69B1A7847070077651F /* nav-btn-reload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-btn-reload@2x.png"; sourceTree = "<group>"; };
+		6BEC00731AB1088F00ED4B7C /* Fitovate_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fitovate_background.png; sourceTree = "<group>"; };
 		8067EB659182C964662ECA13 /* Pods-Fitovate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fitovate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fitovate/Pods-Fitovate.debug.xcconfig"; sourceTree = "<group>"; };
 		9FF9C4FCD2BBA02E32AB0947 /* libPods-Fitovate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Fitovate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD7160181A38B9A90043E740 /* AWSiOSSDKv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDKv2.framework; sourceTree = "<group>"; };
@@ -1276,6 +1276,7 @@
 		2CCE1A8C17ECD32B00680126 = {
 			isa = PBXGroup;
 			children = (
+				6BEC00731AB1088F00ED4B7C /* Fitovate_background.png */,
 				6B0A19D31A69E86A002A35C2 /* i386Symbols.c */,
 				6BA07B121A5F4BB900382FF1 /* Default-568h@2x.png */,
 				2C6D26741896BACA00C459CB /* WeLike */,
@@ -1446,7 +1447,7 @@
 				ORGANIZATIONNAME = "Goran Vuksic";
 				TargetAttributes = {
 					2CCE1A9417ECD32B00680126 = {
-						DevelopmentTeam = HC6J3468J7;
+						DevelopmentTeam = 55NN688S43;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -1480,6 +1481,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BEC00741AB1088F00ED4B7C /* Fitovate_background.png in Resources */,
 				6B130BDB1A730BBC00FE0E0C /* tabbarnewpost.png in Resources */,
 				6BDEA69C1A7847070077651F /* nav-btn-reload.png in Resources */,
 				2C6D27D11896BACA00C459CB /* WLICommentCell.xib in Resources */,
@@ -1504,7 +1506,6 @@
 				6B774EDB1A6A197A007A8277 /* tabbarprofile.png in Resources */,
 				2C6D28021896BACA00C459CB /* btn-follow.png in Resources */,
 				2C6D27D31896BACA00C459CB /* WLILikeCell.xib in Resources */,
-				6B1D254C1AA10460003D9EB5 /* chatapp-ios-icon_1x.png in Resources */,
 				2C6D27EE1896BACA00C459CB /* WLIPopularViewController.xib in Resources */,
 				2C6D280D1896BACA00C459CB /* AppIcon29x29.png in Resources */,
 				2C6D27B61896BACA00C459CB /* MNMPullToRefreshIcon@2x.png in Resources */,
@@ -1558,7 +1559,6 @@
 				2C6D282A1896BACA00C459CB /* custom-activity.png in Resources */,
 				6B267D371A65EE5000F0C056 /* nav-btn-close@2x.png in Resources */,
 				2C6D282C1896BACA00C459CB /* pulldown-refresh-icon.png in Resources */,
-				6B1D253D1A9FD3BE003D9EB5 /* Fitovate_background.png in Resources */,
 				6BDEA69D1A7847070077651F /* nav-btn-reload@2x.png in Resources */,
 				2C6D283C1896BACA00C459CB /* welcome-logo@2x.png in Resources */,
 				2C6D27E21896BACA00C459CB /* WLIFollowersViewController.xib in Resources */,

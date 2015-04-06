@@ -27,11 +27,16 @@ CREATE TABLE "conversations" (
   version INT NOT NULL
 , has_unread_messages INTEGER NOT NULL DEFAULT 0);
 
+CREATE TABLE "deleted_message_parts" (
+  database_identifier INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  file_path TEXT
+);
+
 CREATE TABLE event_content_parts (
   event_content_part_id INTEGER NOT NULL,
   event_database_identifier INTEGER NOT NULL,
   type TEXT NOT NULL,
-  value BLOB,
+  value BLOB, access_expiration INTEGER, url TEXT, size INTEGER,
   FOREIGN KEY(event_database_identifier) REFERENCES events(database_identifier) ON DELETE CASCADE,
   PRIMARY KEY(event_content_part_id, event_database_identifier)
 );
@@ -67,13 +72,20 @@ CREATE TABLE local_keyed_values (
   UNIQUE(object_type, object_id, key)
 );
 
-CREATE TABLE "message_parts" (
-  database_identifier INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  message_database_identifier INTEGER NOT NULL,
-  mime_type TEXT NOT NULL,
-  content BLOB,
-  url TEXT,
-  FOREIGN KEY(message_database_identifier) REFERENCES messages(database_identifier) ON DELETE CASCADE
+CREATE TABLE message_parts (
+    database_identifier INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    message_database_identifier INTEGER NOT NULL,
+    mime_type TEXT NOT NULL,
+    content BLOB,
+    url TEXT,
+    access_expiration INTEGER,
+    file_path TEXT,
+    size INTEGER,
+    access_time DATETIME,
+    object_identifier TEXT,
+    pruned BOOLEAN,
+    transfer_status INTEGER, version INT NOT NULL DEFAULT 0,
+    FOREIGN KEY(message_database_identifier) REFERENCES messages(database_identifier) ON DELETE CASCADE
 );
 
 CREATE TABLE "message_recipient_status" (
@@ -166,6 +178,8 @@ CREATE INDEX conversation_participants_event_database_identifier_idx ON conversa
 
 CREATE INDEX conversations_deleted_at_idx ON conversations(deleted_at);
 
+CREATE INDEX conversations_has_unread_messages_idx ON conversations(has_unread_messages);
+
 CREATE INDEX conversations_stream_database_identifier_idx ON conversations(stream_database_identifier);
 
 CREATE INDEX event_content_parts_event_database_identifier_idx ON event_content_parts(event_database_identifier);
@@ -176,8 +190,6 @@ CREATE INDEX events_seq_idx ON events(seq);
 
 CREATE INDEX events_stream_database_identifier_idx ON events(stream_database_identifier);
 
-CREATE INDEX message_parts_message_database_identifier_idx ON message_parts(message_database_identifier);
-
 CREATE INDEX message_recipient_status_message_database_identifier_idx ON message_recipient_status(message_database_identifier);
 
 CREATE INDEX messages_conversation_database_identifier_idx ON messages(conversation_database_identifier);
@@ -185,6 +197,8 @@ CREATE INDEX messages_conversation_database_identifier_idx ON messages(conversat
 CREATE INDEX messages_deleted_at_idx ON messages(deleted_at);
 
 CREATE INDEX messages_event_database_identifier_idx ON messages(event_database_identifier);
+
+CREATE INDEX messages_is_unread_idx ON messages(is_unread);
 
 CREATE INDEX messages_message_index_idx ON messages(message_index);
 
@@ -420,4 +434,12 @@ INSERT INTO schema_migrations (version) VALUES (20141105082802353);
 
 INSERT INTO schema_migrations (version) VALUES (20141110114425514);
 
+INSERT INTO schema_migrations (version) VALUES (20141124205020533);
+
+INSERT INTO schema_migrations (version) VALUES (20150131122302694);
+
+INSERT INTO schema_migrations (version) VALUES (20150202170209118);
+
 INSERT INTO schema_migrations (version) VALUES (20150207191203003);
+
+INSERT INTO schema_migrations (version) VALUES (20150210133608257);

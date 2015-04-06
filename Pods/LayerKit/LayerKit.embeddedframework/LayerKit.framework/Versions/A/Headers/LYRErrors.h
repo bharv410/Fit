@@ -56,6 +56,14 @@ typedef NS_ENUM(NSUInteger, LYRClientError) {
     LYRClientErrorUndefinedSyncFailure              = 9000,
     LYRClientErrorDevicePersistenceFailure          = 9001,
     LYRClientErrorSynchronizationFailure            = 9002,
+    
+    // Debug Errors
+    LYRClientErrorZipArchiveCreationFailure         = 10001,
+    LYRClientErrorZipFileArchiveFailure             = 10002,
+    LYRClientErrorTempFileArchiveFailure            = 10003,
+    LYRClientErrorSnapshotCaptureFailure            = 10004,
+    LYRClientErrorNoFileLoggerPath                  = 10005,
+    LYRClientErrorDatabaseBackupFailure             = 10006,
 };
 
 extern NSString *const LYRErrorAuthenticatedUserIDUserInfoKey;

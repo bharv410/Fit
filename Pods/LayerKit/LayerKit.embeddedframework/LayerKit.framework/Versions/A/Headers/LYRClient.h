@@ -486,7 +486,7 @@ extern NSString *const LYRClientContentTransferProgressUserInfoKey;
  @discussion Once current disk utilization of downloaded message part content exceeds the maximum capacity the system will delete content on a least recently used basis until
  the total utilization is 80% of the configured disk capacity. Note that auto-downloaded content that gets deleted is not automatically downloaded again.
  */
-@property (nonatomic, assign) NSUInteger diskCapacity;
+@property (nonatomic, assign) LYRSize diskCapacity;
 
 /**
  @abstract Returns the amount of disk space currently being utilized for the storage of downloaded message part content.
@@ -494,7 +494,7 @@ extern NSString *const LYRClientContentTransferProgressUserInfoKey;
  @discussion Utilization may periodically peak above the configured `diskCapacity` while synchronization or downloads are in progress, but will be rebalanced once all operations
  have completed.
  */
-@property (nonatomic, readonly) NSUInteger currentDiskUtilization;
+@property (nonatomic, readonly) LYRSize currentDiskUtilization;
 
 /**
  @abstract A Boolean value that determines whether or not the client will execute content transfers while the application is in a background state.
@@ -522,7 +522,7 @@ extern NSString *const LYRClientContentTransferProgressUserInfoKey;
  @abstract Configures the maximum size (in bytes) for `LYRMessagePart` objects that will be automatically downloaded upon synchronization.
  @discussion The default value is `0`.
  */
-@property (nonatomic) NSUInteger autodownloadMaximumContentSize;
+@property (nonatomic) LYRSize autodownloadMaximumContentSize;
 
 @end
 
@@ -614,7 +614,7 @@ extern NSString *const LYRClientContentTransferProgressUserInfoKey;
     if (conversation) {
         query.predicate = [LYRPredicate predicateWithProperty:@"conversation" operator:LYRPredicateOperatorIsEqualTo value:conversation];
     }
-    query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
+    query.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES]];
     return [client executeQuery:query error:&error];
  */
 - (NSOrderedSet *)messagesForConversation:(LYRConversation *)conversation __deprecated;

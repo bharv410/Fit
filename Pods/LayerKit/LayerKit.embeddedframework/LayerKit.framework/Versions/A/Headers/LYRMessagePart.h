@@ -132,7 +132,7 @@ typedef NS_ENUM(NSUInteger, LYRContentTransferStatus) {
 /**
  @abstract The size of the content in bytes.
  */
-@property (nonatomic, readonly) NSUInteger size LYR_QUERYABLE_PROPERTY LYR_QUERYABLE_FROM(LYRMessage);
+@property (nonatomic, readonly) LYRSize size LYR_QUERYABLE_PROPERTY LYR_QUERYABLE_FROM(LYRMessage);
 
 /**
  @abstract The current transfer status of the message part.

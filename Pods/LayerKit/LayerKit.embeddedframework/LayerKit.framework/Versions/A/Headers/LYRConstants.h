@@ -6,6 +6,22 @@
 //  Copyright (c) 2014 Layer. All rights reserved.
 //
 
+///---------------
+/// @name Typedefs
+///---------------
+
+/**
+ @abstract A type representing an absolute logical position of an object within a sequence.
+ */
+typedef uint64_t LYRPosition;
+#define LYRPositionNotDefined UINT64_MAX
+
+/**
+ @abstract A type representing a content size in bytes.
+ */
+typedef uint64_t LYRSize;
+#define LYRSizeNotDefined UINT64_MAX
+
 /**
  @abstract The `LYRDeletionMode` enumeration defines the available modes for deleting content.
  */

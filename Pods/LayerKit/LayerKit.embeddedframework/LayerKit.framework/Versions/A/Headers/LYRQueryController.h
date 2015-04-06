@@ -111,6 +111,15 @@
  */
 - (NSIndexPath *)indexPathForObject:(id<LYRQueryable>)object;
 
+/**
+ @abstract Returns a dictionary mapping the given set of object identifiers to the `NSIndexPath` values that indicate 
+ where in the query controller's result set the corresponding objects appear. Any object identifiers that are not in
+ the result set (or are outside the pagination window) will not have an entry in the dictionary returned.
+ @param objectIdentifiers The set of object identifiers to look up within the query controller.
+ @return A dictionary mapping the object identifiers that are part of the query controller results to the index path that appear at.
+ */
+- (NSDictionary *)indexPathsForObjectsWithIdentifiers:(NSSet *)objectIdentifiers;
+
 ///--------------------------
 /// @name Executing the Query
 ///--------------------------

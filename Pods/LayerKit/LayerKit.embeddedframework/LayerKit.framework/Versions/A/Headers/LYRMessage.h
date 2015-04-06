@@ -60,12 +60,11 @@ extern NSString *const LYRMessageOptionsPushNotificationSoundNameKey;
 @property (nonatomic, readonly) NSURL *identifier LYR_QUERYABLE_PROPERTY;
 
 /**
- @abstract Object index dictating message order in a conversation.
- @discussion Unsent messages have index value of `NSNotFound`.
- 
- The `index` property is queryable using all predicate operators.
+ @abstract Logical position of the message in a conversation.
+ The `position` property is queryable using all predicate operators.
+ @discussion Unsent messages have index value of `LYRPositionNotDefined`.
  */
-@property (nonatomic, readonly) NSUInteger index LYR_QUERYABLE_PROPERTY;
+@property (nonatomic, readonly) LYRPosition position LYR_QUERYABLE_PROPERTY;
 
 /**
  @abstract The conversation that the receiver is a part of.

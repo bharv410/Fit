@@ -13,7 +13,6 @@
 @interface WLINearbyViewController : WLIViewController
 
 @property (strong, nonatomic) NSMutableArray *users;
-
 @property (strong, nonatomic) IBOutlet UITableView *nearbyTrainersTableView;
 
 @end

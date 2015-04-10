@@ -20,15 +20,23 @@
 @end
 
 @implementation WLINearbyViewController
-{
-    NSMutableArray *tableData;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        self.users = [NSMutableArray array];
+        self.title = @"Nearby Users";
+    }
+    return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = @"Nearby Users";
+    
     
     [sharedConnect usersForSearchString:@" " page:1 pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *users, ServerResponse serverResponseCode) {
         
@@ -44,6 +52,22 @@
         
         
         [self reloadTable];
+        [refreshManager tableViewReloadFinishedAnimated:YES];
+    }];
+}
+- (void)reloadData:(BOOL)reloadAll {
+    
+    loading = YES;
+    [self.nearbyTrainersTableView reloadData];
+    int page = reloadAll ? 1 : (self.users.count / kDefaultPageSize) + 1;
+    [sharedConnect usersForSearchString:@" " page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *users, ServerResponse serverResponseCode) {
+        loading = NO;
+        if (reloadAll) {
+            [self.users removeAllObjects];
+        }
+        [self.users addObjectsFromArray:users];
+        loadMore = users.count == kDefaultPageSize;
+        [self.nearbyTrainersTableView reloadData];
         [refreshManager tableViewReloadFinishedAnimated:YES];
     }];
 }

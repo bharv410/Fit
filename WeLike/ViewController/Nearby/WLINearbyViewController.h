@@ -10,9 +10,10 @@
 #import "WLIViewController.h"
 #import "UIImageView+AFNetworking.h"
 
-@interface WLINearbyViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface WLINearbyViewController : WLIViewController
 
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) NSMutableArray *users;
 
+@property (strong, nonatomic) IBOutlet UITableView *nearbyTrainersTableView;
 
 @end

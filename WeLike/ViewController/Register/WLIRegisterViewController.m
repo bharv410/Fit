@@ -168,9 +168,9 @@
                             if (succeeded) {
                                 NSLog(@"saved");
                                 //benmark
-                                WLIChooseVideoViewController *wcv = [[WLIChooseVideoViewController alloc]init];
-                                wcv.usersName = self.textFieldUsername.text;
-                                [self.navigationController pushViewController:wcv animated:YES];
+//                                WLIChooseVideoViewController *wcv = [[WLIChooseVideoViewController alloc]init];
+//                                wcv.usersName = self.textFieldUsername.text;
+//                                [self.navigationController pushViewController:wcv animated:YES];
                                 [self dismissViewControllerAnimated:YES completion:nil];
                                 
                             } else {

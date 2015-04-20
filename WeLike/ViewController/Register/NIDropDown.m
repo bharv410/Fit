@@ -123,7 +123,7 @@
      }
      }
     
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor blackColor];
     
     UIView * v = [[UIView alloc] init];
     v.backgroundColor = [UIColor grayColor];

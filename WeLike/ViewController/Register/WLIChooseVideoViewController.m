@@ -8,8 +8,7 @@
 
 #import "WLIChooseVideoViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
-#import <AWSiOSSDKv2/S3.h>
-#import <AWSiOSSDKv2/AWSCore.h>
+#import <Parse/Parse.h>
 
 @interface WLIChooseVideoViewController ()
 
@@ -17,6 +16,7 @@
 
 @implementation WLIChooseVideoViewController
 
+@synthesize usersName;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,40 +36,27 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
         [picker dismissViewControllerAnimated:YES completion:NULL];
     
-        NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+    PFObject *userVideo = [PFObject objectWithClassName:@"Videos"];
+    userVideo[@"username"] = self.usersName;
+    
+    NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
     NSString *path = [videoURL path];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
     
-    AWSStaticCredentialsProvider *credentialsProvider = [AWSStaticCredentialsProvider credentialsWithAccessKey:@"AKIAI2TXM2GGTX5OF2HA" secretKey:@"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"];
-    AWSServiceConfiguration *configuration = [AWSServiceConfiguration configurationWithRegion:AWSRegionUSEast1
-                                                                          credentialsProvider:credentialsProvider];
+    PFFile *userVideoFile = [PFFile fileWithName:@"userVideo.mp4" data:data];
+    userVideo[@"video"] = userVideoFile;
     
-    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
-    
-        //upload video in background
-        AWSS3TransferManager *transferManager = [[AWSS3TransferManager alloc]initWithConfiguration:configuration identifier:@"transfermgr"];
-        AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-        uploadRequest.bucket = @"fitovatevideoss";
-        uploadRequest.key = @"somehowaddtheusersname.mp4";
-        uploadRequest.body = videoURL;
-        uploadRequest.contentLength = [NSNumber numberWithUnsignedLongLong:[data length]];
-        NSLog(@"HERE");
-    
-    uploadRequest.uploadProgress =  ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            int progress = (int)(totalBytesSent * 100.0 / totalBytesExpectedToSend);
-            NSLog([NSString stringWithFormat:@"%d",progress]);
-        });};
-    
-    
-    [[transferManager upload:uploadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor] withBlock:^id(BFTask *task) {
-        if (task.error != nil) {
-            NSLog(@"Error: %@", task.error);
+    [userVideo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"saved");
+            [self dismissViewControllerAnimated:YES completion:nil];
         } else {
-            NSLog(@"Success!");
+            // There was a problem, check error.description
+            NSLog(@"error");
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
-        return nil;
     }];
+    
     
 }
 

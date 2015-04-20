@@ -10,4 +10,6 @@
 
 @interface WLIChooseVideoViewController : UIViewController
 
+@property (strong, nonatomic) NSString *usersName;
+
 @end

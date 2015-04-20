@@ -141,24 +141,46 @@
                         [self.view endEditing:YES];
                         [hud show:YES];
                         
-                        [sharedConnect registerUserWithUsername:self.textFieldUsername.text password:self.textFieldPassword.text email:self.textFieldEmail.text userAvatar:self.imageViewAvatar.image userType:WLIUserTypeCompany userFullName:self.textFieldFullName.text userInfo:@"" latitude:coordinate.latitude longitude:coordinate.longitude companyAddress:self.textFieldAddress.text companyPhone:self.textFieldPhone.text companyWeb:self.textFieldWeb.text onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+                        
+                        
+                        PFObject *newUser = [PFObject objectWithClassName:@"Users"];
+                        newUser[@"username"] = self.textFieldUsername.text;
+                        newUser[@"password"] = self.textFieldPassword.text;
+                        newUser[@"email"] = self.textFieldEmail.text;
+                        newUser[@"usertype"] = @"trainer";
+                        newUser[@"fullname"] = self.textFieldFullName.text;
+                        newUser[@"phone"] = self.textFieldPhone.text;
+                        newUser[@"website"] = self.textFieldWeb.text;
+                        
+                            if(self.chooseSpeciality.titleLabel.text != nil)
+                                newUser[@"specialty"] = self.chooseSpeciality.titleLabel.text;
+                        
+                        
+                        PFGeoPoint *point = [PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+                        newUser[@"location"] = point;
+                        
+                        NSData *imageData = UIImagePNGRepresentation(self.imageViewAvatar.image);
+                        PFFile *userAvatar = [PFFile fileWithName:@"userAvatar.png" data:imageData];
+                        newUser[@"userAvatar"] = userAvatar;
+                        
+                        [newUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             [hud hide:YES];
-                            if (serverResponseCode == OK) {
-                                //if they are a trainer than get their video
-                                if(user.userType==WLIUserTypeCompany){
-                                    //benmark
-                                    WLIChooseVideoViewController *wcv = [[WLIChooseVideoViewController alloc]init];
+                            if (succeeded) {
+                                NSLog(@"saved");
+                                //benmark
+                                WLIChooseVideoViewController *wcv = [[WLIChooseVideoViewController alloc]init];
+                                wcv.usersName = self.textFieldUsername.text;
                                 [self.navigationController pushViewController:wcv animated:YES];
-                                }
                                 [self dismissViewControllerAnimated:YES completion:nil];
-                            } else if (serverResponseCode == NO_CONNECTION) {
-                                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                            } else if (serverResponseCode == CONFLICT) {
-                                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"User already exists. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                
                             } else {
-                                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                // There was a problem, check error.description
+                                NSLog(@"error");
+                                [[[UIAlertView alloc] initWithTitle:@"Error" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                             }
                         }];
+
+                        
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please drop pin on map to mark location of your company." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }
@@ -172,7 +194,7 @@
             newUser[@"username"] = self.textFieldUsername.text;
             newUser[@"password"] = self.textFieldPassword.text;
             newUser[@"email"] = self.textFieldEmail.text;
-            newUser[@"usertype"] = @"trainer";
+            newUser[@"usertype"] = @"trainee";
             newUser[@"fullname"] = self.textFieldFullName.text;
             
             NSData *imageData = UIImagePNGRepresentation(self.imageViewAvatar.image);

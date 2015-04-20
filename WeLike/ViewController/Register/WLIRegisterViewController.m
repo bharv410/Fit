@@ -11,6 +11,7 @@
 #import "WLIChooseVideoViewController.h"
 #import "NIDropDown.h"
 #import "QuartzCore/QuartzCore.h"
+#import <Parse/Parse.h>
 
 @interface WLIRegisterViewController ()
 
@@ -167,18 +168,29 @@
             [self.view endEditing:YES];
             [hud show:YES];
             
-            [sharedConnect registerUserWithUsername:self.textFieldUsername.text password:self.textFieldPassword.text email:self.textFieldEmail.text userAvatar:self.imageViewAvatar.image userType:WLIUserTypePerson userFullName:self.textFieldFullName.text userInfo:@"" latitude:0 longitude:0 companyAddress:@"" companyPhone:@"" companyWeb:@"" onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+            PFObject *newUser = [PFObject objectWithClassName:@"Users"];
+            newUser[@"username"] = self.textFieldUsername.text;
+            newUser[@"password"] = self.textFieldPassword.text;
+            newUser[@"email"] = self.textFieldEmail.text;
+            newUser[@"usertype"] = @"trainer";
+            newUser[@"fullname"] = self.textFieldFullName.text;
+            
+            NSData *imageData = UIImagePNGRepresentation(self.imageViewAvatar.image);
+            PFFile *userAvatar = [PFFile fileWithName:@"userAvatar.png" data:imageData];
+            newUser[@"userAvatar"] = userAvatar;
+            
+            [newUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [hud hide:YES];
-                if (serverResponseCode == OK) {
+                if (succeeded) {
+                    NSLog(@"saved");
                     [self dismissViewControllerAnimated:YES completion:nil];
-                } else if (serverResponseCode == NO_CONNECTION) {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                } else if (serverResponseCode == CONFLICT) {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"User already exists. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 } else {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    // There was a problem, check error.description
+                    NSLog(@"error");
+                    [[[UIAlertView alloc] initWithTitle:@"Error" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 }
             }];
+            
         }
     }
 }

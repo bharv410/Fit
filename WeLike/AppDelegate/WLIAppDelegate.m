@@ -13,6 +13,10 @@
 #import "WLIConnect.h"
 #import "WLINewPostViewController.h"
 #import "WLINearbyViewController.h"
+#import <Parse/Parse.h>
+
+NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsException";
+
 
 @implementation WLIAppDelegate
 
@@ -76,6 +80,17 @@
     //benmark
     [[ooVooController sharedController] initSdk:@"12349983352060"
                                applicationToken:@"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE%2FTxwzvba3Wy%2FupvESaKZhg1ngT4E8V7bqvT1RpL5F0UIW8FKbWarcsUJ51Nx%2BGwlHpeETeLbU4B8AYBUSRsopL5aGEZx7OrKL%2B%2B60kOeKuNLZuf%2FTVdRXKNLa1LuXU%3D" baseUrl:[[NSUserDefaults standardUserDefaults] stringForKey:@"production"]];
+    
+    
+    //benmark parse
+    [Parse enableLocalDatastore];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:@"M7f82n8HbyJZs9tmXpi4LXg0kRnIc1GaxYbFfzxr"
+                  clientKey:@"cXd06hH0Ox8DNUoyZxFQ5RvWipg0UagSEvYuzBPW"];
+    
+    // [Optional] Track statistics around application opens.
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     return YES;
 }

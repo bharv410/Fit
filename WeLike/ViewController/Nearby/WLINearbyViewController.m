@@ -14,6 +14,7 @@
 #import "WLIUserCell.h"
 #import "WLILoadingCell.h"
 #import "GlobalDefines.h"
+#import <Parse/Parse.h>
 
 @interface WLINearbyViewController ()
 
@@ -36,6 +37,9 @@
 {
     [super viewDidLoad];
     
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    testObject[@"foo"] = @"bar";
+    [testObject saveInBackground];
     
     
     [sharedConnect usersForSearchString:@" " page:1 pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *users, ServerResponse serverResponseCode) {

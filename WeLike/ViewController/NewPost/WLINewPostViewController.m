@@ -8,6 +8,8 @@
 
 #import "WLINewPostViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Parse/Parse.h>
+#import "GlobalDefines.h"
 
 @implementation WLINewPostViewController
 
@@ -37,6 +39,24 @@
     self.textViewPost.layer.cornerRadius = 3.0f;
     
     [self.textViewPost becomeFirstResponder];
+    self.numberOfPhotos = 0;
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"GameScore"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d scores.", objects.count);
+            self.numberOfPhotos = objects.count;
+            
+            for (PFObject *object in objects) {
+                NSLog(@"%@", object.objectId);
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -73,12 +93,48 @@
         if ([self.textViewPost isFirstResponder]) {
             [self.textViewPost resignFirstResponder];
         }
-        [sharedConnect sendPostWithTitle:self.textViewPost.text postKeywords:nil postImage:self.imageViewPost.image onCompletion:^(WLIPost *post, ServerResponse serverResponseCode) {
+        
+        PFObject *newPhoto = [PFObject objectWithClassName:@"FitovatePhotos"];
+        NSUInteger photoId = self.numberOfPhotos + 1;
+        NSNumber *status = [NSNumber numberWithInteger:photoId];
+        NSNumber *realId = [NSNumber numberWithInteger:sharedConnect.currentUser.userID];
+        NSData *imageData = UIImagePNGRepresentation(self.imageViewPost.image);
+        PFFile *userImage = [PFFile fileWithName:@"userImage.png" data:imageData];
+        
+        newPhoto[@"postID"] = status;
+        newPhoto[@"postTitle"] = self.textViewPost.text;
+        newPhoto[@"userID"] = realId;
+        newPhoto[@"userImage"] = userImage;
+        newPhoto[@"totalLikes"] = @0;
+        newPhoto[@"totalComments"] = @0;
+        newPhoto[@"isLiked"] = @NO;
+        newPhoto [@"isCommented"] = @NO;
+        
+        
+        [newPhoto saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [hud hide:YES];
-            self.imageViewPost.image = nil;
-            self.textViewPost.text = @"";
-            [self dismissViewControllerAnimated:YES completion:nil];
+            if (succeeded) {
+                // The object has been saved.
+                self.imageViewPost.image = nil;
+                self.textViewPost.text = @"";
+//                [self dismissViewControllerAnimated:YES completion:^{
+//                    NSLog(@"Completed");
+//                }];
+
+                [[self.navigationController popViewControllerAnimated:YES];
+            } else {
+                // There was a problem, check error.description
+                NSLog(error.description);
+            }
         }];
+        
+        
+//        [sharedConnect sendPostWithTitle:self.textViewPost.text postKeywords:nil postImage:self.imageViewPost.image onCompletion:^(WLIPost *post, ServerResponse serverResponseCode) {
+//            [hud hide:YES];
+//            self.imageViewPost.image = nil;
+//            self.textViewPost.text = @"";
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//        }];
     }
 }
 

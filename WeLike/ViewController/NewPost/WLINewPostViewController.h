@@ -17,6 +17,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonPostImage;
 @property (strong, nonatomic) IBOutlet UITextView *textViewPost;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property NSUInteger numberOfPhotos;
+@property (strong, nonatomic) NSString *usersName;
 
 - (IBAction)buttonPostImageTouchUpInside:(id)sender;
 - (IBAction)buttonSendTouchUpInside:(id)sender;

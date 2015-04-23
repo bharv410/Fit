@@ -117,15 +117,29 @@
                 // The object has been saved.
                 self.imageViewPost.image = nil;
                 self.textViewPost.text = @"";
-//                [self dismissViewControllerAnimated:YES completion:^{
-//                    NSLog(@"Completed");
-//                }];
 
-                [self.navigationController popViewControllerAnimated:YES];
+                
+                if (self == self.navigationController.visibleViewController){
+                    NSLog(@"self = visibile");
+                    [self.navigationController.visibleViewController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+                }
+                
+                if (self == self.presentingViewController.presentingViewController){
+                    NSLog(@"self = presenting");
+                    [self.presentingViewController.presentingViewController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+                }
+
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!"
+                                                                message:@"Your post is now viewable by all of your followers."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
             } else {
                 // There was a problem, check error.description
                 NSLog(error.description);
             }
+            
         }];
         
         
@@ -134,6 +148,7 @@
 //            self.imageViewPost.image = nil;
 //            self.textViewPost.text = @"";
 //            [self dismissViewControllerAnimated:YES completion:nil];
+//            NSLog(@"BAMMM");
 //        }];
     }
 }

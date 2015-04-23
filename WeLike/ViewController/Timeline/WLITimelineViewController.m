@@ -12,6 +12,7 @@
 #import "GlobalDefines.h"
 #import "LQSViewController.h"
 #import "WLIActivityViewController.h"
+#import <Parse/Parse.h>
 
 @implementation WLITimelineViewController
 
@@ -47,6 +48,23 @@
     UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     self.navigationItem.rightBarButtonItem =back;
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d fitovate pgotos from parse.", objects.count);
+            
+            for (PFObject *object in objects) {
+                
+                NSString *playerName = object[@"postTitle"];
+                NSLog(@"%@", playerName);
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 

@@ -41,7 +41,7 @@
     [self.textViewPost becomeFirstResponder];
     self.numberOfPhotos = 0;
     
-    PFQuery *query = [PFQuery queryWithClassName:@"GameScore"];
+    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.

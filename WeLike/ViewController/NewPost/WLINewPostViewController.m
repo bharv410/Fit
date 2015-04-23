@@ -121,7 +121,7 @@
 //                    NSLog(@"Completed");
 //                }];
 
-                [[self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 // There was a problem, check error.description
                 NSLog(error.description);

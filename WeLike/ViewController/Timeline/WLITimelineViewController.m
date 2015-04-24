@@ -48,14 +48,60 @@
     UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     self.navigationItem.rightBarButtonItem =back;
+   }
+
+
+
+
+-(void)goToMessages {
+    NSLog(@"Eh up, someone just pressed the button!");
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+    LQSViewController *newVc = [[LQSViewController alloc]init];
+    [self.navigationController pushViewController:newVc animated:YES];
+                                
+}
+-(void)goToActivity {
+    NSLog(@"Going to activity!");
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+    WLIActivityViewController *newVc = [[WLIActivityViewController alloc]init];
+    [self.navigationController pushViewController:newVc animated:NO];
     
+}
+
+- (void)didReceiveMemoryWarning {
+    
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Data loading methods
+
+- (void)reloadData:(BOOL)reloadAll {
+    
+    loading = YES;
+    int page;
+    if (reloadAll) {
+        loadMore = YES;
+        page = 1;
+    } else {
+        page  = (self.posts.count / kDefaultPageSize) + 1;
+    }
+//    [sharedConnect timelineForUserID:sharedConnect.currentUser.userID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *posts, ServerResponse serverResponseCode) {
+//        loading = NO;
+//        self.posts = posts;
+//        loadMore = posts.count == kDefaultPageSize;
+//        [self.tableViewRefresh reloadData];
+//        [refreshManager tableViewReloadFinishedAnimated:YES];
+//    }];
+    loading = NO;
     NSMutableArray *allFollowings = [[NSMutableArray alloc]initWithCapacity:10];
     NSNumber *num = [NSNumber numberWithInt:4];
     [allFollowings insertObject:num atIndex:0];
     
     NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
     __block NSUInteger postCount = 0;
-
+    
     PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
     [query addDescendingOrder:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -65,15 +111,15 @@
             
             
             NSDictionary *userDict = [[NSDictionary alloc] initWithObjectsAndKeys:  [NSNumber numberWithInt:sharedConnect.currentUser.userID], @"userID",
-                                  [NSNumber numberWithInt:sharedConnect.currentUser.userType], @"userTypeID",
-                                  sharedConnect.currentUser.userPassword, @"password",
-                                  sharedConnect.currentUser.userEmail, @"email",
-                                  sharedConnect.currentUser.userFullName, @"userFullname",
-                                  sharedConnect.currentUser.userUsername, @"username",
-                                  sharedConnect.currentUser.userInfo, @"userInfo",
-                                  sharedConnect.currentUser.userAvatarPath, @"userAvatar",
-                                  sharedConnect.currentUser.followingUser, @"followingUser",
-                                  [NSNumber numberWithInt:sharedConnect.currentUser.followersCount], @"followersCount",
+                                      [NSNumber numberWithInt:sharedConnect.currentUser.userType], @"userTypeID",
+                                      sharedConnect.currentUser.userPassword, @"password",
+                                      sharedConnect.currentUser.userEmail, @"email",
+                                      sharedConnect.currentUser.userFullName, @"userFullname",
+                                      sharedConnect.currentUser.userUsername, @"username",
+                                      sharedConnect.currentUser.userInfo, @"userInfo",
+                                      sharedConnect.currentUser.userAvatarPath, @"userAvatar",
+                                      sharedConnect.currentUser.followingUser, @"followingUser",
+                                      [NSNumber numberWithInt:sharedConnect.currentUser.followersCount], @"followersCount",
                                       [NSNumber numberWithInt:sharedConnect.currentUser.followingCount], @"followingCount",
                                       sharedConnect.currentUser.companyAddress, @"userAddress",
                                       sharedConnect.currentUser.companyPhone, @"userPhone",
@@ -84,7 +130,7 @@
                                       sharedConnect.currentUser.companyWeb, @"userWeb",
                                       sharedConnect.currentUser.companyEmail, @"userEmail",
                                       sharedConnect.currentUser.followingUser, @"followingUser"
-                                  , nil];
+                                      , nil];
             
             
             
@@ -130,52 +176,7 @@
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
-}
 
-
-
-
--(void)goToMessages {
-    NSLog(@"Eh up, someone just pressed the button!");
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
-    LQSViewController *newVc = [[LQSViewController alloc]init];
-    [self.navigationController pushViewController:newVc animated:YES];
-                                
-}
--(void)goToActivity {
-    NSLog(@"Going to activity!");
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
-    WLIActivityViewController *newVc = [[WLIActivityViewController alloc]init];
-    [self.navigationController pushViewController:newVc animated:NO];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - Data loading methods
-
-- (void)reloadData:(BOOL)reloadAll {
-    
-    loading = YES;
-    int page;
-    if (reloadAll) {
-        loadMore = YES;
-        page = 1;
-    } else {
-        page  = (self.posts.count / kDefaultPageSize) + 1;
-    }
-    [sharedConnect timelineForUserID:sharedConnect.currentUser.userID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *posts, ServerResponse serverResponseCode) {
-        loading = NO;
-        self.posts = posts;
-        loadMore = posts.count == kDefaultPageSize;
-        [self.tableViewRefresh reloadData];
-        [refreshManager tableViewReloadFinishedAnimated:YES];
-    }];
 }
 
 

@@ -45,9 +45,9 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d scores.", objects.count);
-            self.numberOfPhotos = objects.count;
             
+            self.numberOfPhotos = objects.count;
+            NSLog(@"Successfully retrieved %d scores.", self.numberOfPhotos);
             for (PFObject *object in objects) {
                 NSLog(@"%@", object.objectId);
             }

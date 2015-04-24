@@ -49,16 +49,81 @@
     
     self.navigationItem.rightBarButtonItem =back;
     
+    NSMutableArray *allFollowings = [[NSMutableArray alloc]initWithCapacity:10];
+    NSNumber *num = [NSNumber numberWithInt:4];
+    [allFollowings insertObject:num atIndex:0];
+    
+    NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
+    __block NSUInteger postCount = 0;
+
     PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    [query addDescendingOrder:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
             NSLog(@"Successfully retrieved %d fitovate pgotos from parse.", objects.count);
             
+            
+            NSDictionary *userDict = [[NSDictionary alloc] initWithObjectsAndKeys:  [NSNumber numberWithInt:sharedConnect.currentUser.userID], @"userID",
+                                  [NSNumber numberWithInt:sharedConnect.currentUser.userType], @"userTypeID",
+                                  sharedConnect.currentUser.userPassword, @"password",
+                                  sharedConnect.currentUser.userEmail, @"email",
+                                  sharedConnect.currentUser.userFullName, @"userFullname",
+                                  sharedConnect.currentUser.userUsername, @"username",
+                                  sharedConnect.currentUser.userInfo, @"userInfo",
+                                  sharedConnect.currentUser.userAvatarPath, @"userAvatar",
+                                  sharedConnect.currentUser.followingUser, @"followingUser",
+                                  [NSNumber numberWithInt:sharedConnect.currentUser.followersCount], @"followersCount",
+                                      [NSNumber numberWithInt:sharedConnect.currentUser.followingCount], @"followingCount",
+                                      sharedConnect.currentUser.companyAddress, @"userAddress",
+                                      sharedConnect.currentUser.companyPhone, @"userPhone",
+                                      sharedConnect.currentUser.companyWeb, @"userWeb",
+                                      sharedConnect.currentUser.userEmail, @"userEmail",
+                                      sharedConnect.currentUser.coordinate.latitude, @"userLat",
+                                      sharedConnect.currentUser.coordinate.longitude,
+                                      sharedConnect.currentUser.companyWeb, @"userWeb",
+                                      sharedConnect.currentUser.companyEmail, @"userEmail",
+                                      sharedConnect.currentUser.followingUser, @"followingUser"
+                                  , nil];
+            
+            
+            
+            
             for (PFObject *object in objects) {
                 
                 NSString *playerName = object[@"postTitle"];
-                NSLog(@"%@", playerName);
+                NSLog(@"%@", object.createdAt);
+                //NSLog(@"%@", object[@"userID"]);
+                if([allFollowings containsObject:object[@"userID"]]){
+                    NSLog(@"ADDED TO TIMELINE FOR POSTSSSS");
+                    NSLog(@"each object needs to init a dictionary with WLIPost");
+                    
+                    PFFile *tempPhotoForUrl = object[@"userImage"];
+                    
+                    
+                    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
+                                          object[@"postTitle"], @"postTitle",
+                                          tempPhotoForUrl.url, @"postImage",
+                                          object[@"createdAt"], @"postDate",
+                                          object[@"createdAt"], @"timeAgo",
+                                          userDict, @"user",
+                                          object[@"totalLikes"], @"totalLikes",
+                                          object[@"totalComments"], @"totalComments",
+                                          object[@"isLiked"], @"isLiked",
+                                          object[@"isCommented"], @"isCommented"
+                                          , nil];
+                    WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
+                    [wliPosts insertObject:postFromParse atIndex:postCount];
+                    postCount++;
+                    
+                    
+                }
+                //done
+                NSLog(@"DONE loadnig from parse");
+                self.posts = wliPosts;
+                [self.tableViewRefresh reloadData];
+                [refreshManager tableViewReloadFinishedAnimated:YES];
+                
             }
         } else {
             // Log details of the failure

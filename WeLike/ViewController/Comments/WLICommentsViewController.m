@@ -10,6 +10,7 @@
 #import "WLICommentCell.h"
 #import "WLILoadingCell.h"
 #import "GlobalDefines.h"
+#import "ParseSingleton.h"
 
 @implementation WLICommentsViewController
 
@@ -172,6 +173,9 @@
         self.viewEnterComment.center = CGPointMake(self.viewEnterComment.center.x, self.viewEnterComment.center.y + 216 - 49);
     } completion:^(BOOL finished) {
         if (self.textFieldEnterComment.text.length) {
+            
+            [ParseSingleton new];
+            [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:self.post.user.userUsername withActivitytype:@"comment" withPostId:[NSString stringWithFormat:@"%d",self.post.postID]];
             
             [hud show:YES];
             [sharedConnect sendCommentOnPostID:self.post.postID withCommentText:self.textFieldEnterComment.text onCompletion:^(WLIComment *comment, ServerResponse serverResponseCode) {

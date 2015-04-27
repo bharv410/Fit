@@ -11,8 +11,9 @@
 #import "WLILoadingCell.h"
 #import "GlobalDefines.h"
 #import "LQSViewController.h"
-#import "WLIActivityViewController.h"
+#import "ActivityController.h"
 #import <Parse/Parse.h>
+#import "ParseSingleton.h"
 
 @implementation WLITimelineViewController
 
@@ -63,7 +64,7 @@
 -(void)goToActivity {
     NSLog(@"Going to activity!");
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
-    WLIActivityViewController *newVc = [[WLIActivityViewController alloc]init];
+    ActivityController *newVc = [[ActivityController alloc]init];
     [self.navigationController pushViewController:newVc animated:NO];
     
 }
@@ -278,6 +279,9 @@
         } else {
             [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
         }
+        [ParseSingleton new];
+        [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:post.user.userUsername withActivitytype:@"like" withPostId:[NSString stringWithFormat:@"%d",post.postID]];
+        
         [[WLIConnect sharedConnect] setLikeOnPostID:post.postID onCompletion:^(WLILike *like, ServerResponse serverResponseCode) {
             if (serverResponseCode != OK) {
                 [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];

@@ -167,6 +167,9 @@
 		6B28E19C1A69F111007A3C24 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28E19B1A69F111007A3C24 /* AudioToolbox.framework */; };
 		6B28E19E1A69F14F007A3C24 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28E19D1A69F14F007A3C24 /* CoreMedia.framework */; };
 		6B28E1A01A69F180007A3C24 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28E19F1A69F180007A3C24 /* CoreTelephony.framework */; };
+		6B30FB991AEEACE000BEBAD2 /* ParseSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30FB981AEEACE000BEBAD2 /* ParseSingleton.m */; };
+		6B30FBA81AEEBBE100BEBAD2 /* ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30FBA61AEEBBE100BEBAD2 /* ActivityController.m */; };
+		6B30FBA91AEEBBE100BEBAD2 /* ActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */; };
 		6B37FE9F1AE41BD700021F4F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B37FE9E1AE41BD700021F4F /* Parse.framework */; };
 		6B5E08A81A609B160020D78B /* WLIChooseVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E08A61A609B160020D78B /* WLIChooseVideoViewController.m */; };
 		6B5E08A91A609B160020D78B /* WLIChooseVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B5E08A71A609B160020D78B /* WLIChooseVideoViewController.xib */; };
@@ -472,6 +475,11 @@
 		6B28E19B1A69F111007A3C24 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6B28E19D1A69F14F007A3C24 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		6B28E19F1A69F180007A3C24 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		6B30FB971AEEACE000BEBAD2 /* ParseSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseSingleton.h; sourceTree = "<group>"; };
+		6B30FB981AEEACE000BEBAD2 /* ParseSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseSingleton.m; sourceTree = "<group>"; };
+		6B30FBA51AEEBBE100BEBAD2 /* ActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityController.h; sourceTree = "<group>"; };
+		6B30FBA61AEEBBE100BEBAD2 /* ActivityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityController.m; sourceTree = "<group>"; };
+		6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityController.xib; sourceTree = "<group>"; };
 		6B37FE9E1AE41BD700021F4F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6B410FD51A5E12D8004B4823 /* ooVooSDK-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ooVooSDK-iOS.framework"; sourceTree = "<group>"; };
 		6B5E08A51A609B160020D78B /* WLIChooseVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIChooseVideoViewController.h; sourceTree = "<group>"; };
@@ -832,6 +840,8 @@
 				2C6D26EF1896BACA00C459CB /* WLIPost.m */,
 				2C6D26F01896BACA00C459CB /* WLIUser.h */,
 				2C6D26F11896BACA00C459CB /* WLIUser.m */,
+				6B30FB971AEEACE000BEBAD2 /* ParseSingleton.h */,
+				6B30FB981AEEACE000BEBAD2 /* ParseSingleton.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -950,6 +960,7 @@
 		2C6D27151896BACA00C459CB /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				6B30FB9F1AEEBB9600BEBAD2 /* Activity */,
 				6B1D25031A95EFF3003D9EB5 /* Nearby */,
 				6B130BDD1A730D3900FE0E0C /* LayerMessaging */,
 				2C6D27161896BACA00C459CB /* Comments */,
@@ -1404,6 +1415,16 @@
 			path = LayerKit.embeddedframework;
 			sourceTree = "<group>";
 		};
+		6B30FB9F1AEEBB9600BEBAD2 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				6B30FBA51AEEBBE100BEBAD2 /* ActivityController.h */,
+				6B30FBA61AEEBBE100BEBAD2 /* ActivityController.m */,
+				6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */,
+			);
+			name = Activity;
+			sourceTree = "<group>";
+		};
 		AD71602E1A38BABB0043E740 /* AWSJson */ = {
 			isa = PBXGroup;
 			children = (
@@ -1511,6 +1532,7 @@
 				6B66C77C1A8C1FA20057962A /* WLIActivityViewController.xib in Resources */,
 				AD7160491A38BAC60043E740 /* sdb-2009-04-15.json in Resources */,
 				6B130BDC1A730BBC00FE0E0C /* tabbarnewpost@2x.png in Resources */,
+				6B30FBA91AEEBBE100BEBAD2 /* ActivityController.xib in Resources */,
 				AD71604B1A38BAC60043E740 /* sqs-2012-11-05.json in Resources */,
 				2C6D27F21896BACA00C459CB /* WLIEditProfileViewController.xib in Resources */,
 				6B7D56E21A70629A00325793 /* Pacifico.ttf in Resources */,
@@ -1708,11 +1730,13 @@
 				2C6D27B81896BACA00C459CB /* MNMPullToRefreshView.m in Sources */,
 				2C6D27F31896BACA00C459CB /* WLIProfileViewController.m in Sources */,
 				2C6D27C31896BACA00C459CB /* SBJsonWriter.m in Sources */,
+				6B30FBA81AEEBBE100BEBAD2 /* ActivityController.m in Sources */,
 				2C6D27D01896BACA00C459CB /* WLICommentCell.m in Sources */,
 				2C6D27D61896BACA00C459CB /* WLILoadingCollectionViewCell.m in Sources */,
 				2C5B5C841A1A8F9500175A58 /* UIWebView+AFNetworking.m in Sources */,
 				2C6D27C11896BACA00C459CB /* SBJsonStreamWriterAccumulator.m in Sources */,
 				2C6D27F11896BACA00C459CB /* WLIEditProfileViewController.m in Sources */,
+				6B30FB991AEEACE000BEBAD2 /* ParseSingleton.m in Sources */,
 				2C6D27CB1896BACA00C459CB /* WLIFollow.m in Sources */,
 				2C6D27C91896BACA00C459CB /* WLIComment.m in Sources */,
 				6B1D25251A96B209003D9EB5 /* WLINearbyViewController.m in Sources */,

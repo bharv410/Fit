@@ -10,6 +10,7 @@
 #import "WLICommentCell.h"
 #import "WLILoadingCell.h"
 #import "GlobalDefines.h"
+#import "ParseSingleton.h"
 
 @implementation WLIPostViewController
 
@@ -185,6 +186,10 @@
     } completion:^(BOOL finished) {
         if (self.textFieldEnterComment.text.length) {
             
+            [ParseSingleton new];
+            [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:self.post.user.userUsername withActivitytype:@"comment" withPostId:[NSString stringWithFormat:@"%d",self.post.postID]];
+            
+            
             [hud show:YES];
             [sharedConnect sendCommentOnPostID:self.post.postID withCommentText:self.textFieldEnterComment.text onCompletion:^(WLIComment *comment, ServerResponse serverResponseCode) {
                 [hud hide:YES];
@@ -231,6 +236,9 @@
         } else {
             [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
         }
+        [ParseSingleton new];
+        [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:self.post.user.userUsername withActivitytype:@"like" withPostId:[NSString stringWithFormat:@"%d",self.post.postID]];
+        
         [[WLIConnect sharedConnect] setLikeOnPostID:post.postID onCompletion:^(WLILike *like, ServerResponse serverResponseCode) {
             if (serverResponseCode != OK) {
                 [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];

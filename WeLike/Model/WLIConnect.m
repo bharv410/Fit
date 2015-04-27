@@ -9,6 +9,7 @@
 #import "WLIConnect.h"
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
+#import "ParseSingleton.h"
 
 #define kBaseLink @"http://fitovate.elasticbeanstalk.com"
 #define kAPIKey @"!#wli!sdWQDScxzczFžŽYewQsq_?wdX09612627364[3072∑34260-#"

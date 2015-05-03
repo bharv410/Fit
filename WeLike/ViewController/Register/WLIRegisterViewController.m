@@ -12,6 +12,7 @@
 #import "NIDropDown.h"
 #import "QuartzCore/QuartzCore.h"
 #import <Parse/Parse.h>
+#import "FitovateData.h"
 
 @interface WLIRegisterViewController ()
 
@@ -141,6 +142,8 @@
                         [self.view endEditing:YES];
                         [hud show:YES];
                         
+                        FitovateData *myData = [FitovateData sharedFitovateData];
+                        myData.myUsername = self.textFieldUsername.text;
                         
                         
                         PFObject *newUser = [PFObject objectWithClassName:@"Users"];
@@ -189,6 +192,9 @@
         } else {
             [self.view endEditing:YES];
             [hud show:YES];
+            
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            myData.myUsername = self.textFieldUsername.text;
             
             PFObject *newUser = [PFObject objectWithClassName:@"Users"];
             newUser[@"username"] = self.textFieldUsername.text;

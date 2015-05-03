@@ -13,7 +13,8 @@
 }
 
 @property (nonatomic, retain) NSString *someProperty;
+@property (nonatomic, retain) NSString *myUsername;
 
-+ (id)sharedManager;
++ (id)sharedFitovateData;
 
 @end

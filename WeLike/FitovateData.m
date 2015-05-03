@@ -11,6 +11,7 @@
 @implementation FitovateData
 
 @synthesize someProperty;
+@synthesize myUsername;
 
 #pragma mark Singleton Methods
 
@@ -25,7 +26,7 @@
 
 - (id)init {
     if (self = [super init]) {
-        NSString *someString = @"Default Property Value";
+        NSString *someString = @" ";
         someProperty = [[NSString alloc] initWithString:someString];
     }
     return self;

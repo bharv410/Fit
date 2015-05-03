@@ -16,6 +16,8 @@
 #import "WLIAppDelegate.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "LQSViewController.h"
+#import "FitovateData.h"
+#import <Parse/Parse.h>
 
 @implementation WLIProfileViewController
 MPMoviePlayerController *moviePlayerController;
@@ -159,22 +161,40 @@ MPMoviePlayerController *moviePlayerController;
         if ((self.user.userType == WLIUserTypeCompany) && (self.user.userID != [WLIConnect sharedConnect].currentUser.userID)) {
             //benharvey ben harvey edit change
             
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            
             //remove spaces in name for url
             NSString *usernameWithoutSpaces=[self.user.userUsername
                                              stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-            NSString *urlString =[NSString stringWithFormat:@"https://s3.amazonaws.com/fitovatevideoss/%@",usernameWithoutSpaces];
-            //NSString *urlString =@"http://techslides.com/demos/sample-videos/small.mp4";
-            NSURL *url =[[NSURL alloc]initWithString:urlString];
             
-            moviePlayerController = [[MPMoviePlayerController alloc] initWithContentURL:url];
-            [moviePlayerController.view setFrame:self.movieView.bounds];  // player's frame must match parent's
-            [self.movieView addSubview:moviePlayerController.view];
-            
-            // Configure the movie player controller
-            moviePlayerController.controlStyle = MPMovieControlStyleNone;
-            [moviePlayerController prepareToPlay];
-            // Start the movie
-            [moviePlayerController play];
+            PFQuery *videoQuery = [PFQuery queryWithClassName:@"Videos"];
+            [videoQuery whereKey:@"username" equalTo:self.user.userUsername];
+            [videoQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    // The find succeeded.
+                    for (PFObject *object in objects) {
+                        
+                        PFFile *videoFile = object[@"video"];
+                        NSString *urlOfVideo = videoFile.url;
+                        NSURL *url =[[NSURL alloc]initWithString:urlOfVideo];
+                        
+                        moviePlayerController = [[MPMoviePlayerController alloc] initWithContentURL:url];
+                        [moviePlayerController.view setFrame:self.movieView.bounds];  // player's frame must match parent's
+                        [self.movieView addSubview:moviePlayerController.view];
+                        
+                        // Configure the movie player controller
+                        moviePlayerController.controlStyle = MPMovieControlStyleNone;
+                        [moviePlayerController prepareToPlay];
+                        // Start the movie
+                        [moviePlayerController play];
+                        
+                    }
+                } else {
+                    // Log details of the failure
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                    [_movieView setHidden:YES];
+                }
+            }];
         }else{
             [_movieView setHidden:YES];
         }

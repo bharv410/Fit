@@ -9,6 +9,7 @@
 #import "WLILoginViewController.h"
 #import "WLIAppDelegate.h"
 #import "WLITimelineViewController.h"
+#import "FitovateData.h"
 
 @implementation WLILoginViewController
 
@@ -51,6 +52,11 @@
     } else if (!self.textFieldPassword.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Password is required." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
+        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        myData.myUsername = self.textFieldUsername.text;
+        
+        
         [self.view endEditing:YES];
         [hud show:YES];
         [sharedConnect loginUserWithUsername:self.textFieldUsername.text andPassword:self.textFieldPassword.text onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {

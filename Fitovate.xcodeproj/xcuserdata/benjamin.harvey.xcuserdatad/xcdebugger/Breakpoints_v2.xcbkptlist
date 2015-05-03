@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeLike/ViewController/Register/WLIRegisterViewController.m"
-            timestampString = "451245301.762747"
+            timestampString = "452375660.69601"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "@implementation WLIRegisterViewController"
             landmarkType = "3">
          </BreakpointContent>

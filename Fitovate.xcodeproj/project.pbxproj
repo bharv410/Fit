@@ -175,6 +175,7 @@
 		6B5E08A91A609B160020D78B /* WLIChooseVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B5E08A71A609B160020D78B /* WLIChooseVideoViewController.xib */; };
 		6B66C77B1A8C1FA20057962A /* WLIActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B66C7791A8C1FA20057962A /* WLIActivityViewController.m */; };
 		6B66C77C1A8C1FA20057962A /* WLIActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B66C77A1A8C1FA20057962A /* WLIActivityViewController.xib */; };
+		6B7368D21AF6ACA0008B9495 /* FitovateData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B7368D11AF6ACA0008B9495 /* FitovateData.m */; };
 		6B774ED51A6A14C5007A8277 /* tabbarnearby@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B774ED41A6A14C5007A8277 /* tabbarnearby@2x.png */; };
 		6B774ED71A6A1509007A8277 /* tabbarnearby.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B774ED61A6A1509007A8277 /* tabbarnearby.png */; };
 		6B774EDA1A6A197A007A8277 /* tabbarprofile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B774ED81A6A197A007A8277 /* tabbarprofile@2x.png */; };
@@ -488,6 +489,8 @@
 		6B66C7781A8C1FA20057962A /* WLIActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIActivityViewController.h; sourceTree = "<group>"; };
 		6B66C7791A8C1FA20057962A /* WLIActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIActivityViewController.m; sourceTree = "<group>"; };
 		6B66C77A1A8C1FA20057962A /* WLIActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLIActivityViewController.xib; sourceTree = "<group>"; };
+		6B7368D01AF6ACA0008B9495 /* FitovateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FitovateData.h; sourceTree = "<group>"; };
+		6B7368D11AF6ACA0008B9495 /* FitovateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FitovateData.m; sourceTree = "<group>"; };
 		6B774ED41A6A14C5007A8277 /* tabbarnearby@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbarnearby@2x.png"; sourceTree = "<group>"; };
 		6B774ED61A6A1509007A8277 /* tabbarnearby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbarnearby.png; sourceTree = "<group>"; };
 		6B774ED81A6A197A007A8277 /* tabbarprofile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbarprofile@2x.png"; sourceTree = "<group>"; };
@@ -589,6 +592,7 @@
 		2C6D26741896BACA00C459CB /* WeLike */ = {
 			isa = PBXGroup;
 			children = (
+				6B7368CF1AF6AC72008B9495 /* FitovateData */,
 				2C6D26751896BACA00C459CB /* 3rdParty */,
 				2C6D26DC1896BACA00C459CB /* AppDelegate */,
 				2C6D26DF1896BACA00C459CB /* InfoPlist.strings */,
@@ -1425,6 +1429,15 @@
 			name = Activity;
 			sourceTree = "<group>";
 		};
+		6B7368CF1AF6AC72008B9495 /* FitovateData */ = {
+			isa = PBXGroup;
+			children = (
+				6B7368D01AF6ACA0008B9495 /* FitovateData.h */,
+				6B7368D11AF6ACA0008B9495 /* FitovateData.m */,
+			);
+			name = FitovateData;
+			sourceTree = "<group>";
+		};
 		AD71602E1A38BABB0043E740 /* AWSJson */ = {
 			isa = PBXGroup;
 			children = (
@@ -1673,6 +1686,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADD1E6381A423FD100E1F8D4 /* MNMPullToRefreshManager.m in Sources */,
+				6B7368D21AF6ACA0008B9495 /* FitovateData.m in Sources */,
 				2C6D27BD1896BACA00C459CB /* SBJsonStreamParserAdapter.m in Sources */,
 				2C5B5C991A1A8FAE00175A58 /* AFHTTPRequestOperationManager.m in Sources */,
 				2C5B5C801A1A8F9500175A58 /* UIButton+AFNetworking.m in Sources */,

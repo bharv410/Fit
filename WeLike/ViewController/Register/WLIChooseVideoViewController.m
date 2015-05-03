@@ -21,6 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Choose Promo Video"
+                                                    message:@"Each trainer needs a video on his profile that is 30 seconds or less to complete registration"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];    
+    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;

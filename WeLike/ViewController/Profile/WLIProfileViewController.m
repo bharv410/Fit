@@ -73,12 +73,14 @@ MPMoviePlayerController *moviePlayerController;
         self.labelEmail.alpha = 0.0f;
     }
     
-    UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
-    [button setImage:[UIImage imageNamed:@"messagesbutton.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
+//    [button setImage:[UIImage imageNamed:@"messagesbutton.png"] forState:UIControlStateNormal];
+//    [button addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    
+//    self.navigationItem.rightBarButtonItem =back;
+    //benmark messages button 
     
-    self.navigationItem.rightBarButtonItem =back;
     
     }
 
@@ -222,6 +224,14 @@ MPMoviePlayerController *moviePlayerController;
     WLIFollowingViewController *followingViewController = [[WLIFollowingViewController alloc] initWithNibName:@"WLIFollowingViewController" bundle:nil];
     followingViewController.user = self.user;
     [self.navigationController pushViewController:followingViewController animated:YES];
+}
+
+-(IBAction)goToMessages:(id)sender {
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+    LQSViewController *newVc = [[LQSViewController alloc]init];
+    [self.navigationController pushViewController:newVc animated:YES];
+    
 }
 
 - (IBAction)buttonFollowersTouchUpInside:(id)sender {

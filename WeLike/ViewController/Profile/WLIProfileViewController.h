@@ -36,7 +36,7 @@
 @property (strong, nonatomic, setter = setUser:) WLIUser *user;
 
 
-
+- (IBAction)goToMessages:(id)sender;
 - (IBAction)buttonFollowToggleTouchUpInside:(id)sender;
 - (IBAction)buttonFollowingTouchUpInside:(id)sender;
 - (IBAction)buttonFollowersTouchUpInside:(id)sender;

@@ -11,6 +11,7 @@
 #import "WLIPostCollectionViewCell.h"
 #import "GlobalDefines.h"
 #import "WLILoadingCollectionViewCell.h"
+#import "WLISearchViewController.h"
 
 @implementation WLIPopularViewController
 
@@ -82,6 +83,11 @@
     }
 }
 
+- (IBAction)buttonSearchUsersTouchUpInside:(id)sender {
+    
+    WLISearchViewController *searchViewController = [[WLISearchViewController alloc] initWithNibName:@"WLISearchViewController" bundle:nil];
+    [self.navigationController pushViewController:searchViewController animated:YES];
+}
 
 #pragma mark - UICollectionViewDataSource methods
 

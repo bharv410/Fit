@@ -62,8 +62,8 @@ MPMoviePlayerController *moviePlayerController;
         [editButton addTarget:self action:@selector(barButtonItemEditTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
         self.scrollViewUserProfile.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(self.buttonLogout.frame) +20.0f);
+        self.buttonMessage.hidden = YES;
     } else {
-        self.buttonSearchUsers.alpha = 0.0f;
         self.buttonLogout.alpha = 0.0f;
         self.scrollViewUserProfile.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(self.labelEmail.frame) +20.0f);
     }
@@ -259,12 +259,6 @@ MPMoviePlayerController *moviePlayerController;
     WLIFollowersViewController *followersViewController = [[WLIFollowersViewController alloc] initWithNibName:@"WLIFollowersViewController" bundle:nil];
     followersViewController.user = self.user;
     [self.navigationController pushViewController:followersViewController animated:YES];
-}
-
-- (IBAction)buttonSearchUsersTouchUpInside:(id)sender {
-    
-    WLISearchViewController *searchViewController = [[WLISearchViewController alloc] initWithNibName:@"WLISearchViewController" bundle:nil];
-    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 - (IBAction)buttonLogoutTouchUpInside:(UIButton *)sender {

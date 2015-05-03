@@ -52,6 +52,47 @@
     return self;
 }
 
+- (id)initFromParse:(NSDictionary*)userWithInfo {
+    
+    self = [self init];
+    if (self) {
+        _userID = [self integerFromDictionary:userWithInfo forKey:@"userID"];
+        _userType = [self integerFromDictionary:userWithInfo forKey:@"userTypeID"];
+        _userPassword = [self stringFromDictionary:userWithInfo forKey:@"password"];
+        _userEmail = [self stringFromDictionary:userWithInfo forKey:@"email"];
+        _userFullName = [self stringFromDictionary:userWithInfo forKey:@"userFullname"];
+        _userUsername = [self stringFromDictionary:userWithInfo forKey:@"username"];
+        _userInfo = [self stringFromDictionary:userWithInfo forKey:@"userInfo"];
+        _userAvatarPath = [self stringFromDictionary:userWithInfo forKey:@"userAvatar"];
+        _followingUser = [self boolFromDictionary:userWithInfo forKey:@"followingUser"];
+        _followersCount = [self integerFromDictionary:userWithInfo forKey:@"followersCount"];
+        _followingCount = [self integerFromDictionary:userWithInfo forKey:@"followingCount"];
+        
+        _companyAddress = [self stringFromDictionary:userWithInfo forKey:@"userAddress"];
+        _companyPhone = [self stringFromDictionary:userWithInfo forKey:@"userPhone"];
+        _companyWeb = [self stringFromDictionary:userWithInfo forKey:@"userWeb"];
+        _companyEmail = [self stringFromDictionary:userWithInfo forKey:@"userEmail"];
+        
+        float latitude = [self floatFromDictionary:userWithInfo forKey:@"userLat"];
+        float longitude = [self floatFromDictionary:userWithInfo forKey:@"userLong"];
+        _coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+        if (_userFullName.length) {
+            _title = _userFullName;
+        } else if (_userUsername.length) {
+            _title = _userUsername;
+        } else {
+            _title = @"Please add Full Name";
+        }
+        
+        if (_companyAddress.length) {
+            _subtitle = _companyAddress;
+        } else {
+            _subtitle = [NSString stringWithFormat:@"%.6f, %.6f", latitude, longitude];
+        }
+    }
+    
+    return self;
+}
 
 #pragma mark - NSCoding methods
 

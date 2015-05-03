@@ -42,6 +42,7 @@ typedef enum {
 @property (nonatomic) int followingCount;
 
 - (id)initWithDictionary:(NSDictionary*)userWithInfo;
+- (id)initFromParse:(NSDictionary*)userWithInfo;
 
 
 @end

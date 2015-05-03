@@ -28,7 +28,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelEmail;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
-@property (strong, nonatomic) IBOutlet UIButton *buttonSearchUsers;
+@property (strong, nonatomic) IBOutlet UIButton *buttonMessage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogout;
 
 @property (weak, nonatomic) IBOutlet UIView *movieView;
@@ -40,7 +40,6 @@
 - (IBAction)buttonFollowToggleTouchUpInside:(id)sender;
 - (IBAction)buttonFollowingTouchUpInside:(id)sender;
 - (IBAction)buttonFollowersTouchUpInside:(id)sender;
-- (IBAction)buttonSearchUsersTouchUpInside:(id)sender;
 - (IBAction)buttonLogoutTouchUpInside:(UIButton *)sender;
 
 @end

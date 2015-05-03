@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="buttonFollow" destination="AdP-Hu-z9D" id="1Ac-aZ-G6t"/>
                 <outlet property="buttonLogout" destination="HLE-yU-dRq" id="YAS-0D-lAw"/>
-                <outlet property="buttonSearchUsers" destination="iz3-s4-JJf" id="DXK-3Z-DNo"/>
+                <outlet property="buttonMessage" destination="anJ-3k-ZuW" id="VLy-2t-haG"/>
                 <outlet property="imageViewUser" destination="KtT-Fg-KHH" id="ZGN-PX-6We"/>
                 <outlet property="labelAddress" destination="SfS-eP-htz" id="shr-bV-Mv7"/>
                 <outlet property="labelEmail" destination="aWX-Zr-oja" id="fcp-5r-O5S"/>
@@ -109,18 +109,6 @@
                             </state>
                             <connections>
                                 <action selector="buttonFollowersTouchUpInside:" destination="-1" eventType="touchUpInside" id="pi5-gx-4cO"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iz3-s4-JJf">
-                            <rect key="frame" x="20" y="305" width="280" height="40"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.36078431372549019" green="0.67843137254901964" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <state key="normal" title="Search users">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="buttonSearchUsersTouchUpInside:" destination="-1" eventType="touchUpInside" id="La3-gw-ogM"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AdP-Hu-z9D">

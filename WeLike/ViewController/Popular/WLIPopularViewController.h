@@ -18,10 +18,12 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewPopular;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewRecent;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControlPopularRecent;
+@property (strong, nonatomic) IBOutlet UIButton *buttonSearchUsers;
 
 @property (strong, nonatomic) NSArray *popularPosts;
 @property (strong, nonatomic) NSArray *recentPosts;
 
 - (IBAction)segmentedControlPopularRecentValueChanged:(UISegmentedControl *)sender;
+- (IBAction)buttonSearchUsersTouchUpInside:(id)sender;
 
 @end

@@ -20,7 +20,7 @@
         _postDate = [self dateFromDictionary:postWithInfo forKey:@"postDate"];
         _postTimeAgo = [self stringFromDictionary:postWithInfo forKey:@"timeAgo"];
         NSDictionary *rawUser = [self dictionaryFromDictionary:postWithInfo forKey:@"user"];
-        _user = [[WLIUser alloc] initWithDictionary:rawUser];
+        _user = [[WLIUser alloc] initFromParse:rawUser];
         _postLikesCount = [self integerFromDictionary:postWithInfo forKey:@"totalLikes"];
         _postCommentsCount = [self integerFromDictionary:postWithInfo forKey:@"totalComments"];
         _likedThisPost = [self boolFromDictionary:postWithInfo forKey:@"isLiked"];

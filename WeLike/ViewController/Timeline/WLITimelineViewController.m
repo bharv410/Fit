@@ -40,23 +40,41 @@
     
     FitovateData *myData = [FitovateData sharedFitovateData];
     PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    [query orderByAscending:@"userID"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:objects.count];
-                for (PFObject *object in objects) {
+                for (PFObject *loggedInUserParse in objects) {
                 
-                
-                
+                    PFObject *loggedInUserParse = [objects objectAtIndex:0];
+                    NSLog(@"succesful login through parse!!!");
+                    
+                    PFGeoPoint *userLoc = loggedInUserParse[@"location"];
+                    NSDictionary *rawUser = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             loggedInUserParse[@"userID"], @"userID",
+                                             loggedInUserParse[@"userTypeID"], @"userTypeID",
+                                             loggedInUserParse[@"password"], @"password",
+                                             loggedInUserParse[@"email"], @"email",
+                                             loggedInUserParse[@"fullname"], @"userFullname",
+                                             loggedInUserParse[@"username"], @"username",
+                                             loggedInUserParse[@"userinfo"], @"userinfo",
+                                             loggedInUserParse[@"followersCount"], @"followersCount",
+                                             loggedInUserParse[@"followingCount"], @"followingCount",
+                                             loggedInUserParse[@"phone"], @"userPhone",
+                                             loggedInUserParse[@"website"], @"userWeb",
+                                             loggedInUserParse[@"userLat"], userLoc.latitude,
+                                             loggedInUserParse[@"userLong"], userLoc.longitude, nil];
+                    
+                    WLIUser *currUser = [[WLIUser alloc]initFromParse:rawUser];
+                    [myData.followingTheseUsers addObject:currUser];
             }
-            
+            [self reloadData:YES];
         } else {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
             myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:0];
+            [self reloadData:YES];
         }
     }];
-    
-    [self reloadData:YES];
-    
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Activity" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
     self.navigationItem.leftBarButtonItem = anotherButton;
@@ -131,49 +149,25 @@
             NSLog(@"Successfully retrieved %d fitovate pgotos from parse.", objects.count);
             
             
-            NSDictionary *userDict = [[NSDictionary alloc] initWithObjectsAndKeys:  [NSNumber numberWithInt:sharedConnect.currentUser.userID], @"userID",
-                                      [NSNumber numberWithInt:sharedConnect.currentUser.userType], @"userTypeID",
-                                      sharedConnect.currentUser.userPassword, @"password",
-                                      sharedConnect.currentUser.userEmail, @"email",
-                                      sharedConnect.currentUser.userFullName, @"userFullname",
-                                      sharedConnect.currentUser.userUsername, @"username",
-                                      sharedConnect.currentUser.userInfo, @"userInfo",
-                                      sharedConnect.currentUser.userAvatarPath, @"userAvatar",
-                                      sharedConnect.currentUser.followingUser, @"followingUser",
-                                      [NSNumber numberWithInt:sharedConnect.currentUser.followersCount], @"followersCount",
-                                      [NSNumber numberWithInt:sharedConnect.currentUser.followingCount], @"followingCount",
-                                      sharedConnect.currentUser.companyAddress, @"userAddress",
-                                      sharedConnect.currentUser.companyPhone, @"userPhone",
-                                      sharedConnect.currentUser.companyWeb, @"userWeb",
-                                      sharedConnect.currentUser.userEmail, @"userEmail",
-                                      sharedConnect.currentUser.coordinate.latitude, @"userLat",
-                                      sharedConnect.currentUser.coordinate.longitude,
-                                      sharedConnect.currentUser.companyWeb, @"userWeb",
-                                      sharedConnect.currentUser.companyEmail, @"userEmail",
-                                      sharedConnect.currentUser.followingUser, @"followingUser"
-                                      , nil];
-            
-            
             //GET ALL USERS IN VIEWDIDLOAD
             //THEN ADD TO AN ARRAY SELF.FOLLOWINGTHESEUSERS
             //WHEN RETRIEVING POSTS THEN USE THE USER ID TO ADD THE RIGHT ONE
-            
             for (PFObject *object in objects) {
                 
                 NSString *playerName = object[@"postTitle"];
-                NSLog(@"%@", object.createdAt);
-                //NSLog(@"%@", object[@"userID"]);
+
                 if([allFollowings containsObject:object[@"userID"]]){
                     
                     PFFile *tempPhotoForUrl = object[@"userImage"];
                     
+                    FitovateData *myData = [FitovateData sharedFitovateData];
                     
                     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
                                           object[@"postTitle"], @"postTitle",
                                           tempPhotoForUrl.url, @"postImage",
                                           object[@"createdAt"], @"postDate",
                                           object[@"createdAt"], @"timeAgo",
-                                          userDict, @"user",
+                                          [myData.followingTheseUsers objectAtIndex:postCount], @"user",
                                           object[@"totalLikes"], @"totalLikes",
                                           object[@"totalComments"], @"totalComments",
                                           object[@"isLiked"], @"isLiked",

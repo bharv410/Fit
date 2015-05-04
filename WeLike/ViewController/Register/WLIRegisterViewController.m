@@ -21,6 +21,7 @@
 @implementation WLIRegisterViewController
 
 @synthesize chooseSpeciality = _chooseSpeciality;
+@synthesize numberOfUsers = _numberOfUsers;
 
 #pragma mark - Object lifecycle
 
@@ -41,7 +42,7 @@
     [super viewDidLoad];
     
     self.title = @"Register";
-
+    
     [self.scrollViewRegister addSubview:self.viewContentRegister];
     [self adjustViewFrames];
     chooseSpeciality.layer.borderWidth = 1;
@@ -56,6 +57,19 @@
     
     //self.picker.dataSource = self;
     //self.picker.delegate = self;
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d scores.", objects.count);
+            self.numberOfUsers = [NSNumber numberWithInt:objects.count];
+        } else {
+            self.numberOfUsers = [NSNumber numberWithInt:0];
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 
@@ -147,11 +161,16 @@
                         
                         
                         PFObject *newUser = [PFObject objectWithClassName:@"Users"];
-                        newUser[@"username"] = self.textFieldUsername.text;
+                        newUser[@"userID"] = self.numberOfUsers;
+                        newUser[@"userTypeID"] = self.numberOfUsers;
                         newUser[@"password"] = self.textFieldPassword.text;
                         newUser[@"email"] = self.textFieldEmail.text;
-                        newUser[@"usertype"] = @"trainer";
                         newUser[@"fullname"] = self.textFieldFullName.text;
+                        newUser[@"username"] = self.textFieldUsername.text;
+                        newUser[@"usertype"] = @"trainer";
+                        newUser[@"userinfo"] = @"trainer";
+                        newUser[@"followersCount"] = [NSNumber numberWithInt:0];
+                        newUser[@"followingCount"] = [NSNumber numberWithInt:0];
                         newUser[@"phone"] = self.textFieldPhone.text;
                         newUser[@"website"] = self.textFieldWeb.text;
                         

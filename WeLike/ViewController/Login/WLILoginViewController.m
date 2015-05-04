@@ -56,27 +56,44 @@
         FitovateData *myData = [FitovateData sharedFitovateData];
         myData.myUsername = self.textFieldUsername.text;
         
-        
-        [self.view endEditing:YES];
-        [hud show:YES];
-        [sharedConnect loginUserWithUsername:self.textFieldUsername.text andPassword:self.textFieldPassword.text onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+        [myData loginUserWithUsername:self.textFieldUsername.text andPassword:self.textFieldPassword.text onCompletion:^(WLIUser *user, BOOL success) {
             [hud hide:YES];
-            if (serverResponseCode == OK) {
+            if (success) {
                 [self dismissViewControllerAnimated:YES completion:^{
                     WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
                     WLITimelineViewController *timelineViewController = (WLITimelineViewController *)[appDelegate.tabBarController.viewControllers[0] topViewController];
                     [timelineViewController reloadData:YES];
                 }];
-            } else if (serverResponseCode == NO_CONNECTION) {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            } else if (serverResponseCode == NOT_FOUND) {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong username. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            } else if (serverResponseCode == UNAUTHORIZED) {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            } else {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+
+            }else{
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong username or password. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             }
         }];
+        
+        [self.view endEditing:YES];
+        [hud show:YES];
+        
+        //try retry logic if doesnt work??? benmark
+        
+        
+//        [sharedConnect loginUserWithUsername:self.textFieldUsername.text andPassword:self.textFieldPassword.text onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+//            [hud hide:YES];
+//            if (serverResponseCode == OK) {
+//                [self dismissViewControllerAnimated:YES completion:^{
+//                    WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
+//                    WLITimelineViewController *timelineViewController = (WLITimelineViewController *)[appDelegate.tabBarController.viewControllers[0] topViewController];
+//                    [timelineViewController reloadData:YES];
+//                }];
+//            } else if (serverResponseCode == NO_CONNECTION) {
+//                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//            } else if (serverResponseCode == NOT_FOUND) {
+//                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong username. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//            } else if (serverResponseCode == UNAUTHORIZED) {
+//                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//            } else {
+//                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//            }
+//        }];
     }
 }
 

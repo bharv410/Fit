@@ -64,14 +64,14 @@
         _userUsername = [self stringFromDictionary:userWithInfo forKey:@"username"];
         _userInfo = [self stringFromDictionary:userWithInfo forKey:@"userInfo"];
         _userAvatarPath = [self stringFromDictionary:userWithInfo forKey:@"userAvatar"];
-        _followingUser = [self boolFromDictionary:userWithInfo forKey:@"followingUser"];
+        _followingUser = YES;
         _followersCount = [self integerFromDictionary:userWithInfo forKey:@"followersCount"];
         _followingCount = [self integerFromDictionary:userWithInfo forKey:@"followingCount"];
         
         _companyAddress = [self stringFromDictionary:userWithInfo forKey:@"userAddress"];
         _companyPhone = [self stringFromDictionary:userWithInfo forKey:@"userPhone"];
         _companyWeb = [self stringFromDictionary:userWithInfo forKey:@"userWeb"];
-        _companyEmail = [self stringFromDictionary:userWithInfo forKey:@"userEmail"];
+        _companyEmail = @"bharv14@gmail.com";
         
         float latitude = [self floatFromDictionary:userWithInfo forKey:@"userLat"];
         float longitude = [self floatFromDictionary:userWithInfo forKey:@"userLong"];

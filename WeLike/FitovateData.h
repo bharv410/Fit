@@ -7,6 +7,7 @@
 //
 
 #import <foundation/Foundation.h>
+#import "WLIUser.h"
 
 @interface FitovateData : NSObject {
     NSString *someProperty;
@@ -14,7 +15,11 @@
 
 @property (nonatomic, retain) NSString *someProperty;
 @property (nonatomic, retain) NSString *myUsername;
+@property (strong, nonatomic) WLIUser *currentUser;
 
 + (id)sharedFitovateData;
+
+- (void)loginUserWithUsername:(NSString*)username andPassword:(NSString*)password onCompletion:(void (^)(WLIUser *user, BOOL success))completion;
+
 
 @end

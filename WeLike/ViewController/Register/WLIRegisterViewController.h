@@ -34,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *textFieldAddress;
 @property (strong, nonatomic) IBOutlet MKMapView *mapViewLocation;
 @property (strong, nonatomic) IBOutlet UIButton *buttonRegister;
+@property (strong, nonatomic) NSNumber *numberOfUsers;
 
 @property (retain, nonatomic) IBOutlet UIButton *chooseSpeciality;
 

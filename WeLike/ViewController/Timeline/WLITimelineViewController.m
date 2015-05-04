@@ -142,8 +142,6 @@
                 NSLog(@"%@", object.createdAt);
                 //NSLog(@"%@", object[@"userID"]);
                 if([allFollowings containsObject:object[@"userID"]]){
-                    NSLog(@"ADDED TO TIMELINE FOR POSTSSSS");
-                    NSLog(@"each object needs to init a dictionary with WLIPost");
                     
                     PFFile *tempPhotoForUrl = object[@"userImage"];
                     

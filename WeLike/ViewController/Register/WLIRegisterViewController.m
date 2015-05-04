@@ -104,7 +104,7 @@
 }
 
 - (IBAction)buttonRegisterTouchUpInside:(id)sender {
-
+    
     if (!self.textFieldEmail.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Email is required." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else if (self.textFieldPassword.text.length < 4 || self.textFieldRepassword.text.length < 4) {
@@ -147,16 +147,21 @@
                         
                         
                         PFObject *newUser = [PFObject objectWithClassName:@"Users"];
-                        newUser[@"username"] = self.textFieldUsername.text;
+                        newUser[@"userID"] = self.numberOfUsers;
+                        newUser[@"userTypeID"] = self.numberOfUsers;
                         newUser[@"password"] = self.textFieldPassword.text;
                         newUser[@"email"] = self.textFieldEmail.text;
-                        newUser[@"usertype"] = @"trainer";
                         newUser[@"fullname"] = self.textFieldFullName.text;
+                        newUser[@"username"] = self.textFieldUsername.text;
+                        newUser[@"usertype"] = @"trainer";
+                        newUser[@"userinfo"] = @"trainer";
+                        newUser[@"followersCount"] = [NSNumber numberWithInt:0];
+                        newUser[@"followingCount"] = [NSNumber numberWithInt:0];
                         newUser[@"phone"] = self.textFieldPhone.text;
                         newUser[@"website"] = self.textFieldWeb.text;
                         
-                            if(self.chooseSpeciality.titleLabel.text != nil)
-                                newUser[@"specialty"] = self.chooseSpeciality.titleLabel.text;
+                        if(self.chooseSpeciality.titleLabel.text != nil)
+                            newUser[@"specialty"] = self.chooseSpeciality.titleLabel.text;
                         
                         
                         PFGeoPoint *point = [PFGeoPoint geoPointWithLatitude:coordinate.latitude longitude:coordinate.longitude];
@@ -174,7 +179,7 @@
                                 WLIChooseVideoViewController *wcv = [[WLIChooseVideoViewController alloc]init];
                                 wcv.usersName = self.textFieldUsername.text;
                                 [self.navigationController pushViewController:wcv animated:YES];
-//                                [self dismissViewControllerAnimated:YES completion:nil];
+                                //                                [self dismissViewControllerAnimated:YES completion:nil];
                                 
                             } else {
                                 // There was a problem, check error.description
@@ -182,7 +187,7 @@
                                 [[[UIAlertView alloc] initWithTitle:@"Error" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                             }
                         }];
-
+                        
                         
                     } else {
                         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please drop pin on map to mark location of your company." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

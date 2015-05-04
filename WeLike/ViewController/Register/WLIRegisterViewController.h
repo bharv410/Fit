@@ -36,6 +36,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonRegister;
 
 @property (retain, nonatomic) IBOutlet UIButton *chooseSpeciality;
+@property (retain, nonatomic) NSNumber *numberOfUsers;
 
 
 - (IBAction)selectClients:(id)sender;

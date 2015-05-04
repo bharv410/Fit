@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString *someProperty;
 @property (nonatomic, retain) NSString *myUsername;
+@property (nonatomic, retain) NSMutableArray *followingTheseUsers;
 
 + (id)sharedFitovateData;
 

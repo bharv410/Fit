@@ -14,6 +14,7 @@
 #import "ActivityController.h"
 #import <Parse/Parse.h>
 #import "ParseSingleton.h"
+#import "FitovateData.h"
 
 @implementation WLITimelineViewController
 
@@ -35,6 +36,25 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:objects.count];
+                for (PFObject *object in objects) {
+                
+                
+                
+            }
+            
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:0];
+        }
+    }];
+    
     [self reloadData:YES];
     
     
@@ -134,7 +154,9 @@
                                       , nil];
             
             
-            
+            //GET ALL USERS IN VIEWDIDLOAD
+            //THEN ADD TO AN ARRAY SELF.FOLLOWINGTHESEUSERS
+            //WHEN RETRIEVING POSTS THEN USE THE USER ID TO ADD THE RIGHT ONE
             
             for (PFObject *object in objects) {
                 
@@ -142,8 +164,6 @@
                 NSLog(@"%@", object.createdAt);
                 //NSLog(@"%@", object[@"userID"]);
                 if([allFollowings containsObject:object[@"userID"]]){
-                    NSLog(@"ADDED TO TIMELINE FOR POSTSSSS");
-                    NSLog(@"each object needs to init a dictionary with WLIPost");
                     
                     PFFile *tempPhotoForUrl = object[@"userImage"];
                     

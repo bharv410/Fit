@@ -7,6 +7,7 @@
 //
 
 #import "WLIUser.h"
+#import <Parse/Parse.h>
 
 @implementation WLIUser
 
@@ -57,20 +58,22 @@
     self = [self init];
     if (self) {
         _userID = [self integerFromDictionary:userWithInfo forKey:@"userID"];
-        _userType = [self integerFromDictionary:userWithInfo forKey:@"userTypeID"];
+        _userType = [self integerFromDictionary:userWithInfo forKey:@"usertype"];
         _userPassword = [self stringFromDictionary:userWithInfo forKey:@"password"];
         _userEmail = [self stringFromDictionary:userWithInfo forKey:@"email"];
         _userFullName = [self stringFromDictionary:userWithInfo forKey:@"fullname"];
         _userUsername = [self stringFromDictionary:userWithInfo forKey:@"username"];
-        _userInfo = [self stringFromDictionary:userWithInfo forKey:@"userInfo"];
-        _userAvatarPath = [self stringFromDictionary:userWithInfo forKey:@"userAvatar"];
+        _userInfo = [self stringFromDictionary:userWithInfo forKey:@"userinfo"];
+        
+        _userAvatarPath = @"fixes it in the method";
+        
         _followingUser = YES;
         _followersCount = [self integerFromDictionary:userWithInfo forKey:@"followersCount"];
         _followingCount = [self integerFromDictionary:userWithInfo forKey:@"followingCount"];
         
-        _companyAddress = [self stringFromDictionary:userWithInfo forKey:@"userAddress"];
-        _companyPhone = [self stringFromDictionary:userWithInfo forKey:@"userPhone"];
-        _companyWeb = [self stringFromDictionary:userWithInfo forKey:@"userWeb"];
+        _companyAddress = [self stringFromDictionary:userWithInfo forKey:@"specialty"];
+        _companyPhone = [self stringFromDictionary:userWithInfo forKey:@"phone"];
+        _companyWeb = [self stringFromDictionary:userWithInfo forKey:@"website"];
         _companyEmail = [self stringFromDictionary:userWithInfo forKey:@"email"];
         
         float latitude = [self floatFromDictionary:userWithInfo forKey:@"userLat"];

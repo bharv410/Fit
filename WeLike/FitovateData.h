@@ -7,6 +7,8 @@
 //
 
 #import <foundation/Foundation.h>
+#import <Parse/Parse.h>
+#import "WLIUser.h"
 
 @interface FitovateData : NSObject {
     NSString *someProperty;
@@ -14,8 +16,10 @@
 
 @property (nonatomic, retain) NSString *someProperty;
 @property (nonatomic, retain) NSString *myUsername;
-@property (nonatomic, retain) NSMutableArray *followingTheseUsers;
+@property (nonatomic, retain) NSMutableDictionary *followingTheseUsers;
 
 + (id)sharedFitovateData;
+- (NSDictionary *) parseUserToDictionary : (PFObject *) userFromParse;
+- (WLIUser *) pfobjectToWLIUser : (PFObject *) userFromParse;
 
 @end

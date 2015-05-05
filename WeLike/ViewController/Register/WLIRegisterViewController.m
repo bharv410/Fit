@@ -193,6 +193,8 @@
                                 [self.navigationController pushViewController:wcv animated:YES];
                                 //                                [self dismissViewControllerAnimated:YES completion:nil];
                                 
+                                NSLog(@"%@", [myData parseUserToDictionary:newUser]);
+                                
                             } else {
                                 // There was a problem, check error.description
                                 NSLog(@"error");

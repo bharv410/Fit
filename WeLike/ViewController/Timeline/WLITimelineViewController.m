@@ -43,45 +43,19 @@
     [query orderByDescending:@"userID"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:objects.count];
+            myData.followingTheseUsers = [[NSMutableDictionary alloc]initWithCapacity:objects.count];
+            
                 for (PFObject *loggedInUserParse in objects) {
+                    WLIUser *currUser = [myData pfobjectToWLIUser:loggedInUserParse];
+                    [myData.followingTheseUsers setObject:currUser forKey:loggedInUserParse[@"userID"]];
+                    //adds all users for now by userID
                     
-                    NSArray *temp = [[NSArray alloc] init];
-                    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-                    
-                    temp = [loggedInUserParse allKeys];
-                    
-                    NSEnumerator *e = [temp objectEnumerator]; id object; while (object = [e nextObject]) { [dict setValue:[loggedInUserParse objectForKey:object] forKey:object]; }
-                    
-                    //Check the results NSLog(@"PFObject Info: %@", PFObject); NSLog(@"dict Info: %@", dict);
-                
-                    PFObject *loggedInUserParse = [objects objectAtIndex:0];
-                    NSLog(@"succesful login through parse!!!");
-                    
-                    PFGeoPoint *userLoc = loggedInUserParse[@"location"];
-                    NSMutableDictionary *rawUser = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                             loggedInUserParse[@"userID"], @"userID",
-                                             loggedInUserParse[@"userTypeID"], @"userTypeID",
-                                             loggedInUserParse[@"password"], @"password",
-                                             loggedInUserParse[@"email"], @"email",
-                                             loggedInUserParse[@"fullname"], @"userFullname",
-                                             loggedInUserParse[@"username"], @"username",
-                                             loggedInUserParse[@"userinfo"], @"userinfo",
-                                             loggedInUserParse[@"followersCount"], @"followersCount",
-                                             loggedInUserParse[@"followingCount"], @"followingCount",
-                                             loggedInUserParse[@"phone"], @"userPhone",
-                                             loggedInUserParse[@"website"], @"userWeb",
-                                             loggedInUserParse[@"userLat"], userLoc.latitude,
-                                             loggedInUserParse[@"userLong"], userLoc.longitude, nil];
-                    
-                    WLIUser *currUser = [[WLIUser alloc]initFromParse:dict];
-                    PFFile *imageUrl = loggedInUserParse[@"userAvatar"];
-                    currUser.userAvatarPath = imageUrl.url;
-
-                    NSLog(@"%@", dict);
-                    [myData.followingTheseUsers addObject:currUser];
+                    NSLog(@"myData.followingThese = %@",[currUser userUsername]);
             }
+            NSLog(@"myData.followingTheseDICT = %@",myData.followingTheseUsers);
             [self reloadData:YES];
+            
+            
         } else {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
             myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:0];
@@ -148,9 +122,26 @@
 //    }];
     loading = NO;
     NSMutableArray *allFollowings = [[NSMutableArray alloc]initWithCapacity:10];
-    NSNumber *num = [NSNumber numberWithInt:4];
-    [allFollowings insertObject:num atIndex:0];
-    
+    [allFollowings addObject:[NSNumber numberWithInt:1]];
+    [allFollowings addObject:[NSNumber numberWithInt:2]];
+    [allFollowings addObject:[NSNumber numberWithInt:3]];
+    [allFollowings addObject:[NSNumber numberWithInt:4]];
+    [allFollowings addObject:[NSNumber numberWithInt:5]];
+    [allFollowings addObject:[NSNumber numberWithInt:6]];
+    [allFollowings addObject:[NSNumber numberWithInt:7]];
+    [allFollowings addObject:[NSNumber numberWithInt:8]];
+    [allFollowings addObject:[NSNumber numberWithInt:9]];
+    [allFollowings addObject:[NSNumber numberWithInt:10]];
+    [allFollowings addObject:[NSNumber numberWithInt:11]];
+    [allFollowings addObject:[NSNumber numberWithInt:12]];
+    [allFollowings addObject:[NSNumber numberWithInt:13]];
+    [allFollowings addObject:[NSNumber numberWithInt:14]];
+    [allFollowings addObject:[NSNumber numberWithInt:15]];
+    [allFollowings addObject:[NSNumber numberWithInt:16]];
+    [allFollowings addObject:[NSNumber numberWithInt:17]];
+    [allFollowings addObject:[NSNumber numberWithInt:18]];
+//simulate me following these 19 userIDs
+
     NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
     __block NSUInteger postCount = 0;
     
@@ -158,41 +149,21 @@
     [query addDescendingOrder:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            // The find succeeded.
-            NSLog(@"Successfully retrieved %d fitovate pgotos from parse.", objects.count);
-            
-            
-            //GET ALL USERS IN VIEWDIDLOAD
-            //THEN ADD TO AN ARRAY SELF.FOLLOWINGTHESEUSERS
-            //WHEN RETRIEVING POSTS THEN USE THE USER ID TO ADD THE RIGHT ONE
             for (PFObject *object in objects) {
                 
-                NSString *playerName = object[@"postTitle"];
-FitovateData *myData = [FitovateData sharedFitovateData];
-                if([allFollowings containsObject:object[@"userID"]]){
+                NSString *postCaption = object[@"postTitle"];
+                FitovateData *myData = [FitovateData sharedFitovateData];
+                if([allFollowings containsObject:object[@"userID"]]){ // if im following this person
                     
                     PFFile *tempPhotoForUrl = object[@"userImage"];
                     
-                    
-                    
-//                    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
-//                                          object[@"postTitle"], @"postTitle",
-//                                          tempPhotoForUrl.url, @"postImage",
-//                                          object[@"createdAt"], @"postDate",
-//                                          object[@"createdAt"], @"timeAgo",
-//                                          [myData.followingTheseUsers objectAtIndex:postCount], @"user",
-//                                          object[@"totalLikes"], @"totalLikes",
-//                                          object[@"totalComments"], @"totalComments",
-//                                          object[@"isLiked"], @"isLiked",
-//                                          object[@"isCommented"], @"isCommented"
-//                                          , nil];
+
                     
                     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
                                           object[@"postTitle"], @"postTitle",
                                           tempPhotoForUrl.url, @"postImage",
                                           object[@"createdAt"], @"postDate",
                                           object[@"createdAt"], @"timeAgo",
-                                          [myData.followingTheseUsers objectAtIndex:postCount], @"user",
                                           object[@"totalLikes"], @"totalLikes",
                                           object[@"totalComments"], @"totalComments",
                                           object[@"isLiked"], @"isLiked",
@@ -200,14 +171,13 @@ FitovateData *myData = [FitovateData sharedFitovateData];
                                           , nil];
                     
                     WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
+                    postFromParse.user = [myData.followingTheseUsers objectForKey:object[@"userID"]];
+                    
                     [wliPosts insertObject:postFromParse atIndex:postCount];
                     postCount++;
                     
                     
                 }
-                //done
-                WLIUser *userrr = [myData.followingTheseUsers objectAtIndex:postCount];
-                
                 self.posts = wliPosts;
                 [self.tableViewRefresh reloadData];
                 [refreshManager tableViewReloadFinishedAnimated:YES];

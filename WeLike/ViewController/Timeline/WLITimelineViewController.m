@@ -108,7 +108,7 @@
     loading = YES;
     int page;
     if (reloadAll) {
-        loadMore = YES;
+        loadMore = NO;
         page = 1;
     } else {
         page  = (self.posts.count / kDefaultPageSize) + 1;

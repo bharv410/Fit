@@ -10,6 +10,7 @@
 #import "GlobalDefines.h"
 #import "WLIUserCell.h"
 #import "WLILoadingCell.h"
+#import "FitovateData.h"
 
 @implementation WLIFollowingViewController
 
@@ -141,6 +142,10 @@
     WLIUserCell *cell = (WLIUserCell*)senderCell;
     [cell.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-unfollow.png"] forState:UIControlStateNormal];
     user.followingUser = YES;
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    
+    [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:user.userID]];
+    
     [sharedConnect setFollowOnUserID:user.userID onCompletion:^(WLIFollow *follow, ServerResponse serverResponseCode) {
         if (serverResponseCode != OK) {
             user.followingUser = NO;
@@ -155,6 +160,9 @@
     WLIUserCell *cell = (WLIUserCell*)senderCell;
     [cell.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-follow.png"] forState:UIControlStateNormal];
     user.followingUser = NO;
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    
+    [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:user.userID]];
     [sharedConnect removeFollowWithFollowID:user.userID onCompletion:^(ServerResponse serverResponseCode) {
         if (serverResponseCode != OK) {
             user.followingUser = YES;

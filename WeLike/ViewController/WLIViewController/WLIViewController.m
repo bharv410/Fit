@@ -11,6 +11,7 @@
 #import "WLILikesViewController.h"
 #import "WLIProfileViewController.h"
 #import "WLIPostViewController.h"
+#import "FitovateData.h";
 
 @implementation WLIViewController
 
@@ -117,6 +118,9 @@
 }
 
 - (void)followUser:(WLIUser *)user sender:(id)senderCell {
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    
+    [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:user.userID]];
     
     [sharedConnect setFollowOnUserID:user.userID onCompletion:^(WLIFollow *follow, ServerResponse serverResponseCode) {
         
@@ -124,6 +128,9 @@
 }
 
 - (void)unfollowUser:(WLIUser *)user sender:(id)senderCell {
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    
+    [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:user.userID]];
     
     [sharedConnect removeFollowWithFollowID:user.userID onCompletion:^(ServerResponse serverResponseCode) {
         

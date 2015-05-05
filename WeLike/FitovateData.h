@@ -12,14 +12,18 @@
 
 @interface FitovateData : NSObject {
     NSString *someProperty;
+    WLIUser *currentUser;
 }
 
 @property (nonatomic, retain) NSString *someProperty;
+@property (nonatomic, retain) WLIUser *currentUser;
 @property (nonatomic, retain) NSString *myUsername;
 @property (nonatomic, retain) NSMutableDictionary *followingTheseUsers;
 
 + (id)sharedFitovateData;
 - (NSDictionary *) parseUserToDictionary : (PFObject *) userFromParse;
 - (WLIUser *) pfobjectToWLIUser : (PFObject *) userFromParse;
+- (void) unfollowUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower;
+- (void) followUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower;
 
 @end

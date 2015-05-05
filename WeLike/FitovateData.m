@@ -14,6 +14,7 @@
 
 @synthesize someProperty;
 @synthesize myUsername;
+@synthesize currentUser;
 
 #pragma mark Singleton Methods
 
@@ -57,7 +58,37 @@
     float selectedLatitude = selectedLocation.latitude; // returns object latitude float
     float selectedLongitude = selectedLocation.longitude; // returns object longitude
     currUser.coordinate = CLLocationCoordinate2DMake(selectedLatitude, selectedLongitude);
-        return currUser;
+    return currUser;
+}
+
+- (void) followUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower {
+    
+    PFObject *gameScore = [PFObject objectWithClassName:@"Follows"];
+    gameScore[@"following"] = following;
+    gameScore[@"follower"] = follower;
+    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Followed");
+        } else {
+            // There was a problem, check error.description
+            NSLog(@"error following");
+        }
+    }];
+}
+
+- (void) unfollowUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower {
+    
+    PFQuery *unfollowUser = [PFQuery queryWithClassName:@"Follows"];
+    [unfollowUser whereKey:@"following" equalTo:following];
+    [unfollowUser whereKey:@"follower" equalTo:follower];
+    [unfollowUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            for(PFObject *object in objects){
+                [object deleteInBackground];
+                NSLog(@"Followed");
+            }
+        }
+    }];
 }
 
 - (void)dealloc {

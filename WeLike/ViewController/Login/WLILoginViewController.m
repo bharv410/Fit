@@ -63,6 +63,7 @@
             [hud hide:YES];
             if (serverResponseCode == OK) {
                 [self dismissViewControllerAnimated:YES completion:^{
+                    myData.currentUser = user;
                     WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
                     WLITimelineViewController *timelineViewController = (WLITimelineViewController *)[appDelegate.tabBarController.viewControllers[0] topViewController];
                     [timelineViewController reloadData:YES];

@@ -216,6 +216,11 @@ MPMoviePlayerController *moviePlayerController;
         self.user.followingUser = NO;
         self.user.followersCount--;
         [self updateFramesAndDataWithDownloads:NO];
+        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
+        [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.user.userID]];
+        
         [sharedConnect removeFollowWithFollowID:self.user.userID onCompletion:^(ServerResponse serverResponseCode) {
             if (serverResponseCode != OK) {
                 self.user.followingUser = YES;
@@ -228,6 +233,11 @@ MPMoviePlayerController *moviePlayerController;
         self.user.followingUser = YES;
         self.user.followersCount++;
         [self updateFramesAndDataWithDownloads:NO];
+        //benmark
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
+        [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.user.userID]];
+        
         [sharedConnect setFollowOnUserID:self.user.userID onCompletion:^(WLIFollow *follow, ServerResponse serverResponseCode) {
             if (serverResponseCode != OK) {
                 self.user.followingUser = NO;

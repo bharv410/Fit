@@ -10,6 +10,8 @@
 #import <AWSiOSSDKv2/S3.h>
 #import <AWSiOSSDKv2/AWSCore.h>
 #import "ParseSingleton.h"
+#import "FitovateData.h"
+#import <Parse/Parse.h>
 
 #define kBaseLink @"http://fitovate.elasticbeanstalk.com"
 #define kAPIKey @"!#wli!sdWQDScxzczFžŽYewQsq_?wdX09612627364[3072∑34260-#"
@@ -192,20 +194,40 @@ static WLIConnect *sharedConnect;
     if (userID < 1) {
         completion(nil, BAD_REQUEST);
     } else {
-        NSDictionary *parameters = @{@"userID": [NSString stringWithFormat:@"%d", self.currentUser.userID], @"forUserID": [NSString stringWithFormat:@"%d", userID]};
-        [httpClient POST:@"getProfile" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSDictionary *rawUser = [responseObject objectForKey:@"item"];
-            WLIUser *user = [[WLIUser alloc] initWithDictionary:rawUser];
-            if (user.userID == _currentUser.userID) {
-                _currentUser = user;
-                [self saveCurrentUser];
+        
+        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+        [query orderByDescending:@"userID"];
+        [query whereKey:@"userID" equalTo:[NSNumber numberWithInt:userID]];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                for (PFObject *loggedInUserParse in objects) {
+                    WLIUser *currUser = [myData pfobjectToWLIUser:loggedInUserParse];
+                    completion(currUser,kOK);
+                }
+            } else {
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
             }
-            [self debugger:parameters.description methodLog:@"api/getProfile" dataLogFormatted:responseObject];
-            completion(user, OK);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self debugger:parameters.description methodLog:@"api/getProfile" dataLog:error.description];
-            completion(nil, UNKNOWN_ERROR);
         }];
+        
+        
+//        NSDictionary *parameters = @{@"userID": [NSString stringWithFormat:@"%d", self.currentUser.userID], @"forUserID": [NSString stringWithFormat:@"%d", userID]};
+//        [httpClient POST:@"getProfile" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            NSDictionary *rawUser = [responseObject objectForKey:@"item"];
+//            WLIUser *user = [[WLIUser alloc] initWithDictionary:rawUser];
+//            if (user.userID == _currentUser.userID) {
+//                _currentUser = user;
+//                [self saveCurrentUser];
+//            }
+//            [self debugger:parameters.description methodLog:@"api/getProfile" dataLogFormatted:responseObject];
+//            completion(user, OK);
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            [self debugger:parameters.description methodLog:@"api/getProfile" dataLog:error.description];
+//            completion(nil, UNKNOWN_ERROR);
+//        }];
+        
+        
     }
 }
 

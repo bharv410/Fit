@@ -30,6 +30,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMessage;
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogout;
+@property (strong, nonatomic) IBOutlet UIButton *buttonEditProfile;
 
 @property (weak, nonatomic) IBOutlet UIView *movieView;
 
@@ -41,5 +42,14 @@
 - (IBAction)buttonFollowingTouchUpInside:(id)sender;
 - (IBAction)buttonFollowersTouchUpInside:(id)sender;
 - (IBAction)buttonLogoutTouchUpInside:(UIButton *)sender;
+- (IBAction)barButtonItemEditTouchUpInside:(id)sender;
 
 @end
+
+
+
+
+
+
+
+

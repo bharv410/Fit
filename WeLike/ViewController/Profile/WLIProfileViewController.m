@@ -55,15 +55,23 @@ MPMoviePlayerController *moviePlayerController;
     }
 
     if (self.user == [WLIConnect sharedConnect].currentUser) {
-        UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        editButton.adjustsImageWhenHighlighted = NO;
-        editButton.frame = CGRectMake(0.0f, 0.0f, 40.0f, 30.0f);
-        [editButton setImage:[UIImage imageNamed:@"nav-btn-edit.png"] forState:UIControlStateNormal];
-        [editButton addTarget:self action:@selector(barButtonItemEditTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+        
+//        UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        editButton.adjustsImageWhenHighlighted = NO;
+//        editButton.frame = CGRectMake(0.0f, 0.0f, 40.0f, 30.0f);
+//        [editButton setImage:[UIImage imageNamed:@"nav-btn-edit.png"] forState:UIControlStateNormal];
+        
+        //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(buttonLogoutTouchUpInside:)];
+        
+        
+        
         self.scrollViewUserProfile.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(self.buttonLogout.frame) +20.0f);
         self.buttonMessage.hidden = YES;
+        self.buttonEditProfile.alpha = 1.0f;
     } else {
+        self.buttonEditProfile.alpha = 0.0f;
         self.buttonLogout.alpha = 0.0f;
         self.scrollViewUserProfile.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(self.labelEmail.frame) +20.0f);
     }
@@ -157,9 +165,13 @@ MPMoviePlayerController *moviePlayerController;
             self.labelEmail.text = self.user.companyEmail;
         }];
         
+        
         //if its a trainer and its NOT ME
-        if ((self.user.userType == WLIUserTypeCompany) && (self.user.userID != [WLIConnect sharedConnect].currentUser.userID)) {
+//        if ((self.user.userType == WLIUserTypeCompany) && (self.user.userID != [WLIConnect sharedConnect].currentUser.userID)) {
             //benharvey ben harvey edit change
+        
+        
+        if(self.user.userID != [WLIConnect sharedConnect].currentUser.userID){ //not checking if they are a trainer right now
             
             FitovateData *myData = [FitovateData sharedFitovateData];
             
@@ -169,6 +181,10 @@ MPMoviePlayerController *moviePlayerController;
             
             PFQuery *videoQuery = [PFQuery queryWithClassName:@"Videos"];
             [videoQuery whereKey:@"username" equalTo:self.user.userUsername];
+            NSLog(@"%@",self.user.userUsername);
+            NSLog(@"%@",self.user.userUsername);
+            NSLog(@"%@",self.user.userUsername);
+            NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);NSLog(@"%@",self.user.userUsername);
             [videoQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     // The find succeeded.
@@ -204,7 +220,7 @@ MPMoviePlayerController *moviePlayerController;
 
 #pragma mark - Buttons methods
 
-- (void)barButtonItemEditTouchUpInside:(UIBarButtonItem*)barButtonItemEditProfile {
+- (IBAction)barButtonItemEditTouchUpInside:(id)sender {
     
     WLIEditProfileViewController *editProfileViewController = [[WLIEditProfileViewController alloc] initWithNibName:@"WLIEditProfileViewController" bundle:nil];
     [self.navigationController pushViewController:editProfileViewController animated:YES];

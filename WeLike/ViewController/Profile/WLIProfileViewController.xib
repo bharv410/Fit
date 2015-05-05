@@ -7,8 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WLIProfileViewController">
             <connections>
+                <outlet property="buttonEditProfile" destination="HLE-yU-dRq" id="G6y-Nv-w1z"/>
                 <outlet property="buttonFollow" destination="AdP-Hu-z9D" id="1Ac-aZ-G6t"/>
-                <outlet property="buttonLogout" destination="HLE-yU-dRq" id="YAS-0D-lAw"/>
+                <outlet property="buttonLogout" destination="LPV-Dn-SdD" id="PdQ-m4-OlI"/>
                 <outlet property="buttonMessage" destination="anJ-3k-ZuW" id="VLy-2t-haG"/>
                 <outlet property="imageViewUser" destination="KtT-Fg-KHH" id="ZGN-PX-6We"/>
                 <outlet property="labelAddress" destination="SfS-eP-htz" id="shr-bV-Mv7"/>
@@ -124,15 +125,15 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HLE-yU-dRq">
-                            <rect key="frame" x="20" y="363" width="280" height="40"/>
+                            <rect key="frame" x="20" y="264" width="280" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.36078431372549019" green="0.67843137254901964" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <state key="normal" title="Logout">
+                            <state key="normal" title="Edit Profile">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="buttonLogoutTouchUpInside:" destination="-1" eventType="touchUpInside" id="DDZ-Gm-pr3"/>
+                                <action selector="barButtonItemEditTouchUpInside:" destination="-1" eventType="touchUpInside" id="6mA-9N-IXk"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" id="4cK-ac-ivy">
@@ -150,6 +151,18 @@
                             </state>
                             <connections>
                                 <action selector="goToMessages:" destination="-1" eventType="touchUpInside" id="hLf-oF-Fff"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LPV-Dn-SdD">
+                            <rect key="frame" x="20" y="514" width="280" height="40"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.36078431370000003" green="0.67843137249999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Logout">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonLogoutTouchUpInside:" destination="-1" eventType="touchUpInside" id="l7a-6t-5nT"/>
                             </connections>
                         </button>
                     </subviews>

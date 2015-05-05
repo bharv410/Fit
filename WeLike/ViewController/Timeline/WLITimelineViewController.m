@@ -40,17 +40,26 @@
     
     FitovateData *myData = [FitovateData sharedFitovateData];
     PFQuery *query = [PFQuery queryWithClassName:@"Users"];
-    [query orderByAscending:@"userID"];
+    [query orderByDescending:@"userID"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:objects.count];
                 for (PFObject *loggedInUserParse in objects) {
+                    
+                    NSArray *temp = [[NSArray alloc] init];
+                    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+                    
+                    temp = [loggedInUserParse allKeys];
+                    
+                    NSEnumerator *e = [temp objectEnumerator]; id object; while (object = [e nextObject]) { [dict setValue:[loggedInUserParse objectForKey:object] forKey:object]; }
+                    
+                    //Check the results NSLog(@"PFObject Info: %@", PFObject); NSLog(@"dict Info: %@", dict);
                 
                     PFObject *loggedInUserParse = [objects objectAtIndex:0];
                     NSLog(@"succesful login through parse!!!");
                     
                     PFGeoPoint *userLoc = loggedInUserParse[@"location"];
-                    NSDictionary *rawUser = [NSDictionary dictionaryWithObjectsAndKeys:
+                    NSMutableDictionary *rawUser = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                              loggedInUserParse[@"userID"], @"userID",
                                              loggedInUserParse[@"userTypeID"], @"userTypeID",
                                              loggedInUserParse[@"password"], @"password",
@@ -65,7 +74,11 @@
                                              loggedInUserParse[@"userLat"], userLoc.latitude,
                                              loggedInUserParse[@"userLong"], userLoc.longitude, nil];
                     
-                    WLIUser *currUser = [[WLIUser alloc]initFromParse:rawUser];
+                    WLIUser *currUser = [[WLIUser alloc]initFromParse:dict];
+                    PFFile *imageUrl = loggedInUserParse[@"userAvatar"];
+                    currUser.userAvatarPath = imageUrl.url;
+
+                    NSLog(@"%@", dict);
                     [myData.followingTheseUsers addObject:currUser];
             }
             [self reloadData:YES];
@@ -155,12 +168,24 @@
             for (PFObject *object in objects) {
                 
                 NSString *playerName = object[@"postTitle"];
-
+FitovateData *myData = [FitovateData sharedFitovateData];
                 if([allFollowings containsObject:object[@"userID"]]){
                     
                     PFFile *tempPhotoForUrl = object[@"userImage"];
                     
-                    FitovateData *myData = [FitovateData sharedFitovateData];
+                    
+                    
+//                    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
+//                                          object[@"postTitle"], @"postTitle",
+//                                          tempPhotoForUrl.url, @"postImage",
+//                                          object[@"createdAt"], @"postDate",
+//                                          object[@"createdAt"], @"timeAgo",
+//                                          [myData.followingTheseUsers objectAtIndex:postCount], @"user",
+//                                          object[@"totalLikes"], @"totalLikes",
+//                                          object[@"totalComments"], @"totalComments",
+//                                          object[@"isLiked"], @"isLiked",
+//                                          object[@"isCommented"], @"isCommented"
+//                                          , nil];
                     
                     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
                                           object[@"postTitle"], @"postTitle",
@@ -173,6 +198,7 @@
                                           object[@"isLiked"], @"isLiked",
                                           object[@"isCommented"], @"isCommented"
                                           , nil];
+                    
                     WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
                     [wliPosts insertObject:postFromParse atIndex:postCount];
                     postCount++;
@@ -180,7 +206,8 @@
                     
                 }
                 //done
-                NSLog(@"DONE loadnig from parse");
+                WLIUser *userrr = [myData.followingTheseUsers objectAtIndex:postCount];
+                
                 self.posts = wliPosts;
                 [self.tableViewRefresh reloadData];
                 [refreshManager tableViewReloadFinishedAnimated:YES];

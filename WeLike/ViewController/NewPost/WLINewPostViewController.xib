@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WLINewPostViewController">
@@ -55,18 +55,6 @@
                     </state>
                     <connections>
                         <action selector="buttonSendTouchUpInside:" destination="-1" eventType="touchUpInside" id="SIj-Om-K6h"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eJo-JR-wWx">
-                    <rect key="frame" x="141" y="422" width="39" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Video">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="goBack" destination="CVD-u3-uRc" eventType="touchUpInside" id="FEV-Fy-A8f"/>
-                        <action selector="goForward" destination="CVD-u3-uRc" eventType="touchUpInside" id="EDd-OH-EC1"/>
-                        <action selector="reload" destination="CVD-u3-uRc" eventType="touchUpInside" id="8Cq-Xx-SMb"/>
                     </connections>
                 </button>
             </subviews>

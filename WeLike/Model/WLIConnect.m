@@ -488,6 +488,9 @@ static WLIConnect *sharedConnect;
 
 - (void)sendCommentOnPostID:(int)postID withCommentText:(NSString*)commentText onCompletion:(void (^)(WLIComment *comment, ServerResponse serverResponseCode))completion {
     
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    [myData commentFromUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:postID] :commentText];
+    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
     [parameters setObject:[NSString stringWithFormat:@"%d", postID] forKey:@"postID"];

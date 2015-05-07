@@ -117,6 +117,66 @@
     }];
 }
 
+- (void) likeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking {
+    
+    PFObject *gameScore = [PFObject objectWithClassName:@"Likes"];
+    gameScore[@"liker"] = liker;
+    gameScore[@"postId"] = liking;
+    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"liked");
+        } else {
+            // There was a problem, check error.description
+            NSLog(@"error following");
+        }
+    }];
+}
+
+- (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking {
+    
+    PFQuery *unfollowUser = [PFQuery queryWithClassName:@"Likes"];
+    [unfollowUser whereKey:@"liker" equalTo:liker];
+    [unfollowUser whereKey:@"postId" equalTo:liking];
+    [unfollowUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            for(PFObject *object in objects){
+                [object deleteInBackground];
+                NSLog(@"unliked");
+            }
+        }
+    }];
+}
+- (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text {
+    
+    PFObject *gameScore = [PFObject objectWithClassName:@"Comments"];
+    gameScore[@"commenter"] = liker;
+    gameScore[@"postId"] = liking;
+    gameScore[@"comment"] = text;
+    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"commented");
+        } else {
+            // There was a problem, check error.description
+            NSLog(@"error following");
+        }
+    }];
+}
+
+//- (void) deleteCommentUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking {
+//    
+//    PFQuery *unfollowUser = [PFQuery queryWithClassName:@"Likes"];
+//    [unfollowUser whereKey:@"liker" equalTo:liker];
+//    [unfollowUser whereKey:@"postId" equalTo:liking];
+//    [unfollowUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if(!error){
+//            for(PFObject *object in objects){
+//                [object deleteInBackground];
+//                NSLog(@"unliked");
+//            }
+//        }
+//    }];
+//}
+
 - (void)dealloc {
     // Should never be called, but just here for clarity really.
 }

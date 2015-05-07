@@ -264,6 +264,8 @@
         } else {
             [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
         }
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        [myData likeUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:post.postID]];
         [[WLIConnect sharedConnect] removeLikeWithLikeID:post.postID onCompletion:^(ServerResponse serverResponseCode) {
             if (serverResponseCode != OK) {
                 [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];
@@ -285,6 +287,8 @@
         } else {
             [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
         }
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        [myData likeUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:post.postID]];
         [ParseSingleton new];
         [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:post.user.userUsername withActivitytype:@"like" withPostId:[NSString stringWithFormat:@"%d",post.postID]];
         

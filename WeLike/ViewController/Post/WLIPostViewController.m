@@ -11,6 +11,7 @@
 #import "WLILoadingCell.h"
 #import "GlobalDefines.h"
 #import "ParseSingleton.h"
+#import "FitovateData.h"
 
 @implementation WLIPostViewController
 
@@ -215,6 +216,8 @@
         } else {
             [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
         }
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        [myData unlikeUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:self.post.postID]];
         [[WLIConnect sharedConnect] removeLikeWithLikeID:post.postID onCompletion:^(ServerResponse serverResponseCode) {
             if (serverResponseCode != OK) {
                 [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];
@@ -239,6 +242,8 @@
         [ParseSingleton new];
         [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:self.post.user.userUsername withActivitytype:@"like" withPostId:[NSString stringWithFormat:@"%d",self.post.postID]];
         
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        [myData likeUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:self.post.postID]];
         [[WLIConnect sharedConnect] setLikeOnPostID:post.postID onCompletion:^(WLILike *like, ServerResponse serverResponseCode) {
             if (serverResponseCode != OK) {
                 [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];

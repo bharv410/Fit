@@ -46,6 +46,29 @@
     return dict;
 }
 
+- (NSArray *) getAllIdsThatUsersFollowing : (void (^)(void))completion{
+    
+    NSMutableArray *temp = [[NSMutableArray alloc] init];
+
+    
+    PFQuery *getFollowings = [PFQuery queryWithClassName:@"Follows"];
+    [getFollowings whereKey:@"follower" equalTo:myUsername];
+    NSArray *objects = [getFollowings findObjects];
+    for(PFObject *object in objects){
+        [temp addObject:object[@"following"]];
+        NSLog(@"follwing = %d",object[@"following"]);
+    }
+//    [getFollowings findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if(!error){
+//            for(PFObject *object in objects){
+//                [temp addObject:object[@"following"]];
+//                NSLog(@"follwing = %d",object[@"following"]);
+//            }
+//        }
+//    }];
+    return temp;
+}
+
 
 - (WLIUser *) pfobjectToWLIUser : (PFObject *) userFromParse {
     FitovateData *myData = [FitovateData sharedFitovateData];

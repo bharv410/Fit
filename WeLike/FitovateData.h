@@ -25,5 +25,6 @@
 - (WLIUser *) pfobjectToWLIUser : (PFObject *) userFromParse;
 - (void) unfollowUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower;
 - (void) followUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower;
+- (NSArray *) getAllIdsThatUsersFollowing : (void (^)(void))completion;
 
 @end

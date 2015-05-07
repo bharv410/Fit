@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableViewRefresh;
 @property (strong, nonatomic) NSArray *posts;
+@property (strong, nonatomic) NSArray *allFollowings;
 
 
 @end

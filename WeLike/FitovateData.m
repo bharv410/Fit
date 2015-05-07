@@ -49,23 +49,26 @@
 - (NSArray *) getAllIdsThatUsersFollowing : (void (^)(void))completion{
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
-
+    NSNumber *myUserId = [NSNumber numberWithInt:self.currentUser.userID];
+    NSLog(@"my id = %@",myUserId);
+    NSLog(@"my id = %@",myUserId);
+    NSLog(@"my id = %@",myUserId);
     
     PFQuery *getFollowings = [PFQuery queryWithClassName:@"Follows"];
-    [getFollowings whereKey:@"follower" equalTo:myUsername];
-    NSArray *objects = [getFollowings findObjects];
-    for(PFObject *object in objects){
-        [temp addObject:object[@"following"]];
-        NSLog(@"follwing = %d",object[@"following"]);
-    }
-//    [getFollowings findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        if(!error){
-//            for(PFObject *object in objects){
-//                [temp addObject:object[@"following"]];
-//                NSLog(@"follwing = %d",object[@"following"]);
-//            }
-//        }
-//    }];
+    [getFollowings whereKey:@"follower" equalTo:[NSNumber numberWithInt:self.currentUser.userID]];
+    [getFollowings findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            for(PFObject *object in objects){
+    
+                [temp addObject:object[@"following"]];
+                NSLog(@"follwing = %@",object[@"following"]);
+            }
+            completion();
+        }else{
+            NSLog(@"error getting ids that users following");
+        }
+        
+    }];
     return temp;
 }
 
@@ -87,8 +90,8 @@
 - (void) followUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower {
     
     PFObject *gameScore = [PFObject objectWithClassName:@"Follows"];
-    gameScore[@"following"] = following;
-    gameScore[@"follower"] = follower;
+    gameScore[@"following"] = follower;
+    gameScore[@"follower"] = following;
     [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Followed");
@@ -102,8 +105,8 @@
 - (void) unfollowUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower {
     
     PFQuery *unfollowUser = [PFQuery queryWithClassName:@"Follows"];
-    [unfollowUser whereKey:@"following" equalTo:following];
-    [unfollowUser whereKey:@"follower" equalTo:follower];
+    [unfollowUser whereKey:@"following" equalTo:follower];
+    [unfollowUser whereKey:@"follower" equalTo:following];
     [unfollowUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
             for(PFObject *object in objects){

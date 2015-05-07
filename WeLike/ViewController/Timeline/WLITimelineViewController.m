@@ -39,29 +39,13 @@
     
     
     FitovateData *myData = [FitovateData sharedFitovateData];
-    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
-    [query orderByDescending:@"userID"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            myData.followingTheseUsers = [[NSMutableDictionary alloc]initWithCapacity:objects.count];
-            
-                for (PFObject *loggedInUserParse in objects) {
-                    WLIUser *currUser = [myData pfobjectToWLIUser:loggedInUserParse];
-                    [myData.followingTheseUsers setObject:currUser forKey:loggedInUserParse[@"userID"]];
-                    //adds all users for now by userID
-                    
-                    NSLog(@"myData.followingThese = %@",[currUser userUsername]);
-            }
-            NSLog(@"myData.followingTheseDICT = %@",myData.followingTheseUsers);
-            [self reloadData:YES];
-            
-            
-        } else {
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-            myData.followingTheseUsers = [[NSMutableArray alloc]initWithCapacity:0];
-            [self reloadData:YES];
-        }
+    
+    NSLog(@"getting all following");
+    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+        NSLog(@"done getting followng");
+        [self getPosts];
     }];
+    
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Activity" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
     self.navigationItem.leftBarButtonItem = anotherButton;
@@ -84,7 +68,35 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
     LQSViewController *newVc = [[LQSViewController alloc]init];
     [self.navigationController pushViewController:newVc animated:YES];
-                                
+    
+}
+
+-(void)getPosts {
+    NSLog(@"getting posts");
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    [query orderByDescending:@"userID"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            myData.allUsersDictionary = [[NSMutableDictionary alloc]initWithCapacity:objects.count];
+            
+            for (PFObject *loggedInUserParse in objects) {
+                WLIUser *currUser = [myData pfobjectToWLIUser:loggedInUserParse];
+                [myData.allUsersDictionary setObject:currUser forKey:loggedInUserParse[@"userID"]];
+                
+                //adds all users for now by userID
+            }
+            NSLog(@"myData.followingTheseDICT = %@",myData.allUsersDictionary);
+            [self reloadData:YES];
+            
+            
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            myData.allUsersDictionary = [[NSMutableArray alloc]initWithCapacity:0];
+            [self reloadData:YES];
+        }
+    }];
+    
 }
 -(void)goToActivity {
     NSLog(@"Going to activity!");
@@ -121,26 +133,9 @@
 //        [refreshManager tableViewReloadFinishedAnimated:YES];
 //    }];
     loading = NO;
-    NSMutableArray *allFollowings = [[NSMutableArray alloc]initWithCapacity:10];
-    [allFollowings addObject:[NSNumber numberWithInt:1]];
-    [allFollowings addObject:[NSNumber numberWithInt:2]];
-    [allFollowings addObject:[NSNumber numberWithInt:3]];
-    [allFollowings addObject:[NSNumber numberWithInt:4]];
-    [allFollowings addObject:[NSNumber numberWithInt:5]];
-    [allFollowings addObject:[NSNumber numberWithInt:6]];
-    [allFollowings addObject:[NSNumber numberWithInt:7]];
-    [allFollowings addObject:[NSNumber numberWithInt:8]];
-    [allFollowings addObject:[NSNumber numberWithInt:9]];
-    [allFollowings addObject:[NSNumber numberWithInt:10]];
-    [allFollowings addObject:[NSNumber numberWithInt:11]];
-    [allFollowings addObject:[NSNumber numberWithInt:12]];
-    [allFollowings addObject:[NSNumber numberWithInt:13]];
-    [allFollowings addObject:[NSNumber numberWithInt:14]];
-    [allFollowings addObject:[NSNumber numberWithInt:15]];
-    [allFollowings addObject:[NSNumber numberWithInt:16]];
-    [allFollowings addObject:[NSNumber numberWithInt:17]];
-    [allFollowings addObject:[NSNumber numberWithInt:18]];
+    
 //simulate me following these 19 userIDs
+    FitovateData *myData = [FitovateData sharedFitovateData];
 
     NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
     __block NSUInteger postCount = 0;
@@ -152,8 +147,8 @@
             for (PFObject *object in objects) {
                 
                 NSString *postCaption = object[@"postTitle"];
-                FitovateData *myData = [FitovateData sharedFitovateData];
-                if([allFollowings containsObject:object[@"userID"]]){ // if im following this person
+                
+                if([self.allFollowings containsObject:object[@"userID"]]){ // if im following this person
                     
                     PFFile *tempPhotoForUrl = object[@"userImage"];
                     
@@ -171,7 +166,7 @@
                                           , nil];
                     
                     WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
-                    postFromParse.user = [myData.followingTheseUsers objectForKey:object[@"userID"]];
+                    postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
                     
                     [wliPosts insertObject:postFromParse atIndex:postCount];
                     postCount++;

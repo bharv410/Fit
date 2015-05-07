@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelPhone;
 @property (strong, nonatomic) IBOutlet UILabel *labelWeb;
 @property (strong, nonatomic) IBOutlet UILabel *labelEmail;
+@property (strong, nonatomic) IBOutlet UILabel *labelBio;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMessage;

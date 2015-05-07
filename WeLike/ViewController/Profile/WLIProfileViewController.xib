@@ -13,6 +13,7 @@
                 <outlet property="buttonMessage" destination="anJ-3k-ZuW" id="VLy-2t-haG"/>
                 <outlet property="imageViewUser" destination="KtT-Fg-KHH" id="ZGN-PX-6We"/>
                 <outlet property="labelAddress" destination="SfS-eP-htz" id="shr-bV-Mv7"/>
+                <outlet property="labelBio" destination="Oyu-bg-gs5" id="YY2-G0-iTX"/>
                 <outlet property="labelEmail" destination="aWX-Zr-oja" id="fcp-5r-O5S"/>
                 <outlet property="labelFollowersCount" destination="wyc-RT-ws2" id="5DB-tI-q5I"/>
                 <outlet property="labelFollowingCount" destination="ang-6Z-lwx" id="92V-4z-Uu9"/>
@@ -136,11 +137,6 @@
                                 <action selector="barButtonItemEditTouchUpInside:" destination="-1" eventType="touchUpInside" id="6mA-9N-IXk"/>
                             </connections>
                         </button>
-                        <view contentMode="scaleToFill" id="4cK-ac-ivy">
-                            <rect key="frame" x="8" y="216" width="304" height="284"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="anJ-3k-ZuW">
                             <rect key="frame" x="174" y="139" width="126" height="40"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -165,6 +161,19 @@
                                 <action selector="buttonLogoutTouchUpInside:" destination="-1" eventType="touchUpInside" id="l7a-6t-5nT"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is where the bio goes" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Oyu-bg-gs5">
+                            <rect key="frame" x="20" y="220" width="280" height="54"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" id="4cK-ac-ivy">
+                            <rect key="frame" x="54" y="305" width="212" height="212"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                 </scrollView>
             </subviews>

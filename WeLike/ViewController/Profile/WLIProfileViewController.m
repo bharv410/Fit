@@ -95,7 +95,7 @@ MPMoviePlayerController *moviePlayerController;
     }
 
 -(void)goToMessages {
-    NSLog(@"Eh up, someone just pressed the button!");
+    NSLog(@"%d",self.labelBio.bounds.origin.y);
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
     LQSViewController *newVc = [[LQSViewController alloc]init];
     [self.navigationController pushViewController:newVc animated:YES];
@@ -143,6 +143,10 @@ MPMoviePlayerController *moviePlayerController;
     self.labelPhone.text = self.user.companyPhone;
     self.labelWeb.text = self.user.companyWeb;
     self.labelEmail.text = self.user.companyEmail;
+    self.labelBio.text = self.user.userInfo;
+    self.labelBio.numberOfLines = 3;
+    self.labelBio.sizeToFit;
+    self.labelBio.textAlignment = NSTextAlignmentCenter;
     
     if (downloads) {
         [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
@@ -203,6 +207,11 @@ MPMoviePlayerController *moviePlayerController;
                         [moviePlayerController prepareToPlay];
                         // Start the movie
                         [moviePlayerController play];
+                        
+                        NSLog(@"%d",self.labelBio.frame.origin.y);
+                        CGRect rect = CGRectMake(self.movieView.frame.origin.x, self.labelBio.frame.origin.y + 20.0f + self.labelBio.bounds.size.height, self.movieView.bounds.size.width, self.movieView.bounds.size.height);
+                        self.movieView.frame = rect;
+                        self.automaticallyAdjustsScrollViewInsets = NO;
                         
                     }
                 } else {

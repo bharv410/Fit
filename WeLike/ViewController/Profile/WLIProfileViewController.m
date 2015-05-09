@@ -89,8 +89,17 @@ MPMoviePlayerController *moviePlayerController;
 //    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
 //    
 //    self.navigationItem.rightBarButtonItem =back;
-    //benmark messages button 
-    
+    //benmark messages button
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+        if([self.allFollowings containsObject:[NSNumber numberWithInt:self.user.userID]]){
+            [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+            NSLog(@"Set to following");
+        }else{
+            [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+            NSLog(@"Set to follow");
+        }
+    }];
     
     }
 
@@ -149,25 +158,45 @@ MPMoviePlayerController *moviePlayerController;
     self.labelBio.textAlignment = NSTextAlignmentCenter;
     
     if (downloads) {
+//        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+//        
+//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//            if (!error) {
+//                for (PFObject *loggedInUserParse in objects) {
+//                    
+//                    if([loggedInUserParse[@"userID"] isEqualToNumber:[NSNumber numberWithInt:self.user.userID]]){
+//                        NSNumber *oldFollowingAmount = loggedInUserParse[@"followingCount"];
+//                        loggedInUserParse[@"followingCount"] = [NSNumber numberWithInt:[oldFollowingAmount intValue] - 1];
+//                        [loggedInUserParse saveInBackground];
+//                    }
+//                }
+//            } else {
+//                NSLog(@"Error: %@ %@", error, [error userInfo]);
+//            }
+//        }];
+        
+        
         [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
         
-        [sharedConnect userWithUserID:self.user.userID onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
-            _user = user;
-            [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
-            self.labelName.text = self.user.userFullName;
-            if (self.user.followingUser) {
-                [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-            } else {
-                [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-            }
-            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
-            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
-            
-            self.labelAddress.text = self.user.companyAddress;
-            self.labelPhone.text = self.user.companyPhone;
-            self.labelWeb.text = self.user.companyWeb;
-            self.labelEmail.text = self.user.companyEmail;
-        }];
+        
+//        //update with parse data of current object
+//        [sharedConnect userWithUserID:self.user.userID onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+//            _user = user;
+//            [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
+//            self.labelName.text = self.user.userFullName;
+//            if (self.user.followingUser) {
+//                [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+//            } else {
+//                [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+//            }
+//            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
+//            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
+//            
+//            self.labelAddress.text = self.user.companyAddress;
+//            self.labelPhone.text = self.user.companyPhone;
+//            self.labelWeb.text = self.user.companyWeb;
+//            self.labelEmail.text = self.user.companyEmail;
+//        }];
         
         
         //if its a trainer and its NOT ME

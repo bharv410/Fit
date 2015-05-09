@@ -37,6 +37,7 @@
 @property (nonatomic) LYRConversation *conversation;
 
 @property (strong, nonatomic, setter = setUser:) WLIUser *user;
+@property (strong, nonatomic) NSArray *allFollowings;
 
 
 - (IBAction)goToMessages:(id)sender;

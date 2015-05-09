@@ -175,6 +175,23 @@
             NSLog(@"error following");
         }
     }];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *post in objects) {
+                
+                if([post[@"postID"] isEqualToNumber:liking]){
+                    NSNumber *oldLikes = post[@"totalLikes"];
+                    post[@"totalLikes"] = [NSNumber numberWithInt:[oldLikes intValue] + 1];
+                    [post saveInBackground];
+                }
+            }
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 - (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking {
@@ -188,6 +205,23 @@
                 [object deleteInBackground];
                 NSLog(@"unliked");
             }
+        }
+    }];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *post in objects) {
+                
+                if([post[@"postID"] isEqualToNumber:liking]){
+                    NSNumber *oldLikes = post[@"totalLikes"];
+                    post[@"totalLikes"] = [NSNumber numberWithInt:[oldLikes intValue] - 1];
+                    [post saveInBackground];
+                }
+            }
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
 }

@@ -34,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonEditProfile;
 
 @property (weak, nonatomic) IBOutlet UIView *movieView;
+@property (nonatomic) LYRConversation *conversation;
 
 @property (strong, nonatomic, setter = setUser:) WLIUser *user;
 

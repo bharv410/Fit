@@ -265,11 +265,16 @@ MPMoviePlayerController *moviePlayerController;
 
 -(IBAction)goToMessages:(id)sender {
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
-    LQSViewController *newVc = [[LQSViewController alloc]init];
-    [self.navigationController pushViewController:newVc animated:YES];
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    LQSViewController *newVc = [[LQSViewController alloc]init];
+//    [self.navigationController pushViewController:newVc animated:YES];
+    
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername] message:@"Enter message text" delegate:self cancelButtonTitle:@"Send" otherButtonTitles:nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
     
 }
+
 
 - (IBAction)buttonFollowersTouchUpInside:(id)sender {
     
@@ -283,12 +288,44 @@ MPMoviePlayerController *moviePlayerController;
     [[[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure that you want to logout?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
 }
 
+- (void)sendMessage:(NSString *)messageText{
+    WLIConnect *connect = [WLIConnect sharedConnect];
+    // If no conversations exist, create a new conversation object with two participants
+        NSError *error = nil;
+        self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ connect.currentUser.userUsername, self.user.userUsername ]] options:nil error:&error];
+        if (!self.conversation) {
+            NSLog(@"New Conversation creation failed: %@", error);
+        }
+    
+    
+    // Creates a message part with text/plain MIME Type
+    LYRMessagePart *messagePart = [LYRMessagePart messagePartWithText:messageText];
+    
+    // Creates and returns a new message object with the given conversation and array of message parts
+    LYRMessage *message = [connect.layerClient newMessageWithParts:@[messagePart] options:@{LYRMessageOptionsPushNotificationAlertKey: messageText} error:nil];
+    
+    // Sends the specified message
+    BOOL success = [self.conversation sendMessage:message error:&error];
+    if (success) {
+        NSLog(@"Message queued to be sent: %@", messageText);
+        [[[UIAlertView alloc] initWithTitle:@"Sent" message:@"Your message has been sent" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil] show];
+    } else {
+        NSLog(@"Message send failed: %@", error);
+    }
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if ([alertView.title isEqualToString:@"Logout"] && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Yes"]) {
         [[WLIConnect sharedConnect] logout];
         WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
         [appDelegate createViewHierarchy];
+    }else if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername]]){
+        NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
+        
+        [self sendMessage:[[alertView textFieldAtIndex:0] text]];
+            
+
     }
 }
 

@@ -15,6 +15,7 @@
 #import "WLILike.h"
 #import "WLIFollow.h"
 #import "WLIComment.h"
+#import <LayerKit/LayerKit.h>
 
 enum ServerResponse {
     OK = 200,
@@ -44,6 +45,7 @@ typedef enum ServerResponse ServerResponse;
 @property (readonly, nonatomic) NSDateFormatter *dateFormatter;
 @property (readonly, nonatomic) NSDateFormatter *dateOnlyFormatter;
 @property (strong, nonatomic) WLIUser *currentUser;
+@property (strong, nonatomic) LYRClient *layerClient;
 
 + (WLIConnect*) sharedConnect;
 

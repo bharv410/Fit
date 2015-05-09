@@ -21,32 +21,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.convoNumber = 1;
+    
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Next Convo" style:UIBarButtonItemStylePlain target:self action:@selector(nextConvo:)];
+    self.navigationItem.rightBarButtonItem = anotherButton;
+    
+    
     // Do any additional setup after loading the view from its nib.
     //benmark
-    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
-    self.layerClient = [LYRClient clientWithAppID:appID];
-    [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
-        if (!success) {
-            NSLog(@"Failed to connect to Layer: %@", error);
-        } else {
-            NSString *userIDString = WLIConnect.sharedConnect.currentUser.userUsername;
-            // Once connected, authenticate user.
-            // Check Authenticate step for authenticateLayerWithUserID source
-            [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
-                if (!success) {
-                    NSLog(@"Failed Authenticating Layer Client with error:%@", error);
-                }else{
-                    NSLog(@"grabbing conversations...");
-                    [self fetchLayerConversation];
-                }
-            }];
-        }
-    }];
+//    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
+//    self.layerClient = [LYRClient clientWithAppID:appID];
+//    [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
+//        if (!success) {
+//            NSLog(@"Failed to connect to Layer: %@", error);
+//        } else {
+//            NSString *userIDString = WLIConnect.sharedConnect.currentUser.userUsername;
+//            // Once connected, authenticate user.
+//            // Check Authenticate step for authenticateLayerWithUserID source
+//            [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
+//                if (!success) {
+//                    NSLog(@"Failed Authenticating Layer Client with error:%@", error);
+//                }else{
+//                    NSLog(@"grabbing conversations...");
+//                    [self fetchLayerConversation];
+//                }
+//            }];
+//        }
+//    }];
+    [self fetchLayerConversation];
 }
 //this displays all messages
 
 
-
+- (void) nextConvo :(id)sender{
+    self.convoNumber++;
+    [self fetchLayerConversation];
+    
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -67,117 +78,12 @@
     [self sendMessage:@"test message sending"];
 }
 
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-- (void)authenticateLayerWithUserID:(NSString *)userID completion:(void (^)(BOOL success, NSError * error))completion
-{
-    // If the user is authenticated you don't need to re-authenticate.
-    if (self.layerClient.authenticatedUserID) {
-        NSLog(@"Layer Authenticated as User %@", self.layerClient.authenticatedUserID);
-        if (completion) completion(YES, nil);
-        return;
-    }
-    
-    /*
-     * 1. Request an authentication Nonce from Layer
-     */
-    [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
-        if (!nonce) {
-            if (completion) {
-                completion(NO, error);
-            }
-            return;
-        }
-        
-        /*
-         * 2. Acquire identity Token from Layer Identity Service
-         */
-        [self requestIdentityTokenForUserID:userID appID:[self.layerClient.appID UUIDString] nonce:nonce completion:^(NSString *identityToken, NSError *error) {
-            if (!identityToken) {
-                if (completion) {
-                    completion(NO, error);
-                }
-                return;
-            }
-            
-            /*
-             * 3. Submit identity token to Layer for validation
-             */
-            [self.layerClient authenticateWithIdentityToken:identityToken completion:^(NSString *authenticatedUserID, NSError *error) {
-                if (authenticatedUserID) {
-                    if (completion) {
-                        completion(YES, nil);
-                    }
-                    NSLog(@"Layer Authenticated as User: %@", authenticatedUserID);
-                } else {
-                    completion(NO, error);
-                }
-            }];
-        }];
-    }];
-}
-- (void)requestIdentityTokenForUserID:(NSString *)userID appID:(NSString *)appID nonce:(NSString *)nonce completion:(void(^)(NSString *identityToken, NSError *error))completion
-{
-    NSParameterAssert(userID);
-    NSParameterAssert(appID);
-    NSParameterAssert(nonce);
-    NSParameterAssert(completion);
-    
-    NSURL *identityTokenURL = [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:identityTokenURL];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    NSDictionary *parameters = @{ @"app_id": appID, @"user_id": userID, @"nonce": nonce };
-    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
-    request.HTTPBody = requestBody;
-    
-    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            completion(nil, error);
-            return;
-        }
-        
-        // Deserialize the response
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if(![responseObject valueForKey:@"error"])
-        {
-            NSString *identityToken = responseObject[@"identity_token"];
-            completion(identityToken, nil);
-        }
-        else
-        {
-            NSString *domain = @"layer-identity-provider.herokuapp.com";
-            NSInteger code = [responseObject[@"status"] integerValue];
-            NSDictionary *userInfo =
-            @{
-              NSLocalizedDescriptionKey: @"Layer Identity Provider Returned an Error.",
-              NSLocalizedRecoverySuggestionErrorKey: @"There may be a problem with your APPID."
-              };
-            
-            NSError *error = [[NSError alloc] initWithDomain:domain code:code userInfo:userInfo];
-            completion(nil, error);
-        }
-        
-    }] resume];
-}
-
 - (void)sendMessage:(NSString *)messageText{
+    WLIConnect *connect = [WLIConnect sharedConnect];
     // If no conversations exist, create a new conversation object with two participants
     if (!self.conversation) {
         NSError *error = nil;
-        self.conversation = [self.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ @"Simulator", @ "Dashboard" ]] options:nil error:&error];
+        self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ @"Simulator", @ "Dashboard" ]] options:nil error:&error];
         if (!self.conversation) {
             NSLog(@"New Conversation creation failed: %@", error);
         }
@@ -187,7 +93,7 @@
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithText:messageText];
     
     // Creates and returns a new message object with the given conversation and array of message parts
-    LYRMessage *message = [self.layerClient newMessageWithParts:@[messagePart] options:@{LYRMessageOptionsPushNotificationAlertKey: messageText} error:nil];
+    LYRMessage *message = [connect.layerClient newMessageWithParts:@[messagePart] options:@{LYRMessageOptionsPushNotificationAlertKey: messageText} error:nil];
     
     // Sends the specified message
     NSError *error;
@@ -202,21 +108,30 @@
 
 - (void)fetchLayerConversation
 {
+    
+    
+    WLIConnect *connect = [WLIConnect sharedConnect];
+    
     LYRQuery *query = [LYRQuery queryWithClass:[LYRConversation class]];
     
-    query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO] ];
+    query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES] ];
     
     NSError *error;
-    NSOrderedSet *conversations = [self.layerClient executeQuery:query error:&error];
+    NSOrderedSet *conversations = [connect.layerClient executeQuery:query error:&error];
+    if(conversations.count==self.convoNumber)
+        self.convoNumber=1;
     if (!error) {
-        NSLog(@"%tu conversations with participants %@", conversations.count, @[ @"bharv410" ]);
+        NSLog(@"%tu conversations with participants %@", conversations.count, @[ connect.currentUser.userUsername ]);
     } else {
         NSLog(@"Query failed with error %@", error);
     }
     
     // Retrieve the last conversation
     if (conversations.count) {
-        self.conversation = [conversations lastObject];
+        
+        NSUInteger currentConvo = conversations.count - self.convoNumber;
+        
+        self.conversation = [conversations objectAtIndex:currentConvo];
         NSLog(@"Get last conversation object: %@",self.conversation.identifier);
         // setup query controller with messages from last conversation
         [self setupQueryController];
@@ -225,13 +140,14 @@
 
 -(void)setupQueryController
 {
+    WLIConnect *connect = [WLIConnect sharedConnect];
     // Query for all the messages in conversation sorted by index
     LYRQuery *query = [LYRQuery queryWithClass:[LYRMessage class]];
     query.predicate = [LYRPredicate predicateWithProperty:@"conversation" operator:LYRPredicateOperatorIsEqualTo value:self.conversation];
-    query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"index" ascending:NO]];
+    //query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"index" ascending:NO]];
     
     // Set up query controller
-    self.queryController = [self.layerClient queryControllerWithQuery:query];
+    self.queryController = [connect.layerClient queryControllerWithQuery:query];
     self.queryController.delegate = self;
     NSError *error;
     BOOL success = [self.queryController execute:&error];
@@ -309,12 +225,21 @@ newIndexPath:(NSIndexPath *)newIndexPath
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    WLIConnect *sharedConnect = [WLIConnect sharedConnect];
     // Get Message Object from queryController
     LYRMessage *message = [self.queryController objectAtIndexPath:indexPath];
     
     // Set cell text to "<Sender>: <Message Contents>"
     LYRMessagePart *messagePart = message.parts[0];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@:%@",[message sentByUserID], [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
+    LYRActor *sender = [message sender];
+    NSString *senderName = [sender name];
+    NSLog(@"sender name = %@",senderName);
+    
+    if([senderName containsString:sharedConnect.currentUser.userUsername])
+        self.conversationTItle.text = [NSString stringWithFormat:@"Convo with: %@",senderName];
+    
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@:%@",[sender userID], [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
 }
 
 

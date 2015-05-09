@@ -55,50 +55,6 @@ static WLIConnect *sharedConnect;
     // [self removeCurrentUser];
     
     if (self) {
-        //added for aws connection
-        AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-        // Construct the NSURL for the download location.
-        NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"downloaded-shoes.jpg"];
-        NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
-        
-        // Construct the download request.
-        AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
-        
-        downloadRequest.bucket = @"findatrainerv1";
-        downloadRequest.key = @"shoes.jpg";
-        downloadRequest.downloadingFileURL = downloadingFileURL;
-        
-        
-        // Download the file.
-        [[transferManager download:downloadRequest] continueWithExecutor:[BFExecutor mainThreadExecutor]
-                                                               withBlock:^id(BFTask *task) {
-                                                                   if (task.error){
-                                                                       if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                                                                           switch (task.error.code) {
-                                                                               case AWSS3TransferManagerErrorCancelled:
-                                                                               case AWSS3TransferManagerErrorPaused:
-                                                                                   break;
-                                                                                   
-                                                                               default:
-                                                                                   NSLog(@"Error: %@", task.error);
-                                                                                   break;
-                                                                           }
-                                                                       } else {
-                                                                           // Unknown error.
-                                                                           NSLog(@"Error: %@", task.error);
-                                                                       }
-                                                                   }
-                                                                   
-                                                                   if (task.result) {
-                                                                       AWSS3TransferManagerDownloadOutput *downloadOutput = task.result;
-                                                                       //File downloaded successfully.
-                                                                       NSLog(@"rr: %@", @"yayy: %@");NSLog(@"rr: %@", @"yayy: %@");NSLog(@"rr: %@", @"yayy: %@");NSLog(@"rr: %@", @"yayy: %@");NSLog(@"rr: %@", @"yayy: %@");NSLog(@"rr: %@", @"yayy: %@");
-                                                                   }
-                                                                   return nil;
-                                                               }];
-        //added for aws connection
-        
-        
         httpClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kBaseLink]];
         [httpClient.requestSerializer setValue:kAPIKey forHTTPHeaderField:@"api_key"];
         httpClient.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -139,23 +95,44 @@ static WLIConnect *sharedConnect;
     if (!username.length || !password.length) {
         completion(nil, BAD_REQUEST);
     } else {
-        NSDictionary *parameters = @{@"username": username, @"password": password};
-        [httpClient POST:@"/login" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSDictionary *rawUser = [responseObject objectForKey:@"item"];
-            _currentUser = [[WLIUser alloc] initWithDictionary:rawUser];
-            
-            [self saveCurrentUser];
-            
-            [self debugger:parameters.description methodLog:@"api/login" dataLogFormatted:responseObject];
-            completion(_currentUser, OK);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self debugger:parameters.description methodLog:@"api/login" dataLog:error.description];
-            if (operation.response) {
-                completion(nil, operation.response.statusCode);
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+        [query whereKey:@"username" equalTo:username];
+        [query whereKey:@"password" equalTo:password];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                for (PFObject *loggedInUserParse in objects) {
+                    _currentUser = [myData pfobjectToWLIUser:loggedInUserParse];
+                    myData.currentUser = _currentUser;
+                    [self saveCurrentUser];
+                    completion(_currentUser, OK);
+                }
+                if(objects.count==0)
+                    completion(nil, kUNAUTHORIZED);
             } else {
-                completion(nil, NO_CONNECTION);
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+                completion(nil, kUNAUTHORIZED);
             }
         }];
+        
+        
+//        NSDictionary *parameters = @{@"username": username, @"password": password};
+//        [httpClient POST:@"/login" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            NSDictionary *rawUser = [responseObject objectForKey:@"item"];
+//            _currentUser = [[WLIUser alloc] initWithDictionary:rawUser];
+//            
+//            [self saveCurrentUser];
+//            
+//            [self debugger:parameters.description methodLog:@"api/login" dataLogFormatted:responseObject];
+//            completion(_currentUser, OK);
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            [self debugger:parameters.description methodLog:@"api/login" dataLog:error.description];
+//            if (operation.response) {
+//                completion(nil, operation.response.statusCode);
+//            } else {
+//                completion(nil, NO_CONNECTION);
+//            }
+//        }];
     }
 }
 

@@ -9,6 +9,7 @@
 #import "FitovateData.h"
 #import <Parse/Parse.h>
 #import "WLIUser.h"
+#import "WLIConnect.h"
 
 @implementation FitovateData
 
@@ -47,12 +48,11 @@
 }
 
 - (NSArray *) getAllIdsThatUsersFollowing : (void (^)(void))completion{
+    WLIConnect *sharedConnect = [WLIConnect sharedConnect];
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
-    NSNumber *myUserId = [NSNumber numberWithInt:self.currentUser.userID];
-    NSLog(@"my id = %@",myUserId);
-    NSLog(@"my id = %@",myUserId);
-    NSLog(@"my id = %@",myUserId);
+    NSNumber *myUserId = [NSNumber numberWithInt:sharedConnect.currentUser.userID];
+    NSLog(@"logged in as user number %@",myUserId);
     
     PFQuery *getFollowings = [PFQuery queryWithClassName:@"Follows"];
     [getFollowings whereKey:@"follower" equalTo:[NSNumber numberWithInt:self.currentUser.userID]];

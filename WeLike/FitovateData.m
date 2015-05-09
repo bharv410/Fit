@@ -101,6 +101,28 @@
             NSLog(@"error following");
         }
     }];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *loggedInUserParse in objects) {
+                
+                if([loggedInUserParse[@"userID"] isEqualToNumber:following]){
+                    NSNumber *oldFollowingAmount = loggedInUserParse[@"followingCount"];
+                    loggedInUserParse[@"followingCount"] = [NSNumber numberWithInt:[oldFollowingAmount intValue] + 1];
+                    [loggedInUserParse saveInBackground];
+                }
+                    if([loggedInUserParse[@"userID"] isEqualToNumber:follower]){
+                    NSNumber *oldFollowerAmount = loggedInUserParse[@"followersCount"];
+                    loggedInUserParse[@"followersCount"] = [NSNumber numberWithInt:[oldFollowerAmount intValue] + 1];
+                    [loggedInUserParse saveInBackground];
+                }
+            }
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 - (void) unfollowUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower {
@@ -112,8 +134,30 @@
         if(!error){
             for(PFObject *object in objects){
                 [object deleteInBackground];
-                NSLog(@"Followed");
+                NSLog(@"unFollowed");
             }
+        }
+    }];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *loggedInUserParse in objects) {
+                
+                if([loggedInUserParse[@"userID"] isEqualToNumber:following]){
+                    NSNumber *oldFollowingAmount = loggedInUserParse[@"followingCount"];
+                    loggedInUserParse[@"followingCount"] = [NSNumber numberWithInt:[oldFollowingAmount intValue] - 1];
+                    [loggedInUserParse saveInBackground];
+                }
+                if([loggedInUserParse[@"userID"] isEqualToNumber:follower]){
+                    NSNumber *oldFollowerAmount = loggedInUserParse[@"followersCount"];
+                    loggedInUserParse[@"followersCount"] = [NSNumber numberWithInt:[oldFollowerAmount intValue] - 1];
+                    [loggedInUserParse saveInBackground];
+                }
+            }
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
 }

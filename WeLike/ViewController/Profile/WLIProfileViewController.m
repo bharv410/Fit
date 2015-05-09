@@ -245,15 +245,6 @@ MPMoviePlayerController *moviePlayerController;
         FitovateData *myData = [FitovateData sharedFitovateData];
         
         [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.user.userID]];
-        
-        [sharedConnect removeFollowWithFollowID:self.user.userID onCompletion:^(ServerResponse serverResponseCode) {
-            if (serverResponseCode != OK) {
-                self.user.followingUser = YES;
-                self.user.followersCount++;
-                [self updateFramesAndDataWithDownloads:NO];
-                [[[UIAlertView alloc] initWithTitle:@"Following" message:[NSString stringWithFormat:@"An error occured, you are still following %@", self.user.userFullName] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            }
-        }];
     } else {
         self.user.followingUser = YES;
         self.user.followersCount++;
@@ -262,15 +253,6 @@ MPMoviePlayerController *moviePlayerController;
         FitovateData *myData = [FitovateData sharedFitovateData];
         
         [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.user.userID]];
-        
-        [sharedConnect setFollowOnUserID:self.user.userID onCompletion:^(WLIFollow *follow, ServerResponse serverResponseCode) {
-            if (serverResponseCode != OK) {
-                self.user.followingUser = NO;
-                self.user.followersCount--;
-                [self updateFramesAndDataWithDownloads:NO];
-                [[[UIAlertView alloc] initWithTitle:@"Not Following" message:[NSString stringWithFormat:@"An error occured, you are still following %@", self.user.userFullName] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            }
-        }];
     }
 }
 

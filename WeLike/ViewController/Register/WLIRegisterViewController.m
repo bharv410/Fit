@@ -166,7 +166,7 @@
                         newUser[@"fullname"] = self.textFieldFullName.text;
                         newUser[@"username"] = self.textFieldUsername.text;
                         newUser[@"usertype"] = @"trainer";
-                        newUser[@"userinfo"] = @"trainer";
+                        newUser[@"userinfo"] = self.textFieldBio.text;
                         newUser[@"followersCount"] = [NSNumber numberWithInt:0];
                         newUser[@"followingCount"] = [NSNumber numberWithInt:0];
                         newUser[@"phone"] = self.textFieldPhone.text;
@@ -220,6 +220,7 @@
             newUser[@"password"] = self.textFieldPassword.text;
             newUser[@"email"] = self.textFieldEmail.text;
             newUser[@"usertype"] = @"trainee";
+            newUser[@"userinfo"] = self.textFieldBio.text;
             newUser[@"fullname"] = self.textFieldFullName.text;
             
             NSData *imageData = UIImagePNGRepresentation(self.imageViewAvatar.image);
@@ -400,9 +401,14 @@
         PNTToolbar *newToolbar = [PNTToolbar defaultToolbar];
         newToolbar.mainScrollView = self.scrollViewRegister;
         newToolbar.textFields = @[self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldUsername, self.textFieldFullName, self.textFieldPhone, self.textFieldWeb];
+        
+        
+        
+        
+        
     } else  {
         self.viewCompany.hidden = YES;
-        self.buttonRegister.frame = CGRectMake(self.buttonRegister.frame.origin.x, CGRectGetMaxY(self.textFieldFullName.frame) +20.0f, self.buttonRegister.frame.size.width, self.buttonRegister.frame.size.height);
+        self.buttonRegister.frame = CGRectMake(self.buttonRegister.frame.origin.x, CGRectGetMaxY(self.textFieldBio.frame) +20.0f, self.buttonRegister.frame.size.width, self.buttonRegister.frame.size.height);
         self.viewContentRegister.frame = CGRectMake(self.viewContentRegister.frame.origin.x, self.viewContentRegister.frame.origin.y, self.viewContentRegister.frame.size.width, CGRectGetMaxY(self.buttonRegister.frame) +20.0f);
         PNTToolbar *newToolbar = [PNTToolbar defaultToolbar];
         newToolbar.mainScrollView = self.scrollViewRegister;

@@ -55,7 +55,7 @@
     NSLog(@"logged in as user number %@",myUserId);
     
     PFQuery *getFollowings = [PFQuery queryWithClassName:@"Follows"];
-    [getFollowings whereKey:@"follower" equalTo:[NSNumber numberWithInt:self.currentUser.userID]];
+    [getFollowings whereKey:@"follower" equalTo:[NSNumber numberWithInt:sharedConnect.currentUser.userID]];
     [getFollowings findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
             for(PFObject *object in objects){

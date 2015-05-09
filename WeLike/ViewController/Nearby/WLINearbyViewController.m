@@ -38,26 +38,44 @@
 {
     [super viewDidLoad];
     
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    testObject[@"foo"] = @"bar";
-    [testObject saveInBackground];
+    [self updateLocation];
+    
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+                [self loadNearbyUsers];
+            }];
     
     
-    [sharedConnect usersForSearchString:@" " page:1 pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *users, ServerResponse serverResponseCode) {
-        
-            [self.users removeAllObjects];
-        
-        [self.users addObjectsFromArray:users];
-        loadMore = users.count == kDefaultPageSize;
-        
-        for(WLIUser *user in users){
-            NSString *username1 = user.userFullName;
-            NSLog(@"%@",username1);
+}
+
+- (void)loadNearbyUsers{
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    // Create a query for places
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    // Interested in locations near user.
+    //[query whereKey:@"location" nearGeoPoint:self.userCurrentLocation];
+    query.limit = 50;
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            NSLog(@"got  results without error!");
+            //[self.users removeAllObjects];
+            for(PFObject *parseObject in objects){
+                WLIUser *parseUser = [myData pfobjectToWLIUser:parseObject];
+                if([self.allFollowings containsObject:[NSNumber numberWithInt:parseUser.userID]]){
+                    parseUser.followingUser = YES;
+                }else{
+                    parseUser.followingUser = NO;
+                }
+                [self.users addObject:parseUser];
+            }
+            //loadMore = objects.count == kDefaultPageSize;
+            [self reloadTable];
+            [refreshManager tableViewReloadFinishedAnimated:YES];
+            [self loadMoreUsersFromAWS];
+        }else{
+            NSLog(@"error geoquerying");
         }
-        
-        
-        [self reloadTable];
-        [refreshManager tableViewReloadFinishedAnimated:YES];
     }];
 }
 - (void)reloadData:(BOOL)reloadAll {
@@ -77,10 +95,32 @@
     }];
 }
 
+- (void)loadMoreUsersFromAWS {
+    
+    loading = YES;
+    int page = YES ? 1 : (self.users.count / kDefaultPageSize) + 1;
+    [sharedConnect usersForSearchString:@" " page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *users, ServerResponse serverResponseCode) {
+        loading = NO;
+        [self.users addObjectsFromArray:users];
+        loadMore = users.count == kDefaultPageSize;
+        [self.nearbyTrainersTableView reloadData];
+        [refreshManager tableViewReloadFinishedAnimated:YES];
+    }];
+}
+
 - (void) reloadTable { dispatch_async(dispatch_get_main_queue(), ^{
     [self.nearbyTrainersTableView reloadData];
 }); }
 
+- (void)updateLocation
+{
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            self.userCurrentLocation = geoPoint;
+            NSLog(@"got location!");
+        }
+    }];
+}
 
 - (void)viewDidUnload
 {
@@ -179,14 +219,6 @@
     FitovateData *myData = [FitovateData sharedFitovateData];
     
     [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:user.userID]];
-    
-    [sharedConnect setFollowOnUserID:user.userID onCompletion:^(WLIFollow *follow, ServerResponse serverResponseCode) {
-        if (serverResponseCode != OK) {
-            user.followingUser = NO;
-            [cell.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-follow.png"] forState:UIControlStateNormal];
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"An error occured, user was not followed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }
-    }];
 }
 
 - (void)unfollowUser:(WLIUser *)user sender:(id)senderCell {
@@ -198,14 +230,6 @@
     FitovateData *myData = [FitovateData sharedFitovateData];
     
     [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:user.userID]];
-    
-    [sharedConnect removeFollowWithFollowID:user.userID onCompletion:^(ServerResponse serverResponseCode) {
-        if (serverResponseCode != OK) {
-            user.followingUser = YES;
-            [cell.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-unfollow.png"] forState:UIControlStateNormal];
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"An error occured, user was not unfollowed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }
-    }];
 }
 
 

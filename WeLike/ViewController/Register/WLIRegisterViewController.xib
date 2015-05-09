@@ -14,6 +14,7 @@
                 <outlet property="scrollViewRegister" destination="Dtr-hy-Roh" id="bdG-9h-T33"/>
                 <outlet property="segmentedControlUserType" destination="X8g-J7-h74" id="fnA-p4-lWP"/>
                 <outlet property="textFieldAddress" destination="G21-8z-pdy" id="iA8-6A-2wo"/>
+                <outlet property="textFieldBio" destination="6vx-E5-O4t" id="ddc-CD-LXT"/>
                 <outlet property="textFieldEmail" destination="ti3-lE-yF1" id="dbN-KY-5hq"/>
                 <outlet property="textFieldFullName" destination="ZFq-Hf-Qxw" id="eur-dB-oj7"/>
                 <outlet property="textFieldPassword" destination="WAW-1Q-oJK" id="h5d-6i-EXq"/>
@@ -109,7 +110,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Y1r-1R-aQB">
-                    <rect key="frame" x="20" y="377" width="280" height="40"/>
+                    <rect key="frame" x="20" y="429" width="280" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.25244928300000002" green="0.6731654494" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -120,8 +121,14 @@
                         <action selector="buttonRegisterTouchUpInside:" destination="-1" eventType="touchUpInside" id="C2w-Fy-5Xb"/>
                     </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bio" minimumFontSize="17" id="6vx-E5-O4t">
+                    <rect key="frame" x="20" y="383" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <view hidden="YES" contentMode="scaleToFill" id="B4u-fw-xHf">
-                    <rect key="frame" x="0.0" y="359" width="320" height="318"/>
+                    <rect key="frame" x="0.0" y="416" width="320" height="318"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="phone" minimumFontSize="17" id="nJn-R7-Oad">

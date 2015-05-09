@@ -66,7 +66,7 @@
                     myData.currentUser = user;
                     WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
                     WLITimelineViewController *timelineViewController = (WLITimelineViewController *)[appDelegate.tabBarController.viewControllers[0] topViewController];
-                    [timelineViewController reloadData:YES];
+                    [timelineViewController firstLogin];
                 }];
             } else if (serverResponseCode == NO_CONNECTION) {
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

@@ -36,21 +36,10 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    
-    FitovateData *myData = [FitovateData sharedFitovateData];
-    
-    NSLog(@"getting all following");
-    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
-        NSLog(@"done getting followng");
-        [self getPosts];
-    }];
-    
+    [self firstLogin];
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Activity" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
     self.navigationItem.leftBarButtonItem = anotherButton;
-    
-    
     
     UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
     [button setImage:[UIImage imageNamed:@"messagesbutton.png"] forState:UIControlStateNormal];
@@ -117,73 +106,94 @@
 
 - (void)reloadData:(BOOL)reloadAll {
     
-    loading = YES;
-    int page;
-    if (reloadAll) {
-        loadMore = NO;
-        page = 1;
-    } else {
-        page  = (self.posts.count / kDefaultPageSize) + 1;
-    }
-//    [sharedConnect timelineForUserID:sharedConnect.currentUser.userID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *posts, ServerResponse serverResponseCode) {
-//        loading = NO;
-//        self.posts = posts;
-//        loadMore = posts.count == kDefaultPageSize;
-//        [self.tableViewRefresh reloadData];
-//        [refreshManager tableViewReloadFinishedAnimated:YES];
-//    }];
-    loading = NO;
-    
-//simulate me following these 19 userIDs
     FitovateData *myData = [FitovateData sharedFitovateData];
-
-    NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
-    __block NSUInteger postCount = 0;
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
-    [query addDescendingOrder:@"createdAt"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            for (PFObject *object in objects) {
-                
-                NSString *postCaption = object[@"postTitle"];
-                
-                if([self.allFollowings containsObject:object[@"userID"]]){ // if im following this person
+    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+        loading = YES;
+        int page;
+        if (reloadAll) {
+            loadMore = NO;
+            page = 1;
+        } else {
+            page  = (self.posts.count / kDefaultPageSize) + 1;
+        }
+        //    [sharedConnect timelineForUserID:sharedConnect.currentUser.userID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *posts, ServerResponse serverResponseCode) {
+        //        loading = NO;
+        //        self.posts = posts;
+        //        loadMore = posts.count == kDefaultPageSize;
+        //        [self.tableViewRefresh reloadData];
+        //        [refreshManager tableViewReloadFinishedAnimated:YES];
+        //    }];
+        loading = NO;
+        
+        //simulate me following these 19 userIDs
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
+        NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
+        __block NSUInteger postCount = 0;
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+        [query addDescendingOrder:@"createdAt"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                for (PFObject *object in objects) {
                     
-                    PFFile *tempPhotoForUrl = object[@"userImage"];
+                    NSString *postCaption = object[@"postTitle"];
                     
-
-                    
-                    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
-                                          object[@"postTitle"], @"postTitle",
-                                          tempPhotoForUrl.url, @"postImage",
-                                          object[@"createdAt"], @"postDate",
-                                          object[@"createdAt"], @"timeAgo",
-                                          object[@"totalLikes"], @"totalLikes",
-                                          object[@"totalComments"], @"totalComments",
-                                          object[@"isLiked"], @"isLiked",
-                                          object[@"isCommented"], @"isCommented"
-                                          , nil];
-                    
-                    WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
-                    postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
-                    
-                    [wliPosts insertObject:postFromParse atIndex:postCount];
-                    postCount++;
-                    
+                    if([self.allFollowings containsObject:object[@"userID"]]){ // if im following this person
+                        
+                        PFFile *tempPhotoForUrl = object[@"userImage"];
+                        
+                        
+                        
+                        NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
+                                              object[@"postTitle"], @"postTitle",
+                                              tempPhotoForUrl.url, @"postImage",
+                                              object[@"createdAt"], @"postDate",
+                                              object[@"createdAt"], @"timeAgo",
+                                              object[@"totalLikes"], @"totalLikes",
+                                              object[@"totalComments"], @"totalComments",
+                                              object[@"isLiked"], @"isLiked",
+                                              object[@"isCommented"], @"isCommented"
+                                              , nil];
+                        
+                        WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
+                        postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+                        
+                        [wliPosts insertObject:postFromParse atIndex:postCount];
+                        postCount++;
+                        
+                        
+                    }
+                    self.posts = wliPosts;
+                    [self.tableViewRefresh reloadData];
+                    [refreshManager tableViewReloadFinishedAnimated:YES];
                     
                 }
-                self.posts = wliPosts;
-                [self.tableViewRefresh reloadData];
-                [refreshManager tableViewReloadFinishedAnimated:YES];
-                
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
             }
-        } else {
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
+        }];
     }];
+}
 
+- (void)firstLogin{
+    [self.tableViewRefresh reloadData];
+    
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+        [self getPosts];
+    }];
+    
+    if(self.allFollowings.count == 0){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New User"
+                                                        message:@"Follow some users in the nearby section!"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+        
 }
 
 

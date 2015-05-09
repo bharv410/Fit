@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *textFieldPassword;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldRepassword;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldUsername;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldBio;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldFullName;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControlUserType;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldPhone;

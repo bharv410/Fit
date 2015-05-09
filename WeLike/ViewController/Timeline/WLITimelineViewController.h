@@ -15,5 +15,7 @@
 @property (strong, nonatomic) NSArray *posts;
 @property (strong, nonatomic) NSArray *allFollowings;
 
+- (void)firstLogin;
+
 
 @end

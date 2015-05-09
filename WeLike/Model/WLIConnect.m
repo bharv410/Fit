@@ -68,6 +68,8 @@ static WLIConnect *sharedConnect;
         NSData *archivedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"_currentUser"];
         if (archivedUser) {
             _currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUser];
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            myData.currentUser = _currentUser;
         }
     }
     return self;
@@ -76,6 +78,8 @@ static WLIConnect *sharedConnect;
 - (void)saveCurrentUser {
     
     if (self.currentUser) {
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        myData.currentUser = _currentUser;
         NSData *archivedUser = [NSKeyedArchiver archivedDataWithRootObject:_currentUser];
         [[NSUserDefaults standardUserDefaults] setObject:archivedUser forKey:@"_currentUser"];
     }

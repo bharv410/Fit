@@ -158,6 +158,10 @@
                         
                         WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
                         postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+                        NSNumber *number = object[@"totalLikes"];
+                        postFromParse.postLikesCount =[number integerValue];
+                        
+                        NSLog(@"title = %@ numberOfLikes = %d",postFromParse.postTimeAgo, postFromParse.postLikesCount);
                         
                         [wliPosts insertObject:postFromParse atIndex:postCount];
                         postCount++;

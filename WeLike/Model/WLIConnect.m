@@ -776,51 +776,8 @@ static WLIConnect *sharedConnect;
 }
 - (void)requestIdentityTokenForUserID:(NSString *)userID appID:(NSString *)appID nonce:(NSString *)nonce completion:(void(^)(NSString *identityToken, NSError *error))completion
 {
-    NSParameterAssert(userID);
-    NSParameterAssert(appID);
-    NSParameterAssert(nonce);
-    NSParameterAssert(completion);
-    
-    NSURL *identityTokenURL = [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:identityTokenURL];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    NSDictionary *parameters = @{ @"app_id": appID, @"user_id": userID, @"nonce": nonce };
-    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
-    request.HTTPBody = requestBody;
-    
-    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            completion(nil, error);
-            return;
-        }
-        
-        // Deserialize the response
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if(![responseObject valueForKey:@"error"])
-        {
-            NSString *identityToken = responseObject[@"identity_token"];
-            completion(identityToken, nil);
-        }
-        else
-        {
-            NSString *domain = @"layer-identity-provider.herokuapp.com";
-            NSInteger code = [responseObject[@"status"] integerValue];
-            NSDictionary *userInfo =
-            @{
-              NSLocalizedDescriptionKey: @"Layer Identity Provider Returned an Error.",
-              NSLocalizedRecoverySuggestionErrorKey: @"There may be a problem with your APPID."
-              };
-            
-            NSError *error = [[NSError alloc] initWithDomain:domain code:code userInfo:userInfo];
-            completion(nil, error);
-        }
-        
-    }] resume];
+    NSString *identityToken = [NSString stringWithFormat:@"%d",sharedConnect.currentUser.userID];
+    completion(identityToken, nil);
 }
 
 

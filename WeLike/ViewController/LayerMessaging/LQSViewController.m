@@ -232,7 +232,12 @@ newIndexPath:(NSIndexPath *)newIndexPath
     // Set cell text to "<Sender>: <Message Contents>"
     LYRMessagePart *messagePart = message.parts[0];
     LYRActor *sender = [message sender];
-    NSString *senderName = [sender name];
+    NSString *senderName = [sender userID];
+    NSSet *participantsInConvo = [self.conversation participants];
+    for(NSString* participant in participantsInConvo) {
+        if(![senderName containsString:sharedConnect.currentUser.userUsername])
+            NSLog(@"participant = %@",participant);
+    }
     NSLog(@"sender name = %@",senderName);
     
     if([senderName containsString:sharedConnect.currentUser.userUsername])

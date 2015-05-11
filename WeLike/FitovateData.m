@@ -162,7 +162,7 @@
     }];
 }
 
-- (void) likeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking {
+- (void) likeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking : (void (^)(void))completion{
     
     PFObject *gameScore = [PFObject objectWithClassName:@"Likes"];
     gameScore[@"liker"] = liker;
@@ -177,24 +177,22 @@
     }];
     
     PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
-    
+    [query whereKey:@"postID" equalTo:liking];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (PFObject *post in objects) {
-                
-                if([post[@"postID"] isEqualToNumber:liking]){
                     NSNumber *oldLikes = post[@"totalLikes"];
                     post[@"totalLikes"] = [NSNumber numberWithInt:[oldLikes intValue] + 1];
                     [post saveInBackground];
-                }
             }
         } else {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
+        completion();
     }];
 }
 
-- (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking {
+- (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking : (void (^)(void))completion{
     
     PFQuery *unfollowUser = [PFQuery queryWithClassName:@"Likes"];
     [unfollowUser whereKey:@"liker" equalTo:liker];
@@ -209,20 +207,18 @@
     }];
     
     PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
-    
+    [query whereKey:@"postID" equalTo:liking];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (PFObject *post in objects) {
-                
-                if([post[@"postID"] isEqualToNumber:liking]){
                     NSNumber *oldLikes = post[@"totalLikes"];
                     post[@"totalLikes"] = [NSNumber numberWithInt:[oldLikes intValue] - 1];
                     [post saveInBackground];
-                }
             }
         } else {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
+        completion();
     }];
 }
 - (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text {

@@ -37,6 +37,7 @@
 - (IBAction)buttonLikesTouchUpInside:(id)sender;
 
 + (CGSize)sizeWithPost:(WLIPost*)post;
+- (void) updateLikes;
 
 
 @end

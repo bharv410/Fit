@@ -18,9 +18,9 @@ PFObject *newActivity = [PFObject objectWithClassName:@"Activity"];
     NSLog(postId);
 newActivity[@"postID"] = postId;
     NSLog(sourceId);
-newActivity[@"sourceId"] = @"Clayton";
+    newActivity[@"sourceId"] = sourceId;
     NSLog(userId);
-newActivity[@"userID"] = @"bharv410";
+newActivity[@"userID"] = userId;
     NSLog(activityType);
 newActivity[@"activityType"] = activityType;
     

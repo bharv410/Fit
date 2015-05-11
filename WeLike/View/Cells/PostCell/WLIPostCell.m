@@ -8,6 +8,7 @@
 
 #import "WLIPostCell.h"
 #import "WLIConnect.h"
+#import <Parse/Parse.h>
 
 static WLIPostCell *sharedCell = nil;
 
@@ -70,6 +71,7 @@ static WLIPostCell *sharedCell = nil;
 - (void)updateFramesAndDataWithDownloads:(BOOL)downloads {
     
     if (self.post) {
+        
         if (downloads) {
             [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.post.user.userAvatarPath]];
         }
@@ -106,7 +108,6 @@ static WLIPostCell *sharedCell = nil;
         } else {
             [self.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];
         }
-        
         if (self.post.postLikesCount == 1) {
             [self.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", self.post.postLikesCount] forState:UIControlStateNormal];
         } else {
@@ -115,6 +116,25 @@ static WLIPostCell *sharedCell = nil;
     }
 }
 
+- (void) updateLikes {
+    PFQuery *updateLikes = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    [updateLikes whereKey:@"postID" equalTo:[NSNumber numberWithInt: self.post.postID]];
+    [updateLikes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            for(PFObject *object in objects){
+                NSNumber *newNumberOfLikes = object[@"totalLikes"];
+                self.post.postLikesCount = [newNumberOfLikes integerValue];
+                NSLog(@"updating like amount");
+                if (self.post.postLikesCount == 1) {
+                    [self.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", self.post.postLikesCount] forState:UIControlStateNormal];
+                } else {
+                    [self.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", self.post.postLikesCount] forState:UIControlStateNormal];
+                }
+            }
+            
+        }
+    }];
+}
 
 #pragma mark - Action methods
 

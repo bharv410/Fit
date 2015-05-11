@@ -26,8 +26,8 @@
 - (void) unfollowUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower;
 - (void) followUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower;
 - (NSArray *) getAllIdsThatUsersFollowing : (void (^)(void))completion;
-- (void) likeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking;
-- (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking;
+- (void) likeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking: (void (^)(void))completion;
+- (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking: (void (^)(void))completion;
 - (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text;
 
 @end

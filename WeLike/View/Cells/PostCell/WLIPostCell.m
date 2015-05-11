@@ -124,7 +124,6 @@ static WLIPostCell *sharedCell = nil;
             for(PFObject *object in objects){
                 NSNumber *newNumberOfLikes = object[@"totalLikes"];
                 self.post.postLikesCount = [newNumberOfLikes integerValue];
-                NSLog(@"updating like amount");
                 if (self.post.postLikesCount == 1) {
                     [self.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", self.post.postLikesCount] forState:UIControlStateNormal];
                 } else {

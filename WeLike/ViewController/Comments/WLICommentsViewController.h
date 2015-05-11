@@ -16,5 +16,6 @@
 @property (strong, nonatomic) IBOutlet UIView *viewEnterComment;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldEnterComment;
 @property (strong, nonatomic) WLIPost *post;
+@property (nonatomic) BOOL loaded;
 
 @end

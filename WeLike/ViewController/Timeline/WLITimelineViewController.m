@@ -132,6 +132,7 @@
         __block NSUInteger postCount = 0;
         
         PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+        
         [query addDescendingOrder:@"createdAt"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {

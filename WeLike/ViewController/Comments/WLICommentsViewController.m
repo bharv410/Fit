@@ -11,6 +11,8 @@
 #import "WLILoadingCell.h"
 #import "GlobalDefines.h"
 #import "ParseSingleton.h"
+#import "FitovateData.h"
+#import <Parse/Parse.h>
 
 @implementation WLICommentsViewController
 
@@ -34,7 +36,9 @@
     
     [super viewDidLoad];
     self.title = @"Comments";
+    self.loaded = NO;
     [self reloadData:YES];
+    
     //self.viewEnterComment.frame = CGRectMake(0, CGRectGetMaxY(self.tableViewRefresh.frame), CGRectGetWidth(self.viewEnterComment.frame), CGRectGetHeight(self.viewEnterComment.frame));
     //[self.view addSubview:self.viewEnterComment];
 }
@@ -50,20 +54,65 @@
 
 - (void)reloadData:(BOOL)reloadAll {
     
-    loading = YES;
-    int page = reloadAll ? 1 : (self.comments.count / kDefaultPageSize) + 1;
-    [sharedConnect commentsForPostID:self.post.postID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *comments, ServerResponse serverResponseCode) {
-        loading = NO;
-        if (reloadAll) {
-            [self.comments removeAllObjects];
-        }
-        [self.comments addObjectsFromArray:comments];
-        loadMore = comments.count == kDefaultPageSize;
-        [self.tableViewRefresh reloadData];
-        [refreshManager tableViewReloadFinishedAnimated:YES];
+    
+//    loading = YES;
+//    int page = reloadAll ? 1 : (self.comments.count / kDefaultPageSize) + 1;
+//    [sharedConnect commentsForPostID:self.post.postID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *comments, ServerResponse serverResponseCode) {
+//        loading = NO;
+//        if (reloadAll) {
+//            [self.comments removeAllObjects];
+//        }
+//        [self.comments addObjectsFromArray:comments];
+//        loadMore = comments.count == kDefaultPageSize;
+//        [self.tableViewRefresh reloadData];
+//        [refreshManager tableViewReloadFinishedAnimated:YES];
+//    }];
+    if(!self.loaded){
+    [self getComments:^{
+        NSLog(@"got comments from parse");
     }];
+    }else{
+        
+    }
 }
 
+- (void) getComments : (void (^)(void))completion{
+    
+    loading = YES;
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Comments"];
+    
+    [query whereKey:@"postId" equalTo:[NSNumber numberWithInt:self.post.postID]];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        loading = NO;
+        if (!error) {
+            for (PFObject *comment in objects) {
+                //benmark
+                NSString *commentText = comment[@"comment"];
+                NSNumber *commenterID = comment[@"commenter"];
+                NSDate *commentDate = comment.createdAt;
+                
+                WLIUser *userThatCommented = [myData.allUsersDictionary objectForKey:commenterID];
+                WLIComment *commentFromScratch = [[WLIComment alloc]init];
+                commentFromScratch.commentDate = commentDate;
+                commentFromScratch.commentID = [commenterID integerValue];
+                commentFromScratch.commentText = commentText;
+                commentFromScratch.user = userThatCommented;
+                [self.comments addObject:commentFromScratch];
+                
+            }
+            self.loaded = YES;
+            [self.tableViewRefresh reloadData];
+            [refreshManager tableViewReloadFinishedAnimated:YES];
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+        completion();
+    }];
+}
 
 #pragma mark - UITableViewDataSource methods
 

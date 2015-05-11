@@ -9,6 +9,7 @@
 #import "WLIPostCell.h"
 #import "WLIConnect.h"
 #import <Parse/Parse.h>
+#import "FitovateData.h"
 
 static WLIPostCell *sharedCell = nil;
 
@@ -102,6 +103,22 @@ static WLIPostCell *sharedCell = nil;
             self.buttonComment.frame = CGRectMake(self.buttonComment.frame.origin.x, CGRectGetMinY(self.imageViewPostImage.frame), self.buttonComment.frame.size.width, self.buttonComment.frame.size.height);
             self.buttonLikes.frame = CGRectMake(self.buttonLikes.frame.origin.x, CGRectGetMinY(self.imageViewPostImage.frame), self.buttonLikes.frame.size.width, self.buttonLikes.frame.size.height);
         }
+        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
+        PFQuery *didILikeThis = [PFQuery queryWithClassName:@"Likes"];
+        [didILikeThis whereKey:@"liker" equalTo:[NSNumber numberWithInt:myData.currentUser.userID]];
+        [didILikeThis findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error){
+                for(PFObject *object in objects){
+                    NSNumber *thisPostId = [NSNumber numberWithInt:self.post.postID];
+                    NSNumber *currentPostId = object[@"postId"];
+                    if([thisPostId isEqualToNumber:currentPostId]){
+                        self.post.likedThisPost = YES;
+                    }
+                }
+            }
+        }];
         
         if (self.post.likedThisPost) {
             [self.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];

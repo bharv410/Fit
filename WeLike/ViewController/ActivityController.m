@@ -42,12 +42,16 @@
                 
                 NSString *activityType = object[@"activityType"];
                 NSString *sourceId = object[@"sourceId"];
+                NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+                f.numberStyle = NSNumberFormatterDecimalStyle;
+                NSNumber *postId = [f numberFromString:@"postID"];
                 
                 NSString *activityText = [NSString stringWithFormat:@"You added a %@ on %@'s photo",activityType,sourceId];
                 
                 
                 
                 [stringsOfActivity insertObject:activityText atIndex:0];
+                [postIds addObject:postIds];
             }
             self.posts = stringsOfActivity;
             self.postIDs = postIds;
@@ -148,27 +152,22 @@
 //    // Push the view controller.
 //    [self.navigationController pushViewController:detailViewController animated:YES];
     
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    f.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *myNumber = [f numberFromString:[self.posts objectAtIndex:indexPath.row]];
     
+    NSNumber *postId = [self.postIDs objectAtIndex:indexPath.section];
+    
+    for(NSObject *num in self.postIDs){
+        NSLog(@"postId include %@",num);
+        NSLog(@"indexpathsec is %i",indexPath.section);
+        NSLog(@"indexpathsec is %i",indexPath.row);
+    }
+    
+    NSLog(@"postId is %@",postId);
     
     PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
-    [query whereKey:@"postID" equalTo:myNumber];
+    [query whereKey:@"postID" equalTo:postId];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            // The find succeeded.
-            NSLog(@"Successfully retrieved %d photo from parse.", objects.count);
-            NSDictionary *userDict = [[NSDictionary alloc] initWithObjectsAndKeys:  [NSNumber numberWithInt:3], @"userID",
-                                      [NSNumber numberWithInt:1], @"userTypeID",
-                                      @"eed", @"password",
-                                      @"johnjo@gmail.com", @"email",
-                                      @"Ben Harvey", @"userFullname",
-                                      @"fdfxx443", @"username",
-                                       nil];
 
-            
-            
             PFObject *object = [objects objectAtIndex:0];
             
                 NSString *playerName = object[@"postTitle"];
@@ -182,7 +181,7 @@
                                           tempPhotoForUrl.url, @"postImage",
                                           object[@"createdAt"], @"postDate",
                                           object[@"createdAt"], @"timeAgo",
-                                          userDict, @"user",
+                                          [[NSDictionary alloc]init], @"user",
                                           object[@"totalLikes"], @"totalLikes",
                                           object[@"totalComments"], @"totalComments",
                                           object[@"isLiked"], @"isLiked",
@@ -193,10 +192,8 @@
             WLIPostViewController *postViewController = [[WLIPostViewController alloc] initWithNibName:@"WLIPostViewController" bundle:nil];
             postViewController.post = postFromParse;
             [self.navigationController pushViewController:postViewController animated:YES];
-                    
-                    
-               
-                
+                    //benmark
+            //set use
             
         } else {
             // Log details of the failure

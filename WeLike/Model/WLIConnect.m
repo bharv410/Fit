@@ -55,28 +55,6 @@ static WLIConnect *sharedConnect;
      [self removeCurrentUser];
     
     if (self) {
-        
-        
-        NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
-        self.layerClient = [LYRClient clientWithAppID:appID];
-        [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
-            if (!success) {
-                NSLog(@"Failed to connect to Layer: %@", error);
-            } else {
-                NSString *userIDString = _currentUser.userUsername;
-                // Once connected, authenticate user.
-                // Check Authenticate step for authenticateLayerWithUserID source
-                [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
-                    if (!success) {
-                        NSLog(@"Failed Authenticating Layer Client with error:%@", error);
-                    }else{
-                        NSLog(@"authenticated layer");
-                    }
-                }];
-            }
-        }];
-        
-        
         httpClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kBaseLink]];
         [httpClient.requestSerializer setValue:kAPIKey forHTTPHeaderField:@"api_key"];
         httpClient.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -104,6 +82,36 @@ static WLIConnect *sharedConnect;
         myData.currentUser = _currentUser;
         NSData *archivedUser = [NSKeyedArchiver archivedDataWithRootObject:_currentUser];
         [[NSUserDefaults standardUserDefaults] setObject:archivedUser forKey:@"_currentUser"];
+    }
+}
+
+- (void)authentWithLayer {
+    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
+    self.layerClient = [LYRClient clientWithAppID:appID];
+    
+    if(self.layerClient.isConnected){
+        NSString *userIDString = _currentUser.userUsername;
+        NSLog(@"_currentUser name = %@",_currentUser.userUsername);
+        [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
+            if (!success) {
+                NSLog(@"Failed Authenticating Layer Client with error:%@", error);
+            }
+        }];
+    }else{
+    
+    [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"Failed to connect to Layer: %@", error);
+        } else {
+            NSString *userIDString = _currentUser.userUsername;
+            NSLog(@"_currentUser name = %@",_currentUser.userUsername);
+            [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
+                if (!success) {
+                    NSLog(@"Failed Authenticating Layer Client with error:%@", error);
+                }
+            }];
+        }
+    }];
     }
 }
 
@@ -492,21 +500,8 @@ static WLIConnect *sharedConnect;
 - (void)sendCommentOnPostID:(int)postID withCommentText:(NSString*)commentText onCompletion:(void (^)(WLIComment *comment, ServerResponse serverResponseCode))completion {
     
     FitovateData *myData = [FitovateData sharedFitovateData];
-    [myData commentFromUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:postID] :commentText];
-    
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", postID] forKey:@"postID"];
-    [parameters setObject:commentText forKey:@"commentText"];
-    [httpClient POST:@"setComment" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *rawComment = [responseObject objectForKey:@"item"];
-        WLIComment *comment = [[WLIComment alloc] initWithDictionary:rawComment];
-        
-        [self debugger:parameters.description methodLog:@"api/setComment" dataLogFormatted:responseObject];
+    [myData commentFromUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:postID] :commentText :^(WLIComment *comment) {
         completion(comment, OK);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self debugger:parameters.description methodLog:@"api/setComment" dataLog:error.description];
-        completion(nil, UNKNOWN_ERROR);
     }];
 }
 
@@ -531,26 +526,54 @@ static WLIConnect *sharedConnect;
 
 - (void)commentsForPostID:(int)postID page:(int)page pageSize:(int)pageSize onCompletion:(void (^)(NSMutableArray *comments, ServerResponse serverResponseCode))completion {
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", postID] forKey:@"postID"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"take"];
-    [httpClient POST:@"getComments" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *rawComments = [responseObject objectForKey:@"items"];
-        
-        NSMutableArray *comments = [NSMutableArray arrayWithCapacity:rawComments.count];
-        for (NSDictionary *rawComment in rawComments) {
-            WLIComment *comment = [[WLIComment alloc] initWithDictionary:rawComment];
-            [comments addObject:comment];
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    PFQuery *query = [PFQuery queryWithClassName:@"Comments"];
+    [query whereKey:@"postId" equalTo:[NSNumber numberWithInt:postID]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSMutableArray *comments = [NSMutableArray arrayWithCapacity:objects.count];
+            
+            for (PFObject *comment in objects) {
+                WLIComment *newComment = [[WLIComment alloc] init];
+                NSNumber *commentNumber = comment[@"commentId"];
+                newComment.commentID = [commentNumber integerValue];
+                newComment.commentDate = comment.createdAt;
+                newComment.commentText = comment[@"comment"];
+                NSNumber *idOfCommenter = comment[@"commenter"];
+                WLIUser *commenterUser = [myData.allUsersDictionary objectForKey:idOfCommenter];
+                newComment.user = commenterUser;
+                [comments addObject:newComment];
+            }
+            completion(comments, OK);
+            
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            completion(nil, kUNAUTHORIZED);
         }
-        
-        [self debugger:parameters.description methodLog:@"api/getComments" dataLogFormatted:responseObject];
-        completion(comments, OK);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self debugger:parameters.description methodLog:@"api/getComments" dataLog:error.description];
-        completion(nil, UNKNOWN_ERROR);
     }];
+
+    
+    //benmark
+//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+//    [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
+//    [parameters setObject:[NSString stringWithFormat:@"%d", postID] forKey:@"postID"];
+//    [parameters setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
+//    [parameters setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"take"];
+//    [httpClient POST:@"getComments" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSArray *rawComments = [responseObject objectForKey:@"items"];
+//        
+//        NSMutableArray *comments = [NSMutableArray arrayWithCapacity:rawComments.count];
+//        for (NSDictionary *rawComment in rawComments) {
+//            WLIComment *comment = [[WLIComment alloc] initWithDictionary:rawComment];
+//            [comments addObject:comment];
+//        }
+//        
+//        [self debugger:parameters.description methodLog:@"api/getComments" dataLogFormatted:responseObject];
+//        completion(comments, OK);
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        [self debugger:parameters.description methodLog:@"api/getComments" dataLog:error.description];
+//        completion(nil, UNKNOWN_ERROR);
+//    }];
 }
 
 
@@ -708,6 +731,15 @@ static WLIConnect *sharedConnect;
     
     _currentUser = nil;
     [self removeCurrentUser];
+    if (self.layerClient.authenticatedUserID) {
+        [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+            if(success){
+                if(!error){
+                    NSLog(@"deauthenticated");
+                }
+            }
+        }];
+    }
 }
 
 #pragma mark - debugger
@@ -731,7 +763,7 @@ static WLIConnect *sharedConnect;
 {
     // If the user is authenticated you don't need to re-authenticate.
     if (self.layerClient.authenticatedUserID) {
-        NSLog(@"Layer Authenticated as User %@", self.layerClient.authenticatedUserID);
+        NSLog(@"Layer Authenticated as previously User %@", self.layerClient.authenticatedUserID);
         if (completion) completion(YES, nil);
         return;
     }
@@ -764,6 +796,7 @@ static WLIConnect *sharedConnect;
             [self.layerClient authenticateWithIdentityToken:identityToken completion:^(NSString *authenticatedUserID, NSError *error) {
                 if (authenticatedUserID) {
                     if (completion) {
+                        
                         completion(YES, nil);
                     }
                     NSLog(@"Layer Authenticated as User: %@", authenticatedUserID);
@@ -776,7 +809,7 @@ static WLIConnect *sharedConnect;
 }
 - (void)requestIdentityTokenForUserID:(NSString *)userID appID:(NSString *)appID nonce:(NSString *)nonce completion:(void(^)(NSString *identityToken, NSError *error))completion
 {
-    NSString *identityToken = [NSString stringWithFormat:@"%d",sharedConnect.currentUser.userID];
+    NSString *identityToken = [NSString stringWithFormat:@"%@%d",_currentUser.userUsername, _currentUser.userID];
     completion(identityToken, nil);
 }
 

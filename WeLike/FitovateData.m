@@ -221,18 +221,34 @@
         completion();
     }];
 }
-- (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text {
+- (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text : (void (^)(WLIComment *comment))completion{
+    PFQuery *query = [PFQuery queryWithClassName:@"Comments"];
+    FitovateData *myData = [FitovateData sharedFitovateData];
     
-    PFObject *gameScore = [PFObject objectWithClassName:@"Comments"];
-    gameScore[@"commenter"] = liker;
-    gameScore[@"postId"] = liking;
-    gameScore[@"comment"] = text;
-    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"commented");
-        } else {
-            // There was a problem, check error.description
-            NSLog(@"error following");
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            PFObject *gameScore = [PFObject objectWithClassName:@"Comments"];
+            gameScore[@"commenter"] = liker;
+            gameScore[@"postId"] = liking;
+            gameScore[@"comment"] = text;
+            gameScore[@"commentId"] = [NSNumber numberWithInteger:objects.count + 1];
+            [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    NSLog(@"commented");
+                    WLIComment *newComment = [[WLIComment alloc] init];
+                    newComment.commentID = objects.count + 1;
+                    newComment.commentDate = gameScore.createdAt;
+                    newComment.commentText = text;
+                    NSNumber *idOfCommenter = liker;
+                    WLIUser *commenterUser = [myData.allUsersDictionary objectForKey:idOfCommenter];
+                    newComment.user = commenterUser;
+                    completion(newComment);
+                } else {
+                    // There was a problem, check error.description
+                    NSLog(@"error following");
+                    completion(nil);
+                }
+            }];
         }
     }];
 }

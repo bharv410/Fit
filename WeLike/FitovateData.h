@@ -9,6 +9,7 @@
 #import <foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "WLIUser.h"
+#import "WLIComment.h"
 
 @interface FitovateData : NSObject {
     NSString *someProperty;
@@ -28,6 +29,6 @@
 - (NSArray *) getAllIdsThatUsersFollowing : (void (^)(void))completion;
 - (void) likeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking: (void (^)(void))completion;
 - (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking: (void (^)(void))completion;
-- (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text;
+- (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text : (void (^)(WLIComment *comment))completion;
 
 @end

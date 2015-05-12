@@ -49,6 +49,9 @@ typedef enum ServerResponse ServerResponse;
 
 + (WLIConnect*) sharedConnect;
 
+
+- (void)authentWithLayer;
+
 #pragma mark - user
 
 - (void)loginUserWithUsername:(NSString*)username andPassword:(NSString*)password onCompletion:(void (^)(WLIUser *user, ServerResponse serverResponseCode))completion;

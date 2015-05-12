@@ -116,15 +116,15 @@ static WLIPostCell *sharedCell = nil;
                     if([thisPostId isEqualToNumber:currentPostId]){
                         self.post.likedThisPost = YES;
                     }
+                    if (self.post.likedThisPost) {
+                        [self.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];
+                    } else {
+                        [self.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];
+                    }
                 }
             }
         }];
         
-        if (self.post.likedThisPost) {
-            [self.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];
-        } else {
-            [self.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];
-        }
         if (self.post.postLikesCount == 1) {
             [self.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", self.post.postLikesCount] forState:UIControlStateNormal];
         } else {

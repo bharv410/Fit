@@ -80,9 +80,9 @@
     {
         // iOS6 and above : Use NSAttributedStrings
         const CGFloat fontSize = 13;
-        UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
+        UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize + 3];
         UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
-        UIColor *foregroundColor = [UIColor blackColor];
+        UIColor *foregroundColor = [UIColor colorWithRed:92.0f/255.0f green:173.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
         
         // Create the attributes
         NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:

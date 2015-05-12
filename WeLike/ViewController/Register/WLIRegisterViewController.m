@@ -216,12 +216,15 @@
             myData.myUsername = self.textFieldUsername.text;
             
             PFObject *newUser = [PFObject objectWithClassName:@"Users"];
+            newUser[@"userID"] = self.numberOfUsers;
             newUser[@"username"] = self.textFieldUsername.text;
             newUser[@"password"] = self.textFieldPassword.text;
             newUser[@"email"] = self.textFieldEmail.text;
             newUser[@"usertype"] = @"trainee";
             newUser[@"userinfo"] = self.textFieldBio.text;
             newUser[@"fullname"] = self.textFieldFullName.text;
+            newUser[@"followersCount"] = [NSNumber numberWithInt:0];
+            newUser[@"followingCount"] = [NSNumber numberWithInt:0];
             
             NSData *imageData = UIImagePNGRepresentation(self.imageViewAvatar.image);
             PFFile *userAvatar = [PFFile fileWithName:@"userAvatar.png" data:imageData];

@@ -12,6 +12,7 @@
 #import "WLIPostViewController.h"
 #import "WLIConnect.h"
 #import "GlobalDefines.h"
+#import "FitovateData.h"
 
 @interface ActivityController ()
 
@@ -27,10 +28,12 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    
     
     PFQuery *query = [PFQuery queryWithClassName:@"Activity"];
     [query addDescendingOrder:@"createdAt"];
-    [query whereKey:@"userID" equalTo:@"bharv410"];
+    [query whereKey:@"userID" equalTo:myData.currentUser.userUsername];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
@@ -44,14 +47,16 @@
                 NSString *sourceId = object[@"sourceId"];
                 NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
                 f.numberStyle = NSNumberFormatterDecimalStyle;
-                NSNumber *postId = [f numberFromString:@"postID"];
+                NSNumber *postId = [f numberFromString:object[@"postID"]];
+                NSLog(@"postId is %@",postId);
+                
                 
                 NSString *activityText = [NSString stringWithFormat:@"You added a %@ on %@'s photo",activityType,sourceId];
                 
                 
                 
                 [stringsOfActivity insertObject:activityText atIndex:0];
-                [postIds addObject:postIds];
+                [postIds addObject:postId];
             }
             self.posts = stringsOfActivity;
             self.postIDs = postIds;
@@ -67,6 +72,56 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setStringForActivity : (UILabel *)onLabel : (NSString* )forText{
+    NSString *text = forText;
+    if ([onLabel respondsToSelector:@selector(setAttributedText:)])
+    {
+        // iOS6 and above : Use NSAttributedStrings
+        const CGFloat fontSize = 13;
+        UIFont *boldFont = [UIFont boldSystemFontOfSize:fontSize];
+        UIFont *regularFont = [UIFont systemFontOfSize:fontSize];
+        UIColor *foregroundColor = [UIColor blackColor];
+        
+        // Create the attributes
+        NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                               regularFont, NSFontAttributeName, nil];
+        NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 boldFont, NSFontAttributeName,
+                                 foregroundColor, NSForegroundColorAttributeName, nil];
+        
+        NSRange rangeOfStringWithLike = [text rangeOfString:@"like"];
+        
+        if(rangeOfStringWithLike.location == NSNotFound){
+            const NSRange range = [text rangeOfString:@"comment"];
+            NSMutableAttributedString *attributedText =
+            [[NSMutableAttributedString alloc] initWithString:text
+                                                   attributes:attrs];
+            [attributedText setAttributes:subAttrs range:range];
+            
+            // Set it in our UILabel and we are done!
+            [onLabel setAttributedText:attributedText];
+        }else{
+            NSMutableAttributedString *attributedText =
+            [[NSMutableAttributedString alloc] initWithString:text
+                                                   attributes:attrs];
+            [attributedText setAttributes:subAttrs range:rangeOfStringWithLike];
+            
+            // Set it in our UILabel and we are done!
+            [onLabel setAttributedText:attributedText];
+        }
+        
+    } else {
+        // iOS5 and below
+        // Here we have some options too. The first one is to do something
+        // less fancy and show it just as plain text without attributes.
+        // The second is to use CoreText and get similar results with a bit
+        // more of code. Interested people please look down the old answer.
+        
+        // Now I am just being lazy so :p
+        [onLabel setText:text];
+    }
 }
 
 #pragma mark - Table view data source
@@ -99,8 +154,11 @@
     }
     
     // Configure the cell.
-    cell.textLabel.text = [self.posts
-                           objectAtIndex: [indexPath row]];
+//    cell.textLabel.text = [self.posts
+//                           objectAtIndex: [indexPath row]];
+    [self setStringForActivity:cell.textLabel :[self.posts
+                                                objectAtIndex: [indexPath row]]];
+    
     return cell;
 }
 
@@ -152,14 +210,8 @@
 //    // Push the view controller.
 //    [self.navigationController pushViewController:detailViewController animated:YES];
     
-    
-    NSNumber *postId = [self.postIDs objectAtIndex:indexPath.section];
-    
-    for(NSObject *num in self.postIDs){
-        NSLog(@"postId include %@",num);
-        NSLog(@"indexpathsec is %i",indexPath.section);
-        NSLog(@"indexpathsec is %i",indexPath.row);
-    }
+    if(self.postIDs){
+    NSNumber *postId = [self.postIDs objectAtIndex:indexPath.row];
     
     NSLog(@"postId is %@",postId);
     
@@ -200,7 +252,7 @@
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
-
+    }
 }
 
 /*

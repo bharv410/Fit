@@ -211,6 +211,8 @@
 //    [self.navigationController pushViewController:detailViewController animated:YES];
     
     if(self.postIDs){
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
     NSNumber *postId = [self.postIDs objectAtIndex:indexPath.row];
     
     NSLog(@"postId is %@",postId);
@@ -240,6 +242,7 @@
                                           object[@"isCommented"], @"isCommented"
                                           , nil];
                     WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
+            postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
             
             WLIPostViewController *postViewController = [[WLIPostViewController alloc] initWithNibName:@"WLIPostViewController" bundle:nil];
             postViewController.post = postFromParse;

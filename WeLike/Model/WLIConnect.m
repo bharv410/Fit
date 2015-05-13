@@ -762,56 +762,47 @@ static WLIConnect *sharedConnect;
 - (void)authenticateLayerWithUserID:(NSString *)userID completion:(void (^)(BOOL success, NSError * error))completion
 {
     // If the user is authenticated you don't need to re-authenticate.
-    if (self.layerClient.authenticatedUserID) {
-        NSLog(@"Layer Authenticated as previously User %@", self.layerClient.authenticatedUserID);
-        if (completion) completion(YES, nil);
-        return;
-    }
+//    if (self.layerClient.authenticatedUserID) {
+//        NSLog(@"Layer Authenticated as previously User %@", self.layerClient.authenticatedUserID);
+//        if (completion) completion(YES, nil);
+//        return;
+//    }
     
-    /*
-     * 1. Request an authentication Nonce from Layer
-     */
     [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
-        if (!nonce) {
-            if (completion) {
-                completion(NO, error);
-            }
-            return;
-        }
+        NSLog(@"Authentication nonce %@", nonce);
         
-        /*
-         * 2. Acquire identity Token from Layer Identity Service
-         */
-        [self requestIdentityTokenForUserID:userID appID:[self.layerClient.appID UUIDString] nonce:nonce completion:^(NSString *identityToken, NSError *error) {
-            if (!identityToken) {
-                if (completion) {
-                    completion(NO, error);
-                }
-                return;
-            }
-            
-            /*
-             * 3. Submit identity token to Layer for validation
-             */
-            [self.layerClient authenticateWithIdentityToken:identityToken completion:^(NSString *authenticatedUserID, NSError *error) {
-                if (authenticatedUserID) {
-                    if (completion) {
-                        
-                        completion(YES, nil);
-                    }
-                    NSLog(@"Layer Authenticated as User: %@", authenticatedUserID);
-                } else {
-                    completion(NO, error);
-                }
-            }];
-        }];
+        // Upon reciept of nonce, post to your backend and acquire a Layer identityToken
+        if (nonce) {
+//            PFUser *user = [PFUser currentUser];
+//            NSString *userID  = user.objectId;
+            [PFCloud callFunctionInBackground:@"generateToken"
+                               withParameters:@{@"nonce" : nonce,
+                                                @"userID" : userID}
+                                        block:^(NSString *token, NSError *error) {
+                                            if (!error) {
+                                                // Send the Identity Token to Layer to authenticate the user
+                                                [self.layerClient authenticateWithIdentityToken:token completion:^(NSString *authenticatedUserID, NSError *error) {
+                                                    if (!error) {
+                                                        NSLog(@"Parse User authenticated with Layer Identity Token");
+                                                    }
+                                                    else{
+                                                        NSLog(@"Parse User failed to authenticate with token with error: %@", error);
+                                                    }
+                                                }];
+                                            }
+                                            else{
+                                                NSLog(@"Parse Cloud function failed to be called to generate token with error: %@", error);
+                                            }
+                                        }];
+        }
     }];
+    
 }
-- (void)requestIdentityTokenForUserID:(NSString *)userID appID:(NSString *)appID nonce:(NSString *)nonce completion:(void(^)(NSString *identityToken, NSError *error))completion
-{
-    NSString *identityToken = [NSString stringWithFormat:@"%@%d",_currentUser.userUsername, _currentUser.userID];
-    completion(identityToken, nil);
-}
+//- (void)requestIdentityTokenForUserID:(NSString *)userID appID:(NSString *)appID nonce:(NSString *)nonce completion:(void(^)(NSString *identityToken, NSError *error))completion
+//{
+//    NSString *identityToken = [NSString stringWithFormat:@"%@%d",_currentUser.userUsername, _currentUser.userID];
+//    completion(identityToken, nil);
+//}
 
 
 @end

@@ -731,15 +731,7 @@ static WLIConnect *sharedConnect;
     
     _currentUser = nil;
     [self removeCurrentUser];
-    if (self.layerClient.authenticatedUserID) {
-        [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
-            if(success){
-                if(!error){
-                    NSLog(@"deauthenticated");
-                }
-            }
-        }];
-    }
+    self.layerClient = nil;
 }
 
 #pragma mark - debugger
@@ -762,11 +754,11 @@ static WLIConnect *sharedConnect;
 - (void)authenticateLayerWithUserID:(NSString *)userID completion:(void (^)(BOOL success, NSError * error))completion
 {
     // If the user is authenticated you don't need to re-authenticate.
-//    if (self.layerClient.authenticatedUserID) {
-//        NSLog(@"Layer Authenticated as previously User %@", self.layerClient.authenticatedUserID);
-//        if (completion) completion(YES, nil);
-//        return;
-//    }
+    if (self.layerClient.authenticatedUserID) {
+        NSLog(@"Layer Authenticated as previously User %@", self.layerClient.authenticatedUserID);
+        if (completion) completion(YES, nil);
+        return;
+    }
     
     [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
         NSLog(@"Authentication nonce %@", nonce);

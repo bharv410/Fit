@@ -75,7 +75,8 @@
 -(IBAction)SendBtnClick:(id)sender
 {
     NSLog(@"BtnClick");
-    [self sendMessage:@"test message sending"];
+    [self sendMessage:self.messageText.text];
+    self.messageText.text = @"";
 }
 
 - (void)sendMessage:(NSString *)messageText{
@@ -83,7 +84,7 @@
     // If no conversations exist, create a new conversation object with two participants
     if (!self.conversation) {
         NSError *error = nil;
-        self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ @"Simulator", @ "Dashboard" ]] options:nil error:&error];
+        self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ connect.currentUser.userUsername, @ "Dashboard" ]] options:nil error:&error];
         if (!self.conversation) {
             NSLog(@"New Conversation creation failed: %@", error);
         }
@@ -235,14 +236,11 @@ newIndexPath:(NSIndexPath *)newIndexPath
     NSString *senderName = [sender userID];
     NSSet *participantsInConvo = [self.conversation participants];
     for(NSString* participant in participantsInConvo) {
-        if(![senderName containsString:sharedConnect.currentUser.userUsername])
-            NSLog(@"participant = %@",participant);
+        NSLog(@"participant name = %@",participant);
+        if(![participant containsString:sharedConnect.currentUser.userUsername])
+            self.conversationTItle.text = [NSString stringWithFormat:@" %@'s messages",participant];
     }
     NSLog(@"sender name = %@",senderName);
-    
-    if([senderName containsString:sharedConnect.currentUser.userUsername])
-        self.conversationTItle.text = [NSString stringWithFormat:@"Convo with: %@",senderName];
-    
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@:%@",[sender userID], [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
 }

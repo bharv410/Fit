@@ -321,11 +321,15 @@ MPMoviePlayerController *moviePlayerController;
     WLIConnect *connect = [WLIConnect sharedConnect];
     // If no conversations exist, create a new conversation object with two participants
         NSError *error = nil;
-        self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ connect.currentUser.userUsername, self.user.userUsername ]] options:nil error:&error];
+        self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ _user.userUsername, connect.currentUser.userUsername ]] options:nil error:&error];
         if (!self.conversation) {
             NSLog(@"New Conversation creation failed: %@", error);
+        }else{
+            NSSet *participantsInConvo = [self.conversation participants];
+            for(NSString* participant in participantsInConvo) {
+                NSLog(@"participant name = %@",participant);
+            }
         }
-    
     
     // Creates a message part with text/plain MIME Type
     LYRMessagePart *messagePart = [LYRMessagePart messagePartWithText:messageText];
@@ -344,11 +348,20 @@ MPMoviePlayerController *moviePlayerController;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+    WLIConnect *connect = [WLIConnect sharedConnect];
     if ([alertView.title isEqualToString:@"Logout"] && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Yes"]) {
-        [[WLIConnect sharedConnect] logout];
-        WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
-        [appDelegate createViewHierarchy];
+        if (connect.layerClient.authenticatedUserID) {
+            [connect.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+                if(success){
+                    if(!error){
+                        NSLog(@"deauthenticated");
+                        [[WLIConnect sharedConnect] logout];
+                        WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
+                        [appDelegate createViewHierarchy];
+                    }
+                }
+            }];
+        }
     }else if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername]]){
         NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
         

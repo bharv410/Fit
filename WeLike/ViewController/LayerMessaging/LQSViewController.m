@@ -268,7 +268,14 @@ newIndexPath:(NSIndexPath *)newIndexPath
     }
     NSLog(@"sender name = %@",senderName);
     
+    if([sharedConnect.currentUser.userUsername containsString:[sender userID]]){
+        cell.textLabel.textColor = [UIColor blueColor];
+    }else{
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
+    
     cell.textLabel.text = [NSString stringWithFormat:@"%@:%@",[sender userID], [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
+    
 }
 
 

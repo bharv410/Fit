@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"Messages";
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -27,6 +28,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+@synthesize delegate;
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [delegate sendDataToA:[self.conversationsList objectAtIndex:self.chosenRow]];
+    
 }
 
 #pragma mark - Table view data source
@@ -106,6 +114,10 @@
     //[self.navigationController pushViewController:detailViewController animated:YES];
     
     NSLog(@"%tu",indexPath.row);
+    self.chosenRow = indexPath.row;
+    [delegate sendDataToA:[self.conversationsList objectAtIndex:self.chosenRow]];
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 

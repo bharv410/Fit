@@ -24,7 +24,7 @@
     [super viewDidLoad];
     self.convoNumber = 1;
     
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Next Convo" style:UIBarButtonItemStylePlain target:self action:@selector(nextConvo:)];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"All Messages" style:UIBarButtonItemStylePlain target:self action:@selector(nextConvo:)];
     self.navigationItem.rightBarButtonItem = anotherButton;
     
     
@@ -136,10 +136,11 @@
                 }
             }
         }
-                     ConversationTableViewController *ctv = [[ConversationTableViewController alloc]init];
-                     ctv.conversationSenderList = arrayOfSenders;
-                     ctv.conversationsList = arrayOfConvos;
-        [self.navigationController pushViewController:ctv animated:YES];
+                     self.pushedCTV = [[ConversationTableViewController alloc]init];
+                     self.pushedCTV.conversationSenderList = arrayOfSenders;
+                     self.pushedCTV.conversationsList = arrayOfConvos;
+        self.pushedCTV.delegate=self;
+        [self.navigationController pushViewController:self.pushedCTV animated:YES];
     
     
     } else {
@@ -156,6 +157,12 @@
         // setup query controller with messages from last conversation
         [self setupQueryController];
     }
+}
+-(void)sendDataToA:(LYRConversation *)conversation
+{
+    // data will come here inside of ViewControllerA
+    self.conversation = conversation;
+    [self setupQueryController];
 }
 
 -(void)setupQueryController
@@ -257,7 +264,7 @@ newIndexPath:(NSIndexPath *)newIndexPath
     for(NSString* participant in participantsInConvo) {
         NSLog(@"participant name = %@",participant);
         if(![participant containsString:sharedConnect.currentUser.userUsername])
-            self.conversationTItle.text = [NSString stringWithFormat:@" %@'s messages",participant];
+            self.conversationTItle.text = [NSString stringWithFormat:@"%@",participant];
     }
     NSLog(@"sender name = %@",senderName);
     

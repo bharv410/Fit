@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <LayerKit/LayerKit.h>
+
+@protocol senddataProtocol <NSObject>
+
+-(void)sendDataToA:(LYRConversation *)conversation;
+@end
 
 @interface ConversationTableViewController : UITableViewController
 
@@ -14,6 +20,9 @@
 @property (strong, nonatomic) NSArray *conversationSenderList;
 @property (strong, nonatomic) NSArray *conversationsList;
 @property (strong, nonatomic) NSString *title;
+@property (nonatomic) NSInteger chosenRow;
+
+@property(nonatomic,assign)id delegate;
 
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <LayerKit/LayerKit.h>
+#import "ConversationTableViewController.h"
 
 @interface LQSViewController : UIViewController <UITextViewDelegate, UITableViewDelegate, UITableViewDataSource,LYRQueryControllerDelegate>
 
@@ -18,4 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *conversationTItle;
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
+
+@property (strong, nonatomic)  ConversationTableViewController *pushedCTV;
+
 @end

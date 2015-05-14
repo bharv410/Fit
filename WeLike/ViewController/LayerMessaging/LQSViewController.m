@@ -9,6 +9,7 @@
 #import "LQSViewController.h"
 #import "LQSChatMessageCell.h"
 #import "WLIConnect.h"
+#import "ConversationTableViewController.h"
 
 @interface LQSViewController ()
 
@@ -56,7 +57,6 @@
 - (void) nextConvo :(id)sender{
     self.convoNumber++;
     [self fetchLayerConversation];
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -123,6 +123,25 @@
         self.convoNumber=1;
     if (!error) {
         NSLog(@"%tu conversations with participants %@", conversations.count, @[ connect.currentUser.userUsername ]);
+    
+        
+        NSMutableArray *arrayOfSenders = [[NSMutableArray alloc]init];
+        NSMutableArray *arrayOfConvos = [[NSMutableArray alloc]init];
+        for(LYRConversation *convers in conversations){
+            NSSet *participantsInConvo = [convers participants];
+            for(NSString* participant in participantsInConvo) {
+                if(![participant containsString:connect.currentUser.userUsername]){
+                    [arrayOfSenders addObject:participant];
+                    [arrayOfConvos addObject:convers];
+                }
+            }
+        }
+                     ConversationTableViewController *ctv = [[ConversationTableViewController alloc]init];
+                     ctv.conversationSenderList = arrayOfSenders;
+                     ctv.conversationsList = arrayOfConvos;
+        [self.navigationController pushViewController:ctv animated:YES];
+    
+    
     } else {
         NSLog(@"Query failed with error %@", error);
     }

@@ -170,6 +170,8 @@
 		6B30FB991AEEACE000BEBAD2 /* ParseSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30FB981AEEACE000BEBAD2 /* ParseSingleton.m */; };
 		6B30FBA81AEEBBE100BEBAD2 /* ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30FBA61AEEBBE100BEBAD2 /* ActivityController.m */; };
 		6B30FBA91AEEBBE100BEBAD2 /* ActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */; };
+		6B32A4461B050249002E172C /* ConversationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B32A4441B050249002E172C /* ConversationTableViewController.m */; };
+		6B32A4471B050249002E172C /* ConversationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B32A4451B050249002E172C /* ConversationTableViewController.xib */; };
 		6B37FE9F1AE41BD700021F4F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B37FE9E1AE41BD700021F4F /* Parse.framework */; };
 		6B5E08A81A609B160020D78B /* WLIChooseVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E08A61A609B160020D78B /* WLIChooseVideoViewController.m */; };
 		6B5E08A91A609B160020D78B /* WLIChooseVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B5E08A71A609B160020D78B /* WLIChooseVideoViewController.xib */; };
@@ -481,6 +483,9 @@
 		6B30FBA51AEEBBE100BEBAD2 /* ActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityController.h; sourceTree = "<group>"; };
 		6B30FBA61AEEBBE100BEBAD2 /* ActivityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityController.m; sourceTree = "<group>"; };
 		6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityController.xib; sourceTree = "<group>"; };
+		6B32A4431B050249002E172C /* ConversationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationTableViewController.h; path = LayerMessaging/ConversationTableViewController.h; sourceTree = "<group>"; };
+		6B32A4441B050249002E172C /* ConversationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationTableViewController.m; path = LayerMessaging/ConversationTableViewController.m; sourceTree = "<group>"; };
+		6B32A4451B050249002E172C /* ConversationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationTableViewController.xib; path = LayerMessaging/ConversationTableViewController.xib; sourceTree = "<group>"; };
 		6B37FE9E1AE41BD700021F4F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6B410FD51A5E12D8004B4823 /* ooVooSDK-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ooVooSDK-iOS.framework"; sourceTree = "<group>"; };
 		6B5E08A51A609B160020D78B /* WLIChooseVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIChooseVideoViewController.h; sourceTree = "<group>"; };
@@ -1367,6 +1372,9 @@
 				6B66C7781A8C1FA20057962A /* WLIActivityViewController.h */,
 				6B66C7791A8C1FA20057962A /* WLIActivityViewController.m */,
 				6B66C77A1A8C1FA20057962A /* WLIActivityViewController.xib */,
+				6B32A4431B050249002E172C /* ConversationTableViewController.h */,
+				6B32A4441B050249002E172C /* ConversationTableViewController.m */,
+				6B32A4451B050249002E172C /* ConversationTableViewController.xib */,
 			);
 			name = LayerMessaging;
 			sourceTree = "<group>";
@@ -1565,6 +1573,7 @@
 				6B774ED51A6A14C5007A8277 /* tabbarnearby@2x.png in Resources */,
 				6BA07B0D1A5F4B3600382FF1 /* Default-568h@2x.jpg in Resources */,
 				6BDEA6981A7846380077651F /* nav-btn-edit.png in Resources */,
+				6B32A4471B050249002E172C /* ConversationTableViewController.xib in Resources */,
 				6BA07B0F1A5F4B6600382FF1 /* Default.jpg in Resources */,
 				AD7160411A38BAC60043E740 /* dynamodb-2012-08-10.json in Resources */,
 				2C6D27B51896BACA00C459CB /* MNMPullToRefreshIcon.png in Resources */,
@@ -1756,6 +1765,7 @@
 				6B1D25251A96B209003D9EB5 /* WLINearbyViewController.m in Sources */,
 				2C6D27E11896BACA00C459CB /* WLIFollowersViewController.m in Sources */,
 				2C5B5C831A1A8F9500175A58 /* UIRefreshControl+AFNetworking.m in Sources */,
+				6B32A4461B050249002E172C /* ConversationTableViewController.m in Sources */,
 				6B130BE41A730E9300FE0E0C /* LQSViewController.m in Sources */,
 				2C6D27DB1896BACA00C459CB /* WLIPostCollectionViewCell.m in Sources */,
 				2C6D27DD1896BACA00C459CB /* WLIUserCell.m in Sources */,

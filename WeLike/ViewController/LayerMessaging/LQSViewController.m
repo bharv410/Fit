@@ -269,12 +269,16 @@ newIndexPath:(NSIndexPath *)newIndexPath
     NSLog(@"sender name = %@",senderName);
     
     if([sharedConnect.currentUser.userUsername containsString:[sender userID]]){
-        cell.textLabel.textColor = [UIColor blueColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:92.0f/255.0f green:173.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+        cell.textLabel.backgroundColor = [UIColor colorWithRed:92.0f/255.0f green:173.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
     }else{
         cell.textLabel.textColor = [UIColor blackColor];
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+        cell.textLabel.backgroundColor = [UIColor whiteColor];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@:%@",[sender userID], [[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@",[[NSString alloc] initWithData:messagePart.data encoding:NSUTF8StringEncoding]];
     
 }
 

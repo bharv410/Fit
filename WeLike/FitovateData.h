@@ -30,5 +30,8 @@
 - (void) likeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking: (void (^)(void))completion;
 - (void) unlikeUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking: (void (^)(void))completion;
 - (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text : (void (^)(WLIComment *comment))completion;
+- (void) oovooConferenceStarted;
+- (void) startOovoo;
+-(void) joinConference: (NSString *)userToJoin;
 
 @end

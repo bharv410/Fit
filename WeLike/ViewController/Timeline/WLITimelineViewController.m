@@ -15,6 +15,7 @@
 #import <Parse/Parse.h>
 #import "ParseSingleton.h"
 #import "FitovateData.h"
+#import <ooVooSDK-iOS/ooVooSDK-iOS.h>
 
 @implementation WLITimelineViewController
 
@@ -81,7 +82,7 @@
             
         } else {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
-            myData.allUsersDictionary = [[NSMutableArray alloc]initWithCapacity:0];
+            myData.allUsersDictionary = [[NSMutableDictionary alloc]initWithCapacity:0];
             [self reloadData:YES];
         }
     }];
@@ -183,12 +184,17 @@
 }
 
 - (void)firstLogin{
+    
     WLIConnect *myConnect = [WLIConnect sharedConnect];
     if(![myConnect.currentUser.userUsername length] ==0)
-        [myConnect authentWithLayer];
+        [myConnect authentWithLayer:^{
+        }];
+    
     [self.tableViewRefresh reloadData];
     
     FitovateData *myData = [FitovateData sharedFitovateData];
+    [myData startOovoo];
+    //[myData joinConference];
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
         [self getPosts];
     }];

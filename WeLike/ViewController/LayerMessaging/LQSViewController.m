@@ -10,6 +10,7 @@
 #import "LQSChatMessageCell.h"
 #import "WLIConnect.h"
 #import "ConversationTableViewController.h"
+#import "FitovateData.h"
 
 @interface LQSViewController ()
 
@@ -77,6 +78,20 @@
     NSLog(@"BtnClick");
     [self sendMessage:self.messageText.text];
     self.messageText.text = @"";
+}
+
+- (IBAction) videoCall: (id) sender
+{
+    NSSet *participantsInConvo = [self.conversation participants];
+    for(NSString* participant in participantsInConvo) {
+        
+        if(![participant containsString:[WLIConnect sharedConnect].currentUser.userUsername]){
+            NSLog(@"videocall = %@",participant);
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            [myData joinConference:participant];
+            return;
+        }
+    }
 }
 
 - (void)sendMessage:(NSString *)messageText{

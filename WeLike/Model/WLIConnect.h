@@ -50,7 +50,7 @@ typedef enum ServerResponse ServerResponse;
 + (WLIConnect*) sharedConnect;
 
 
-- (void)authentWithLayer;
+- (void)authentWithLayer: (void (^)(void))completion;
 
 #pragma mark - user
 

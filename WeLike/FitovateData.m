@@ -10,12 +10,17 @@
 #import <Parse/Parse.h>
 #import "WLIUser.h"
 #import "WLIConnect.h"
+#import <ooVooSDK-iOS/ooVooSDK-iOS.h>
 
 @implementation FitovateData
 
 @synthesize someProperty;
 @synthesize myUsername;
 @synthesize currentUser;
+
+
+NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE%2FTxwzvba3Wy%2FupvESaKZhg1ngT4E8V7bqvT1RpL5F0UIW8FKbWarcsUJ51Nx%2BGwlHpeETeLbU4B8AYBUSRsopL5aGEZx7OrKL%2B%2B60kOeKuNLZuf%2FTVdRXKNLa1LuXU%3D";
+
 
 #pragma mark Singleton Methods
 
@@ -34,6 +39,35 @@
         someProperty = [[NSString alloc] initWithString:someString];
     }
     return self;
+}
+
+-(void) startOovoo{
+    if(myUsername){
+        
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(oovooConferenceStarted) name:OOVOOConferenceDidBeginNotification object:nil];
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation addUniqueObject:myUsername forKey:@"channels"];
+    [currentInstallation saveInBackground];
+    }
+}
+
+-(void) oovooConferenceStarted{
+    NSLog(@"Oovoo conference started");
+}
+
+-(void) joinConference : (NSString *)userToJoin{
+    //benmark
+    [[ooVooController sharedController] initSdk:@"12349983352060"
+                               applicationToken:OOVOOToken baseUrl:[[NSUserDefaults standardUserDefaults] stringForKey:@"production"]];
+    
+    [[ooVooController sharedController] joinConference:userToJoin applicationToken:OOVOOToken  applicationId:@"12349983352060" participantInfo:currentUser.userInfo];
+    
+    
+    PFPush *push = [[PFPush alloc] init];
+    [push setChannel:userToJoin];
+    [push setMessage:@"Your getting a video call!"];
+    [push sendPushInBackground];
 }
 
 - (NSDictionary *) parseUserToDictionary : (PFObject *) userFromParse {

@@ -85,7 +85,7 @@ static WLIConnect *sharedConnect;
     }
 }
 
-- (void)authentWithLayer {
+- (void)authentWithLayer : (void (^)(void))completion {
     NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
     self.layerClient = [LYRClient clientWithAppID:appID];
     
@@ -95,6 +95,8 @@ static WLIConnect *sharedConnect;
         [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
             if (!success) {
                 NSLog(@"Failed Authenticating Layer Client with error:%@", error);
+            }else{
+                completion();
             }
         }];
     }else{
@@ -108,6 +110,8 @@ static WLIConnect *sharedConnect;
             [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
                 if (!success) {
                     NSLog(@"Failed Authenticating Layer Client with error:%@", error);
+                }else{
+                    completion();
                 }
             }];
         }

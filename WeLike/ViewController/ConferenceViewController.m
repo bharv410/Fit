@@ -22,15 +22,18 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupIndicator];
     
     [[ooVooController sharedController] initSdk:@"12349983352060"
                                applicationToken:OOVOOToken baseUrl:[[NSUserDefaults standardUserDefaults] stringForKey:@"production"]];
     
     [[ooVooController sharedController] joinConference:self.conferenceToJoin applicationToken:OOVOOToken  applicationId:@"12349983352060" participantInfo:@"participant info"];
     
+    self.title = [NSString stringWithFormat:@"%@",self.conferenceToJoin];
     
     self.videoView = [[ooVooVideoView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height/2)];
     [self.view addSubview:self.videoView];
+
     
     [ooVooController sharedController].cameraEnabled = YES;
     
@@ -51,6 +54,28 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
                                              selector:@selector(cameraDidStart:)
                                                  name:OOVOOCameraDidStartNotification
                                                object:nil];
+    
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
+        [self.indicator startAnimating];
+    }
+}
+
+
+-(void) setupIndicator{
+    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.indicator.frame = CGRectMake(0.0, [UIScreen mainScreen].applicationFrame.size.height/2 +20, 40.0, 40.0);
+    [self.videoView addSubview:self.indicator];
+    [self.indicator bringSubviewToFront:self.videoView];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = TRUE;
+}
+
++ (CGFloat) window_height   {
+    return [UIScreen mainScreen].applicationFrame.size.height;
+}
+
++ (CGFloat) window_width   {
+    return [UIScreen mainScreen].applicationFrame.size.width;
 }
 
 - (void)participantDidJoin:(NSNotification *)notification
@@ -64,14 +89,12 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
         if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
             //if I called them and they picked up
             [[ooVooController sharedController] receiveParticipantVideo:YES forParticipantID:self.conferenceToJoin];
+            [self.indicator stopAnimating];
         }else{
             
             //they called me and I just joined
             [[ooVooController sharedController] receiveParticipantVideo:YES forParticipantID:self.notificationSender];
         }
-        
-        
-        
     });
 }
 

@@ -91,6 +91,8 @@
             ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
             cvc.conferenceToJoin = participant;
             [self.navigationController pushViewController:cvc animated:YES];
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            [myData joinConference:participant];
             return;
         }
     }

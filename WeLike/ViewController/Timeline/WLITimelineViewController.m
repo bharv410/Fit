@@ -194,7 +194,6 @@
     
     FitovateData *myData = [FitovateData sharedFitovateData];
     [myData startOovoo];
-    //[myData joinConference];
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
         [self getPosts];
     }];

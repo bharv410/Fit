@@ -11,6 +11,7 @@
 #import "WLIConnect.h"
 #import "ConversationTableViewController.h"
 #import "FitovateData.h"
+#import "ConferenceViewController.h"
 
 @interface LQSViewController ()
 
@@ -87,8 +88,9 @@
         
         if(![participant containsString:[WLIConnect sharedConnect].currentUser.userUsername]){
             NSLog(@"videocall = %@",participant);
-            FitovateData *myData = [FitovateData sharedFitovateData];
-            [myData joinConference:participant];
+            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+            cvc.conferenceToJoin = participant;
+            [self.navigationController pushViewController:cvc animated:YES];
             return;
         }
     }

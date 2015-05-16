@@ -173,6 +173,8 @@
 		6B32A4461B050249002E172C /* ConversationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B32A4441B050249002E172C /* ConversationTableViewController.m */; };
 		6B32A4471B050249002E172C /* ConversationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B32A4451B050249002E172C /* ConversationTableViewController.xib */; };
 		6B37FE9F1AE41BD700021F4F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B37FE9E1AE41BD700021F4F /* Parse.framework */; };
+		6B4026171B07DD1E00EAA300 /* ConferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4026151B07DD1E00EAA300 /* ConferenceViewController.m */; };
+		6B4026181B07DD1E00EAA300 /* ConferenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B4026161B07DD1E00EAA300 /* ConferenceViewController.xib */; };
 		6B5E08A81A609B160020D78B /* WLIChooseVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E08A61A609B160020D78B /* WLIChooseVideoViewController.m */; };
 		6B5E08A91A609B160020D78B /* WLIChooseVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B5E08A71A609B160020D78B /* WLIChooseVideoViewController.xib */; };
 		6B66C77B1A8C1FA20057962A /* WLIActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B66C7791A8C1FA20057962A /* WLIActivityViewController.m */; };
@@ -487,6 +489,9 @@
 		6B32A4441B050249002E172C /* ConversationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationTableViewController.m; path = LayerMessaging/ConversationTableViewController.m; sourceTree = "<group>"; };
 		6B32A4451B050249002E172C /* ConversationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationTableViewController.xib; path = LayerMessaging/ConversationTableViewController.xib; sourceTree = "<group>"; };
 		6B37FE9E1AE41BD700021F4F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		6B4026141B07DD1E00EAA300 /* ConferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConferenceViewController.h; sourceTree = "<group>"; };
+		6B4026151B07DD1E00EAA300 /* ConferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConferenceViewController.m; sourceTree = "<group>"; };
+		6B4026161B07DD1E00EAA300 /* ConferenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConferenceViewController.xib; sourceTree = "<group>"; };
 		6B410FD51A5E12D8004B4823 /* ooVooSDK-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ooVooSDK-iOS.framework"; sourceTree = "<group>"; };
 		6B5E08A51A609B160020D78B /* WLIChooseVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIChooseVideoViewController.h; sourceTree = "<group>"; };
 		6B5E08A61A609B160020D78B /* WLIChooseVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIChooseVideoViewController.m; sourceTree = "<group>"; };
@@ -969,6 +974,7 @@
 		2C6D27151896BACA00C459CB /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				6B4026131B07DCFD00EAA300 /* OoVoo */,
 				6B30FB9F1AEEBB9600BEBAD2 /* Activity */,
 				6B1D25031A95EFF3003D9EB5 /* Nearby */,
 				6B130BDD1A730D3900FE0E0C /* LayerMessaging */,
@@ -1437,6 +1443,16 @@
 			name = Activity;
 			sourceTree = "<group>";
 		};
+		6B4026131B07DCFD00EAA300 /* OoVoo */ = {
+			isa = PBXGroup;
+			children = (
+				6B4026141B07DD1E00EAA300 /* ConferenceViewController.h */,
+				6B4026151B07DD1E00EAA300 /* ConferenceViewController.m */,
+				6B4026161B07DD1E00EAA300 /* ConferenceViewController.xib */,
+			);
+			name = OoVoo;
+			sourceTree = "<group>";
+		};
 		6B7368CF1AF6AC72008B9495 /* FitovateData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1570,6 +1586,7 @@
 				2C6D27F01896BACA00C459CB /* WLIPostViewController.xib in Resources */,
 				AD7160431A38BAC60043E740 /* elasticloadbalancing-2012-06-01.json in Resources */,
 				2C6D27F41896BACA00C459CB /* WLIProfileViewController.xib in Resources */,
+				6B4026181B07DD1E00EAA300 /* ConferenceViewController.xib in Resources */,
 				6B774ED51A6A14C5007A8277 /* tabbarnearby@2x.png in Resources */,
 				6BA07B0D1A5F4B3600382FF1 /* Default-568h@2x.jpg in Resources */,
 				6BDEA6981A7846380077651F /* nav-btn-edit.png in Resources */,
@@ -1718,6 +1735,7 @@
 				2C6D27BB1896BACA00C459CB /* SBJsonStreamParser.m in Sources */,
 				2C6D27DA1896BACA00C459CB /* WLITableViewCell.m in Sources */,
 				6B5E08A81A609B160020D78B /* WLIChooseVideoViewController.m in Sources */,
+				6B4026171B07DD1E00EAA300 /* ConferenceViewController.m in Sources */,
 				2C6D27C81896BACA00C459CB /* main.m in Sources */,
 				2C6D27C01896BACA00C459CB /* SBJsonStreamWriter.m in Sources */,
 				2C6D27D81896BACA00C459CB /* WLIPostCell.m in Sources */,

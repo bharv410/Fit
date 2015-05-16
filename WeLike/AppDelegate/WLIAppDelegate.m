@@ -14,6 +14,7 @@
 #import "WLINewPostViewController.h"
 #import "WLINearbyViewController.h"
 #import <Parse/Parse.h>
+#import "ConferenceViewController.h"
 
 NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsException";
 
@@ -25,6 +26,7 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     // Override point for customization after application launch.
    WLIRegisterViewController *vc= [[WLIRegisterViewController alloc] init];
     self.window.rootViewController = vc;
@@ -90,6 +92,20 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
+    // Extract the notification data
+    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSString *sender = [notificationPayload objectForKey:@"sender"];
+    NSString *conference = [notificationPayload objectForKey:@"conference"];
+    if([sender length]>2){
+        ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+        cvc.conferenceToJoin = conference;
+        cvc.notificationSender = sender;
+        [self.window.rootViewController presentViewController:cvc animated:YES completion:^{
+            NSLog(@"presented oovvoo conference");
+        }];
+    }else{
+        NSLog(@"no conference");
+    }
     
     return YES;
 }

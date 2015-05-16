@@ -11,15 +11,13 @@
 #import "WLIUser.h"
 #import "WLIConnect.h"
 #import <ooVooSDK-iOS/ooVooSDK-iOS.h>
+#import "ConferenceViewController.h"
 
 @implementation FitovateData
 
 @synthesize someProperty;
 @synthesize myUsername;
 @synthesize currentUser;
-
-
-NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE%2FTxwzvba3Wy%2FupvESaKZhg1ngT4E8V7bqvT1RpL5F0UIW8FKbWarcsUJ51Nx%2BGwlHpeETeLbU4B8AYBUSRsopL5aGEZx7OrKL%2B%2B60kOeKuNLZuf%2FTVdRXKNLa1LuXU%3D";
 
 
 #pragma mark Singleton Methods
@@ -57,15 +55,14 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
 }
 
 -(void) joinConference : (NSString *)userToJoin{
-    //benmark
-    [[ooVooController sharedController] initSdk:@"12349983352060"
-                               applicationToken:OOVOOToken baseUrl:[[NSUserDefaults standardUserDefaults] stringForKey:@"production"]];
-    
-    [[ooVooController sharedController] joinConference:userToJoin applicationToken:OOVOOToken  applicationId:@"12349983352060" participantInfo:currentUser.userInfo];
-    
+    NSDictionary *data = @{
+                           @"sender" : myUsername,
+                           @"channel" : userToJoin // Photo's object id
+                           };
     
     PFPush *push = [[PFPush alloc] init];
     [push setChannel:userToJoin];
+    [push setData:data];
     [push setMessage:@"Your getting a video call!"];
     [push sendPushInBackground];
 }

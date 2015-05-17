@@ -189,13 +189,22 @@ MPMoviePlayerController *moviePlayerController;
             } else {
                 [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
             }
-            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
-            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
+//            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
+//            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
             
             self.labelAddress.text = self.user.companyAddress;
             self.labelPhone.text = self.user.companyPhone;
             self.labelWeb.text = self.user.companyWeb;
             self.labelEmail.text = self.user.companyEmail;
+        }];
+        
+        
+        [sharedConnect followersForUserID:self.user.userID page:1 pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *followers, ServerResponse serverResponseCode) {
+            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", followers.count];
+        }];
+        
+        [sharedConnect followingForUserID:self.user.userID page:1 pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *followers, ServerResponse serverResponseCode) {
+            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", followers.count];
         }];
         
         

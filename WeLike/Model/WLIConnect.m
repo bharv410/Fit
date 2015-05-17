@@ -52,7 +52,7 @@ static WLIConnect *sharedConnect;
     self = [super init];
     
     // comment for user persistance
-     [self removeCurrentUser];
+     //[self removeCurrentUser];
     
     if (self) {
         httpClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kBaseLink]];
@@ -467,13 +467,15 @@ static WLIConnect *sharedConnect;
                                       object[@"createdAt"], @"postDate",
                                       object[@"createdAt"], @"timeAgo",
                                       [[NSDictionary alloc]init], @"user",
-                                      object[@"totalLikes"], @"totalLikes",
-                                      object[@"totalComments"], @"totalComments",
+                                      [object[@"totalLikes"] integerValue], @"totalLikes",
+                                      [object[@"totalComments"] integerValue], @"totalComments",
                                       object[@"isLiked"], @"isLiked",
                                       object[@"isCommented"], @"isCommented"
                                       , nil];
                 WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
                 postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+                postFromParse.postLikesCount = [object[@"totalLikes"] integerValue];
+                postFromParse.postCommentsCount = [object[@"totalComments"] integerValue];
                 [temp addObject:postFromParse];
             }
             completion(temp, OK);
@@ -503,13 +505,17 @@ static WLIConnect *sharedConnect;
                                   object[@"createdAt"], @"postDate",
                                   object[@"createdAt"], @"timeAgo",
                                   [[NSDictionary alloc]init], @"user",
-                                  object[@"totalLikes"], @"totalLikes",
-                                  object[@"totalComments"], @"totalComments",
+                                  [object[@"totalLikes"] integerValue], @"totalLikes",
+                                  [object[@"totalComments"] integerValue], @"totalComments",
                                   object[@"isLiked"], @"isLiked",
                                   object[@"isCommented"], @"isCommented"
                                   , nil];
             WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
             postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+            postFromParse.postLikesCount = [object[@"totalLikes"] integerValue];
+            postFromParse.postCommentsCount = [object[@"totalComments"] integerValue];
+                
+                NSLog(@"%d is likes amount",postFromParse.postLikesCount);
             [temp addObject:postFromParse];
             }
             completion(temp, OK);
@@ -702,25 +708,37 @@ static WLIConnect *sharedConnect;
     if (userID < 1) {
         completion(nil, BAD_REQUEST);
     } else {
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"take"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", userID] forKey:@"forUserID"];
-        [httpClient POST:@"getFollowers" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSArray *rawUsers = responseObject[@"items"];
-            
-            NSMutableArray *users = [NSMutableArray arrayWithCapacity:rawUsers.count];
-            for (NSDictionary *rawUser in rawUsers) {
-                WLIUser *user = [[WLIUser alloc] initWithDictionary:rawUser[@"user"]];
-                [users addObject:user];
+        NSMutableArray *idsOfUsersFollowing = [[NSMutableArray alloc] init];
+        
+        PFQuery *getFollowings = [PFQuery queryWithClassName:@"Follows"];
+        [getFollowings whereKey:@"following" equalTo:[NSNumber numberWithInt:userID]];
+        [getFollowings findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error){
+                for(PFObject *object in objects){
+                    NSNumber *followingId = object[@"follower"];
+                    [idsOfUsersFollowing addObject:followingId];
+                }
+                FitovateData *myData = [FitovateData sharedFitovateData];
+                PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+                [query whereKey:@"userID" containedIn:idsOfUsersFollowing];
+                [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                    if (!error) {
+                        NSMutableArray *users = [NSMutableArray arrayWithCapacity:objects.count];
+                        for (PFObject *loggedInUserParse in objects) {
+                            WLIUser *currUser = [myData pfobjectToWLIUser:loggedInUserParse];
+                            [users addObject:currUser];
+                        }
+                        completion(users, OK);
+                    } else {
+                        NSLog(@"Error: %@ %@", error, [error userInfo]);
+                        completion(nil,UNKNOWN_ERROR);
+                    }
+                }];
+                
+            }else{
+                NSLog(@"error getting ids that users following");
+                completion(nil,UNKNOWN_ERROR);
             }
-            
-            [self debugger:parameters.description methodLog:@"api/getFollowers" dataLogFormatted:responseObject];
-            completion(users, OK);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self debugger:parameters.description methodLog:@"api/getFollowers" dataLog:error.description];
-            completion(nil, UNKNOWN_ERROR);
         }];
     }
 }
@@ -730,26 +748,40 @@ static WLIConnect *sharedConnect;
     if (userID < 1) {
         completion(nil, BAD_REQUEST);
     } else {
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"take"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", userID] forKey:@"forUserID"];
-        [httpClient POST:@"getFollowing" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSArray *rawUsers = responseObject[@"items"];
-            
-            NSMutableArray *users = [NSMutableArray arrayWithCapacity:rawUsers.count];
-            for (NSDictionary *rawUser in rawUsers) {
-                WLIUser *user = [[WLIUser alloc] initWithDictionary:rawUser[@"user"]];
-                [users addObject:user];
+    NSMutableArray *idsOfUsersFollowing = [[NSMutableArray alloc] init];
+    
+    PFQuery *getFollowings = [PFQuery queryWithClassName:@"Follows"];
+    [getFollowings whereKey:@"follower" equalTo:[NSNumber numberWithInt:userID]];
+    [getFollowings findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            for(PFObject *object in objects){
+                NSNumber *followingId = object[@"following"];
+                [idsOfUsersFollowing addObject:followingId];
+                NSLog(@" follwing id = %@",followingId);
             }
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+            [query whereKey:@"userID" containedIn:idsOfUsersFollowing];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    NSMutableArray *users = [NSMutableArray arrayWithCapacity:objects.count];
+                    for (PFObject *loggedInUserParse in objects) {
+                        WLIUser *currUser = [myData pfobjectToWLIUser:loggedInUserParse];
+                        [users addObject:currUser];
+                        NSLog(@" follwing name = %@",currUser.userUsername);
+                    }
+                    completion(users, OK);
+                } else {
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                    completion(nil,UNKNOWN_ERROR);
+                }
+            }];
             
-            [self debugger:parameters.description methodLog:@"api/getFollowing" dataLogFormatted:responseObject];
-            completion(users, OK);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self debugger:parameters.description methodLog:@"api/getFollowing" dataLog:error.description];
-            completion(nil, UNKNOWN_ERROR);
-        }];
+        }else{
+            NSLog(@"error getting ids that users following");
+            completion(nil,UNKNOWN_ERROR);
+        }
+    }];
     }
 }
 

@@ -17,7 +17,6 @@
 @property (nonatomic, retain) LYRQueryController *queryController;
 @property (nonatomic) LYRConversation *conversation;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *conversationTItle;
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
 
 @property (strong, nonatomic)  ConversationTableViewController *pushedCTV;

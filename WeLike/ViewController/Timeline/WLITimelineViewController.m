@@ -57,7 +57,7 @@
     NSLog(@"Eh up, someone just pressed the button!");
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
     LQSViewController *newVc = [[LQSViewController alloc]init];
-    [self.navigationController pushViewController:newVc animated:YES];
+    [self.navigationController pushViewController:newVc animated:NO];
     
 }
 
@@ -104,10 +104,10 @@
 #pragma mark - Data loading methods
 
 - (void)reloadData:(BOOL)reloadAll {
-    
+    loading = YES;
     FitovateData *myData = [FitovateData sharedFitovateData];
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
-        loading = YES;
+        
         int page;
         if (reloadAll) {
             loadMore = NO;

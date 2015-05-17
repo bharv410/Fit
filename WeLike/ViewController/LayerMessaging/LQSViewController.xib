@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LQSViewController">
             <connections>
-                <outlet property="conversationTItle" destination="Bsj-Ix-cLa" id="6pF-rd-cD7"/>
                 <outlet property="messageText" destination="rfl-Ti-Ja9" id="XsZ-yV-bCm"/>
                 <outlet property="tableView" destination="5a6-g1-Jb7" id="gv3-FN-skf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -49,22 +48,13 @@
                         <rect key="frame" x="62" y="93" width="320" height="30"/>
                     </variation>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsj-Ix-cLa">
-                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <color key="textColor" red="0.36078431370000003" green="0.67843137249999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="35" width="374" height="22"/>
-                    </variation>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1G-Dg-a6x">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <state key="normal" title="VideoCall">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="13" y="65" width="65" height="30"/>
+                        <rect key="frame" x="317" y="8" width="65" height="30"/>
                     </variation>
                     <connections>
                         <action selector="videoCall:" destination="-1" eventType="touchUpInside" id="kDV-8l-fTZ"/>
@@ -78,7 +68,6 @@
                     <exclude reference="5a6-g1-Jb7"/>
                     <exclude reference="jZf-X5-ajs"/>
                     <exclude reference="rfl-Ti-Ja9"/>
-                    <exclude reference="Bsj-Ix-cLa"/>
                     <exclude reference="f1G-Dg-a6x"/>
                 </mask>
             </variation>
@@ -87,7 +76,6 @@
                     <include reference="5a6-g1-Jb7"/>
                     <include reference="jZf-X5-ajs"/>
                     <include reference="rfl-Ti-Ja9"/>
-                    <include reference="Bsj-Ix-cLa"/>
                     <include reference="f1G-Dg-a6x"/>
                 </mask>
             </variation>

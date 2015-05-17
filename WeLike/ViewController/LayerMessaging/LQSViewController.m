@@ -89,7 +89,7 @@
             NSLog(@"videocall = %@",participant);
             ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
             cvc.conferenceToJoin = participant;
-            [self.navigationController pushViewController:cvc animated:YES];
+            [self.navigationController pushViewController:cvc animated:NO];
             FitovateData *myData = [FitovateData sharedFitovateData];
             [myData joinConference:participant];
             return;
@@ -274,7 +274,6 @@ newIndexPath:(NSIndexPath *)newIndexPath
     // Get Message Object from queryController
     LYRMessage *message = [self.queryController objectAtIndexPath:indexPath];
     
-    // Set cell text to "<Sender>: <Message Contents>"
     LYRMessagePart *messagePart = message.parts[0];
     LYRActor *sender = [message sender];
     NSString *senderName = [sender userID];
@@ -282,9 +281,8 @@ newIndexPath:(NSIndexPath *)newIndexPath
     for(NSString* participant in participantsInConvo) {
         NSLog(@"participant name = %@",participant);
         if(![participant containsString:sharedConnect.currentUser.userUsername])
-            self.conversationTItle.text = [NSString stringWithFormat:@"%@",participant];
+            self.title = [NSString stringWithFormat:@"%@",participant];
     }
-    NSLog(@"sender name = %@",senderName);
     
     if([sharedConnect.currentUser.userUsername containsString:[sender userID]]){
         cell.textLabel.textColor = [UIColor whiteColor];

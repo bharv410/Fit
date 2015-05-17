@@ -180,23 +180,23 @@ MPMoviePlayerController *moviePlayerController;
         
         
 //        //update with parse data of current object
-//        [sharedConnect userWithUserID:self.user.userID onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
-//            _user = user;
-//            [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
-//            self.labelName.text = self.user.userFullName;
-//            if (self.user.followingUser) {
-//                [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-//            } else {
-//                [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-//            }
-//            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
-//            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
-//            
-//            self.labelAddress.text = self.user.companyAddress;
-//            self.labelPhone.text = self.user.companyPhone;
-//            self.labelWeb.text = self.user.companyWeb;
-//            self.labelEmail.text = self.user.companyEmail;
-//        }];
+        [sharedConnect userWithUserID:self.user.userID onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+            _user = user;
+            [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
+            self.labelName.text = self.user.userFullName;
+            if (self.user.followingUser) {
+                [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+            } else {
+                [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+            }
+            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
+            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
+            
+            self.labelAddress.text = self.user.companyAddress;
+            self.labelPhone.text = self.user.companyPhone;
+            self.labelWeb.text = self.user.companyWeb;
+            self.labelEmail.text = self.user.companyEmail;
+        }];
         
         
         //if its a trainer and its NOT ME
@@ -352,14 +352,9 @@ MPMoviePlayerController *moviePlayerController;
     if ([alertView.title isEqualToString:@"Logout"] && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Yes"]) {
         if (connect.layerClient.authenticatedUserID) {
             [connect.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
-                if(success){
-                    if(!error){
-                        NSLog(@"deauthenticated");
-                        [[WLIConnect sharedConnect] logout];
-                        WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
-                        [appDelegate createViewHierarchy];
-                    }
-                }
+                [[WLIConnect sharedConnect] logout];
+                WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
+                [appDelegate createViewHierarchy];
             }];
         }
     }else if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername]]){

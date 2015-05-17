@@ -33,7 +33,8 @@
 @synthesize delegate;
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [delegate sendDataToA:[self.conversationsList objectAtIndex:self.chosenRow]];
+    if([self.conversationsList count]>0)
+        [delegate sendDataToA:[self.conversationsList objectAtIndex:self.chosenRow]];
     
 }
 

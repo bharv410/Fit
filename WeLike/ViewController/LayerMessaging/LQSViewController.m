@@ -76,7 +76,6 @@
 }
 -(IBAction)SendBtnClick:(id)sender
 {
-    NSLog(@"BtnClick");
     [self sendMessage:self.messageText.text];
     self.messageText.text = @"";
 }

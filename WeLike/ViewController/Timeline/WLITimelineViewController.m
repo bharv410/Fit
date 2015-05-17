@@ -62,7 +62,6 @@
 }
 
 -(void)getPosts {
-    NSLog(@"getting posts");
     FitovateData *myData = [FitovateData sharedFitovateData];
     PFQuery *query = [PFQuery queryWithClassName:@"Users"];
     [query orderByDescending:@"userID"];
@@ -76,7 +75,6 @@
                 
                 //adds all users for now by userID
             }
-            NSLog(@"myData.followingTheseDICT = %@",myData.allUsersDictionary);
             [self reloadData:YES];
             
             
@@ -124,9 +122,8 @@
         //        [self.tableViewRefresh reloadData];
         //        [refreshManager tableViewReloadFinishedAnimated:YES];
         //    }];
-        loading = NO;
         
-        //simulate me following these 19 userIDs
+        
         FitovateData *myData = [FitovateData sharedFitovateData];
         
         NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
@@ -136,11 +133,10 @@
         
         [query addDescendingOrder:@"createdAt"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            loading = NO;
             if (!error) {
                 for (PFObject *object in objects) {
-                    
-                    NSString *postCaption = object[@"postTitle"];
-                    
+        
                     if([self.allFollowings containsObject:object[@"userID"]]){ // if im following this person
                         
                         PFFile *tempPhotoForUrl = object[@"userImage"];
@@ -162,13 +158,8 @@
                         postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
                         NSNumber *number = object[@"totalLikes"];
                         postFromParse.postLikesCount =[number integerValue];
-                        
-                        NSLog(@"title = %@ numberOfLikes = %d",postFromParse.postTimeAgo, postFromParse.postLikesCount);
-                        
                         [wliPosts insertObject:postFromParse atIndex:postCount];
                         postCount++;
-                        
-                        
                     }
                     self.posts = wliPosts;
                     [self.tableViewRefresh reloadData];

@@ -86,8 +86,6 @@ static WLIConnect *sharedConnect;
 }
 
 - (void)authentWithLayer : (void (^)(void))completion {
-    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
-    self.layerClient = [LYRClient clientWithAppID:appID];
     
     if(self.layerClient.isConnected){
         NSString *userIDString = _currentUser.userUsername;
@@ -454,47 +452,71 @@ static WLIConnect *sharedConnect;
 
 - (void)recentPostsWithPageSize:(int)pageSize onCompletion:(void (^)(NSMutableArray *posts, ServerResponse serverResponseCode))completion {
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"take"];
-    
-    [httpClient POST:@"getRecentPosts" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *rawPosts = [responseObject objectForKey:@"items"];
-        
-        NSMutableArray *posts = [NSMutableArray arrayWithCapacity:rawPosts.count];
-        for (NSDictionary *rawPost in rawPosts) {
-            WLIPost *post = [[WLIPost alloc] initWithDictionary:rawPost];
-            [posts addObject:post];
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    [query orderByDescending:@"createdAt"];
+    query.limit = 15;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSMutableArray *temp = [NSMutableArray arrayWithCapacity:objects.count];
+            for(PFObject *object in objects){
+                PFFile *tempPhotoForUrl = object[@"userImage"];
+                NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
+                                      object[@"postTitle"], @"postTitle",
+                                      tempPhotoForUrl.url, @"postImage",
+                                      object[@"createdAt"], @"postDate",
+                                      object[@"createdAt"], @"timeAgo",
+                                      [[NSDictionary alloc]init], @"user",
+                                      object[@"totalLikes"], @"totalLikes",
+                                      object[@"totalComments"], @"totalComments",
+                                      object[@"isLiked"], @"isLiked",
+                                      object[@"isCommented"], @"isCommented"
+                                      , nil];
+                WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
+                postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+                [temp addObject:postFromParse];
+            }
+            completion(temp, OK);
+        } else {
+            completion(nil, UNKNOWN_ERROR);
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
-        
-        [self debugger:parameters.description methodLog:@"api/getRecentPosts" dataLogFormatted:responseObject];
-        completion(posts, OK);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self debugger:parameters.description methodLog:@"api/getRecentPosts" dataLog:error.description];
-        completion(nil, UNKNOWN_ERROR);
     }];
+
 }
 
 - (void)popularPostsOnPage:(int)page pageSize:(int)pageSize onCompletion:(void (^)(NSMutableArray *posts, ServerResponse serverResponseCode))completion {
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"take"];
-    [httpClient POST:@"getPopularPosts" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *rawPosts = [responseObject objectForKey:@"items"];
-        
-        NSMutableArray *posts = [NSMutableArray arrayWithCapacity:rawPosts.count];
-        for (NSDictionary *rawPost in rawPosts) {
-            WLIPost *post = [[WLIPost alloc] initWithDictionary:rawPost];
-            [posts addObject:post];
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    [query orderByDescending:@"totalLikes"];
+    query.limit = 15;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSMutableArray *temp = [NSMutableArray arrayWithCapacity:objects.count];
+            for(PFObject *object in objects){
+            
+            PFFile *tempPhotoForUrl = object[@"userImage"];
+            NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
+                                  object[@"postTitle"], @"postTitle",
+                                  tempPhotoForUrl.url, @"postImage",
+                                  object[@"createdAt"], @"postDate",
+                                  object[@"createdAt"], @"timeAgo",
+                                  [[NSDictionary alloc]init], @"user",
+                                  object[@"totalLikes"], @"totalLikes",
+                                  object[@"totalComments"], @"totalComments",
+                                  object[@"isLiked"], @"isLiked",
+                                  object[@"isCommented"], @"isCommented"
+                                  , nil];
+            WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
+            postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+            [temp addObject:postFromParse];
+            }
+            completion(temp, OK);
+        } else {
+            completion(nil, UNKNOWN_ERROR);
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
-        
-        [self debugger:parameters.description methodLog:@"api/getPopularPosts" dataLogFormatted:responseObject];
-        completion(posts, OK);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self debugger:parameters.description methodLog:@"api/getPopularPosts" dataLog:error.description];
-        completion(nil, UNKNOWN_ERROR);
     }];
 }
 
@@ -759,10 +781,52 @@ static WLIConnect *sharedConnect;
 {
     // If the user is authenticated you don't need to re-authenticate.
     if (self.layerClient.authenticatedUserID) {
-        NSLog(@"Layer Authenticated as previously User %@", self.layerClient.authenticatedUserID);
-        if (completion) completion(YES, nil);
-        return;
-    }
+        if ([self.layerClient.authenticatedUserID isEqualToString:_currentUser.userUsername]){
+            NSLog(@"Layer Authenticated as previously User %@", self.layerClient.authenticatedUserID);
+            if (completion) completion(YES, nil);
+            return;
+        }else {
+            //If the authenticated userID is different, then deauthenticate the current client and re-authenticate with the new userID.
+            [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+                if (!error){
+                    
+                    [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
+                        NSLog(@"Authentication nonce %@", nonce);
+                        
+                        // Upon reciept of nonce, post to your backend and acquire a Layer identityToken
+                        if (nonce) {
+                            //            PFUser *user = [PFUser currentUser];
+                            //            NSString *userID  = user.objectId;
+                            [PFCloud callFunctionInBackground:@"generateToken"
+                                               withParameters:@{@"nonce" : nonce,
+                                                                @"userID" : userID}
+                                                        block:^(NSString *token, NSError *error) {
+                                                            if (!error) {
+                                                                // Send the Identity Token to Layer to authenticate the user
+                                                                [self.layerClient authenticateWithIdentityToken:token completion:^(NSString *authenticatedUserID, NSError *error) {
+                                                                    if (!error) {
+                                                                        NSLog(@"Parse User authenticated with Layer Identity Token");
+                                                                    }
+                                                                    else{
+                                                                        NSLog(@"Parse User failed to authenticate with token with error: %@", error);
+                                                                    }
+                                                                }];
+                                                            }
+                                                            else{
+                                                                NSLog(@"Parse Cloud function failed to be called to generate token with error: %@", error);
+                                                            }
+                                                        }];
+                        }
+                    }];
+                    
+                } else {
+                    if (completion){
+                        completion(NO, error);
+                    }
+                }
+            }];
+        }
+    }else{
     
     [self.layerClient requestAuthenticationNonceWithCompletion:^(NSString *nonce, NSError *error) {
         NSLog(@"Authentication nonce %@", nonce);
@@ -792,7 +856,7 @@ static WLIConnect *sharedConnect;
                                         }];
         }
     }];
-    
+    }
 }
 //- (void)requestIdentityTokenForUserID:(NSString *)userID appID:(NSString *)appID nonce:(NSString *)nonce completion:(void(^)(NSString *identityToken, NSError *error))completion
 //{

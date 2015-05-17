@@ -37,24 +37,16 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d fitovate ativity from parse.", objects.count);
             NSMutableArray *stringsOfActivity = [[NSMutableArray alloc]initWithCapacity:10];
             NSMutableArray *postIds = [[NSMutableArray alloc]initWithCapacity:10];
             
             for (PFObject *object in objects) {
-                
                 NSString *activityType = object[@"activityType"];
                 NSString *sourceId = object[@"sourceId"];
                 NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
                 f.numberStyle = NSNumberFormatterDecimalStyle;
                 NSNumber *postId = [f numberFromString:object[@"postID"]];
-                NSLog(@"postId is %@",postId);
-                
-                
                 NSString *activityText = [NSString stringWithFormat:@"You added a %@ on %@'s photo",activityType,sourceId];
-                
-                
-                
                 [stringsOfActivity insertObject:activityText atIndex:0];
                 [postIds addObject:postId];
             }
@@ -225,10 +217,7 @@
             PFObject *object = [objects objectAtIndex:0];
             
                 NSString *playerName = object[@"postTitle"];
-                NSLog(@"%@", object.createdAt);
-                    
                     PFFile *tempPhotoForUrl = object[@"userImage"];
-                    
                     
                     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
                                           object[@"postTitle"], @"postTitle",

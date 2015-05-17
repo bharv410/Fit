@@ -83,7 +83,6 @@
     
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     NSNumber *myUserId = [NSNumber numberWithInt:sharedConnect.currentUser.userID];
-    NSLog(@"logged in as user number %@",myUserId);
     [temp addObject:myUserId];
     
     PFQuery *getFollowings = [PFQuery queryWithClassName:@"Follows"];
@@ -91,9 +90,7 @@
     [getFollowings findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
             for(PFObject *object in objects){
-    
                 [temp addObject:object[@"following"]];
-                NSLog(@"follwing = %@",object[@"following"]);
             }
             completion();
         }else{

@@ -8,7 +8,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LQSViewController">
             <connections>
                 <outlet property="messageText" destination="rfl-Ti-Ja9" id="XsZ-yV-bCm"/>
+                <outlet property="replyButton" destination="jZf-X5-ajs" id="P7e-Ns-G1P"/>
                 <outlet property="tableView" destination="5a6-g1-Jb7" id="gv3-FN-skf"/>
+                <outlet property="videoCallButton" destination="f1G-Dg-a6x" id="x7u-EW-vxH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,7 +23,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="0.0" y="131" width="400" height="690"/>
+                        <rect key="frame" x="0.0" y="47" width="400" height="690"/>
                     </variation>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="5R8-bJ-Qgx"/>
@@ -30,31 +32,31 @@
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZf-X5-ajs">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <state key="normal" title="Send">
+                    <state key="normal" title="Reply">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="13" y="92" width="36" height="30"/>
+                        <rect key="frame" x="8" y="8" width="39" height="30"/>
                     </variation>
                     <connections>
                         <action selector="SendBtnClick:" destination="-1" eventType="touchUpInside" id="Gij-Dj-iHi"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rfl-Ti-Ja9">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rfl-Ti-Ja9">
                     <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="62" y="93" width="320" height="30"/>
+                        <rect key="frame" x="62" y="9" width="330" height="30"/>
                     </variation>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1G-Dg-a6x">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1G-Dg-a6x">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <state key="normal" title="VideoCall">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="317" y="8" width="65" height="30"/>
+                        <rect key="frame" x="168" y="9" width="65" height="30"/>
                     </variation>
                     <connections>
                         <action selector="videoCall:" destination="-1" eventType="touchUpInside" id="kDV-8l-fTZ"/>

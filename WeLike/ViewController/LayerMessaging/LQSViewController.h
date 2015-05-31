@@ -18,6 +18,8 @@
 @property (nonatomic) LYRConversation *conversation;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
+@property (weak, nonatomic) IBOutlet UIButton *replyButton;
+@property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
 
 @property (strong, nonatomic)  ConversationTableViewController *pushedCTV;
 

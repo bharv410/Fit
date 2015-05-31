@@ -68,6 +68,10 @@
                     WLITimelineViewController *timelineViewController = (WLITimelineViewController *)[appDelegate.tabBarController.viewControllers[0] topViewController];
                     [timelineViewController firstLogin];
                 }];
+                WLIConnect *myConnect = [WLIConnect sharedConnect];
+                [myConnect authentWithLayer:^{
+                    NSLog(@"done");
+                }];
             } else if (serverResponseCode == NO_CONNECTION) {
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else if (serverResponseCode == NOT_FOUND) {

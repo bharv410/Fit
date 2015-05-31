@@ -35,6 +35,8 @@
     if (self = [super init]) {
         NSString *someString = @" ";
         someProperty = [[NSString alloc] initWithString:someString];
+        self.layerAuthenticated = NO;
+        NSLog(@"not authed");
     }
     return self;
 }

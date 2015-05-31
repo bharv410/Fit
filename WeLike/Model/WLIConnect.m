@@ -52,7 +52,8 @@ static WLIConnect *sharedConnect;
     self = [super init];
     
     // comment for user persistance
-     //[self removeCurrentUser];
+    
+    [self removeCurrentUser];
     
     if (self) {
         httpClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kBaseLink]];
@@ -70,7 +71,15 @@ static WLIConnect *sharedConnect;
             _currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUser];
             FitovateData *myData = [FitovateData sharedFitovateData];
             myData.currentUser = _currentUser;
-        }
+            NSLog(@"archived user %@", _currentUser.userUsername);
+            if(_currentUser.userUsername !=nil && !myData.layerAuthenticated){
+                [self authentWithLayer:^{
+                    myData.layerAuthenticated = YES;
+                    NSLog(@"AUTHED!");
+                }];
+            }
+            
+            }
     }
     return self;
 }
@@ -86,8 +95,10 @@ static WLIConnect *sharedConnect;
 }
 
 - (void)authentWithLayer : (void (^)(void))completion {
-    
+    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
+    self.layerClient = [LYRClient clientWithAppID:appID];
     if(self.layerClient.isConnected){
+        
         NSString *userIDString = _currentUser.userUsername;
         NSLog(@"_currentUser name = %@",_currentUser.userUsername);
         [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
@@ -97,6 +108,7 @@ static WLIConnect *sharedConnect;
                 completion();
             }
         }];
+        
     }else{
     
     [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
@@ -114,6 +126,7 @@ static WLIConnect *sharedConnect;
             }];
         }
     }];
+        
     }
 }
 
@@ -138,9 +151,11 @@ static WLIConnect *sharedConnect;
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 for (PFObject *loggedInUserParse in objects) {
+                    
                     _currentUser = [myData pfobjectToWLIUser:loggedInUserParse];
                     myData.currentUser = _currentUser;
-                    [self saveCurrentUser];
+                    if(myData.currentUser.userUsername!=nil)
+                        [self saveCurrentUser];
                     completion(_currentUser, OK);
                 }
                 if(objects.count==0)
@@ -188,7 +203,8 @@ static WLIConnect *sharedConnect;
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *rawUser = [responseObject objectForKey:@"item"];
             _currentUser = [[WLIUser alloc] initWithDictionary:rawUser];
-            [self saveCurrentUser];
+            if(_currentUser.userUsername!=nil)
+                [self saveCurrentUser];
             [self debugger:parameters.description methodLog:@"api/register" dataLogFormatted:responseObject];
             completion(_currentUser, OK);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -289,7 +305,8 @@ static WLIConnect *sharedConnect;
             NSDictionary *rawUser = [responseObject objectForKey:@"item"];
             WLIUser *user = [[WLIUser alloc] initWithDictionary:rawUser];
             self.currentUser = user;
-            [self saveCurrentUser];
+            if(self.currentUser.userUsername!=nil)
+                [self saveCurrentUser];
             
             [self debugger:parameters.description methodLog:@"api/setProfile" dataLogFormatted:responseObject];
             completion(user, OK);

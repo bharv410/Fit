@@ -47,7 +47,7 @@
                 f.numberStyle = NSNumberFormatterDecimalStyle;
                 NSNumber *postId = [f numberFromString:object[@"postID"]];
                 NSString *activityText = [NSString stringWithFormat:@"You added a %@ on %@'s photo",activityType,sourceId];
-                [stringsOfActivity insertObject:activityText atIndex:0];
+                [stringsOfActivity addObject:activityText];
                 [postIds addObject:postId];
             }
             self.posts = stringsOfActivity;
@@ -206,9 +206,7 @@
         FitovateData *myData = [FitovateData sharedFitovateData];
         
     NSNumber *postId = [self.postIDs objectAtIndex:indexPath.row];
-    
-    NSLog(@"postId is %@",postId);
-    
+        
     PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
     [query whereKey:@"postID" equalTo:postId];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

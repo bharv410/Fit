@@ -28,7 +28,7 @@
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"All Messages" style:UIBarButtonItemStylePlain target:self action:@selector(nextConvo:)];
     self.navigationItem.rightBarButtonItem = anotherButton;
-    
+    [self.messageText setHidden:YES];
     
     // Do any additional setup after loading the view from its nib.
     //benmark
@@ -76,8 +76,17 @@
 }
 -(IBAction)SendBtnClick:(id)sender
 {
-    [self sendMessage:self.messageText.text];
-    self.messageText.text = @"";
+    
+    if([self.replyButton.currentTitle isEqualToString:@"Reply"]){
+        NSLog(@"is equal to reply");
+        [self.replyButton setTitle:@"Send" forState:UIControlStateNormal];
+        [self.messageText setHidden:NO];
+        [self.videoCallButton setHidden:YES];
+    }else if([self.replyButton.currentTitle isEqualToString:@"Send"]){
+        NSLog(@"is equal to send");
+        [self sendMessage:self.messageText.text];
+        self.messageText.text = @"";
+    }
 }
 
 - (IBAction) videoCall: (id) sender

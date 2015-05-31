@@ -92,10 +92,6 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    WLIConnect *sharedConnect = [WLIConnect sharedConnect];
-    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
-    sharedConnect.layerClient = [LYRClient clientWithAppID:appID];
-    
     // Extract the notification data
     NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     NSString *sender = [notificationPayload objectForKey:@"sender"];

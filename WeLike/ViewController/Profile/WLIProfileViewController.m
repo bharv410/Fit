@@ -49,8 +49,10 @@ MPMoviePlayerController *moviePlayerController;
     } else {
         if (self.user.followingUser) {
             [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+            NSLog(@"Set to following2");
         } else {
             [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+            NSLog(@"Set to follow2");
         }
     }
 
@@ -94,10 +96,10 @@ MPMoviePlayerController *moviePlayerController;
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
         if([self.allFollowings containsObject:[NSNumber numberWithInt:self.user.userID]]){
             [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-            NSLog(@"Set to following");
+            NSLog(@"Set to following1");
         }else{
             [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-            NSLog(@"Set to follow");
+            NSLog(@"Set to follow1");
         }
     }];
     
@@ -174,7 +176,14 @@ MPMoviePlayerController *moviePlayerController;
 //                NSLog(@"Error: %@ %@", error, [error userInfo]);
 //            }
 //        }];
-        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+            if([self.allFollowings containsObject:[NSNumber numberWithInt:self.user.userID]]){
+                [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+            }else{
+                [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+            }
+        }];
         
         [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
         
@@ -184,13 +193,8 @@ MPMoviePlayerController *moviePlayerController;
             _user = user;
             [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
             self.labelName.text = self.user.userFullName;
-            if (self.user.followingUser) {
-                [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-            } else {
-                [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-            }
-//            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
-//            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
+            self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
+            self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
             
             self.labelAddress.text = self.user.companyAddress;
             self.labelPhone.text = self.user.companyPhone;
@@ -309,8 +313,8 @@ MPMoviePlayerController *moviePlayerController;
     
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername] message:@"Enter message text" delegate:self cancelButtonTitle:@"Send" otherButtonTitles:nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
-    
+    //[alert show];
+    [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
 }
 
 
@@ -361,11 +365,12 @@ MPMoviePlayerController *moviePlayerController;
     if ([alertView.title isEqualToString:@"Logout"] && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Yes"]) {
         if (connect.layerClient.authenticatedUserID) {
             [connect.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
-                [[WLIConnect sharedConnect] logout];
-                WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
-                [appDelegate createViewHierarchy];
+                
             }];
         }
+        [[WLIConnect sharedConnect] logout];
+        WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate createViewHierarchy];
     }else if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername]]){
         NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
         

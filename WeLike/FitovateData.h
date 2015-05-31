@@ -20,6 +20,7 @@
 @property (nonatomic, retain) WLIUser *currentUser;
 @property (nonatomic, retain) NSString *myUsername;
 @property (nonatomic, retain) NSMutableDictionary *allUsersDictionary;
+@property (nonatomic) BOOL layerAuthenticated;
 
 + (id)sharedFitovateData;
 - (NSDictionary *) parseUserToDictionary : (PFObject *) userFromParse;

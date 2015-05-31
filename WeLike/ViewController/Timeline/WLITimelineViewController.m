@@ -175,12 +175,6 @@
 }
 
 - (void)firstLogin{
-    
-    WLIConnect *myConnect = [WLIConnect sharedConnect];
-    if(![myConnect.currentUser.userUsername length] ==0)
-        [myConnect authentWithLayer:^{
-        }];
-    
     [self.tableViewRefresh reloadData];
     
     FitovateData *myData = [FitovateData sharedFitovateData];

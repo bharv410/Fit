@@ -57,6 +57,14 @@
         }
     }];
     
+    
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
+    self.navigationItem.leftBarButtonItem = anotherButton;
+    
+}
+
+-(void)goToActivity {
+    [self.tabBarController setSelectedIndex:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -228,8 +228,15 @@
                                           object[@"isLiked"], @"isLiked",
                                           object[@"isCommented"], @"isCommented"
                                           , nil];
+            
+            NSDate *createdAtDate = object.createdAt;
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            [format setDateFormat:@"MMMM dd, yyyy (EEEE) HH:mm:ss"];
+            NSString *nsstr = [format stringFromDate:createdAtDate];
+            
                     WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
             postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+            postFromParse.postTimeAgo = nsstr;
             
             WLIPostViewController *postViewController = [[WLIPostViewController alloc] initWithNibName:@"WLIPostViewController" bundle:nil];
             postViewController.post = postFromParse;

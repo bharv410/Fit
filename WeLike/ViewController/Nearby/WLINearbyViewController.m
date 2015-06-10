@@ -29,7 +29,7 @@
     if (self) {
         // Custom initialization
         self.users = [NSMutableArray array];
-        self.title = @"Nearby Users";
+        self.title = @"Nearby Trainers";
     }
     return self;
 }
@@ -55,7 +55,7 @@
     // Interested in locations near user.
     //[query whereKey:@"location" nearGeoPoint:self.userCurrentLocation];
     query.limit = 50;
-    
+    [query whereKey:@"usertype" equalTo:@"trainer"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
             NSLog(@"got  results without error!");

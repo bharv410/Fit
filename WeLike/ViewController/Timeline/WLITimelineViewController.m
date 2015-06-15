@@ -39,20 +39,12 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self firstLogin];
+    if([WLIConnect sharedConnect].currentUser!=nil)
+        [self firstLogin];
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Activity" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
     self.navigationItem.leftBarButtonItem = anotherButton;
-    
-    UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
-    [button setImage:[UIImage imageNamed:@"messagesbutton.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.rightBarButtonItem =back;
    }
-
-
 
 
 -(void)goToMessages {
@@ -198,7 +190,8 @@
                                               otherButtonTitles:nil];
         [alert show];
     }
-        
+    [self performSelector:@selector(showMessagesButton) withObject:nil afterDelay:2.0];
+    
 }
 
 
@@ -326,6 +319,13 @@
 //            }
 //        }];
     }
+}
+-(void)showMessagesButton{
+    UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
+    [button setImage:[UIImage imageNamed:@"messagesbutton.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem =back;
 }
 
 @end

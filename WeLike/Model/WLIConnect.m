@@ -855,6 +855,7 @@ static WLIConnect *sharedConnect;
                                                                 [self.layerClient authenticateWithIdentityToken:token completion:^(NSString *authenticatedUserID, NSError *error) {
                                                                     if (!error) {
                                                                         NSLog(@"Parse User authenticated with Layer Identity Token");
+                                                                        
                                                                     }
                                                                     else{
                                                                         NSLog(@"Parse User failed to authenticate with token with error: %@", error);

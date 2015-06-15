@@ -12,6 +12,7 @@
 #import "WLIConnect.h"
 #import <ooVooSDK-iOS/ooVooSDK-iOS.h>
 #import "ConferenceViewController.h"
+#import "PGAvater.h"
 
 @implementation FitovateData
 
@@ -50,6 +51,31 @@
     [currentInstallation addUniqueObject:myUsername forKey:@"channels"];
     [currentInstallation saveInBackground];
     }
+}
+
+-(PGAvater *)avatarForUser : (NSString *) participant{
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    [query whereKey:@"username" equalTo:participant];
+    NSArray *returnedObkecs = [query findObjects];
+    if([returnedObkecs count]>0){
+        PFObject *loggedInUserParse = [returnedObkecs objectAtIndex:0];
+        WLIUser *thisuser = [self pfobjectToWLIUser:loggedInUserParse];
+        return [[PGAvater alloc]initWithImagePath:thisuser.userAvatarPath];
+    }else{
+        return [[PGAvater alloc]initWithImagePath:@"http://images.gizmag.com/hero/ocean-freashwater-aquifiers.jpg"];
+    }
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (!error) {
+//            PFObject *loggedInUserParse = [objects objectAtIndex:0];
+//            WLIUser *currentUser = [self pfobjectToWLIUser:loggedInUserParse];
+//            //return [[PGAvater alloc]initWithImagePath:currentUser.userAvatarPath];
+//            [mutableavatarpath setString:currentUser.userAvatarPath];
+//        }else{
+//            [mutableavatarpath setString:@"http://images.gizmag.com/hero/ocean-freashwater-aquifiers.jpg"];
+//        }
+//        completion(mutableavatarpath);
+//        
+//    }];
 }
 
 -(void) oovooConferenceStarted{

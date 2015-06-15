@@ -9,6 +9,7 @@
 #import <foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "WLIUser.h"
+#import "PGAvater.h"
 #import "WLIComment.h"
 
 @interface FitovateData : NSObject {
@@ -34,5 +35,6 @@
 - (void) oovooConferenceStarted;
 - (void) startOovoo;
 -(void) joinConference: (NSString *)userToJoin;
+-(PGAvater *)avatarForUser : (NSString *) participant;
 
 @end

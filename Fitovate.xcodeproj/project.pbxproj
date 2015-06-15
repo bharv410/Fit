@@ -143,6 +143,7 @@
 		6B0DECBB1B2E42970057033C /* PGConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECBA1B2E42970057033C /* PGConversationViewController.m */; };
 		6B0DECBC1B2E46710057033C /* PGConversationListViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB61B2E41950057033C /* PGConversationListViewController.h */; };
 		6B0DECBD1B2E46760057033C /* PGConversationViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB91B2E42970057033C /* PGConversationViewController.h */; };
+		6B0DECC01B2E5CF00057033C /* PGAvater.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECBF1B2E5CF00057033C /* PGAvater.m */; };
 		6B130BDB1A730BBC00FE0E0C /* tabbarnewpost.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B130BD91A730BBC00FE0E0C /* tabbarnewpost.png */; };
 		6B130BDC1A730BBC00FE0E0C /* tabbarnewpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B130BDA1A730BBC00FE0E0C /* tabbarnewpost@2x.png */; };
 		6B130BE41A730E9300FE0E0C /* LQSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B130BE21A730E9300FE0E0C /* LQSViewController.m */; };
@@ -450,6 +451,8 @@
 		6B0DECB71B2E41950057033C /* PGConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGConversationListViewController.m; sourceTree = "<group>"; };
 		6B0DECB91B2E42970057033C /* PGConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGConversationViewController.h; sourceTree = "<group>"; };
 		6B0DECBA1B2E42970057033C /* PGConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGConversationViewController.m; sourceTree = "<group>"; };
+		6B0DECBE1B2E5CF00057033C /* PGAvater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGAvater.h; sourceTree = "<group>"; };
+		6B0DECBF1B2E5CF00057033C /* PGAvater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGAvater.m; sourceTree = "<group>"; };
 		6B130BD91A730BBC00FE0E0C /* tabbarnewpost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbarnewpost.png; sourceTree = "<group>"; };
 		6B130BDA1A730BBC00FE0E0C /* tabbarnewpost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbarnewpost@2x.png"; sourceTree = "<group>"; };
 		6B130BE11A730E9300FE0E0C /* LQSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LQSViewController.h; path = LayerMessaging/LQSViewController.h; sourceTree = "<group>"; };
@@ -1388,6 +1391,8 @@
 				6B0DECB71B2E41950057033C /* PGConversationListViewController.m */,
 				6B0DECB91B2E42970057033C /* PGConversationViewController.h */,
 				6B0DECBA1B2E42970057033C /* PGConversationViewController.m */,
+				6B0DECBE1B2E5CF00057033C /* PGAvater.h */,
+				6B0DECBF1B2E5CF00057033C /* PGAvater.m */,
 			);
 			name = AtlasMessaging;
 			sourceTree = "<group>";
@@ -1807,6 +1812,7 @@
 				2C6D27F11896BACA00C459CB /* WLIEditProfileViewController.m in Sources */,
 				6B0DECB81B2E41950057033C /* PGConversationListViewController.m in Sources */,
 				6B30FB991AEEACE000BEBAD2 /* ParseSingleton.m in Sources */,
+				6B0DECC01B2E5CF00057033C /* PGAvater.m in Sources */,
 				2C6D27CB1896BACA00C459CB /* WLIFollow.m in Sources */,
 				6B0DECB51B2E3EDB0057033C /* PGUser.m in Sources */,
 				2C6D27C91896BACA00C459CB /* WLIComment.m in Sources */,

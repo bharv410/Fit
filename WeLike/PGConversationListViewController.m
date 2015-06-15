@@ -10,6 +10,8 @@
 #import "PGUser.h"
 #import "PGConversationViewController.h"
 #import "WLIConnect.h"
+#import "FitovateData.h"
+#import "PGAvater.h"
 
 @interface PGConversationListViewController ()
 
@@ -26,6 +28,7 @@
     // Add a create chat button
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewChat:)];
     [self setDisplaysAvatarItem:YES];
+    [self setAllowsEditing:NO];
     
 }
 
@@ -75,6 +78,21 @@
     } else {
         [self presentConversationControllerForConversation:conversation];
     }
+}
+
+- (id<ATLAvatarItem>)conversationListViewController:(ATLConversationListViewController *)conversationListViewController avatarItemForConversation:(LYRConversation *)conversation{
+    __block NSMutableString *participantName = [[NSMutableString alloc]init];
+    
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    
+    NSSet* participantsInConvo = [conversation participants];
+    for(NSString* participant in participantsInConvo) {
+        if(![participant containsString:[WLIConnect sharedConnect].currentUser.userUsername]){
+            [participantName setString:participant];
+        }
+    }
+    PGAvater *myav = [myData avatarForUser:participantName];
+    return myav;
 }
 
 - (void)participantTableViewController:(ATLParticipantTableViewController *)participantTableViewController didSearchWithString:(NSString *)searchText completion:(void (^)(NSSet *filteredParticipants))completion {

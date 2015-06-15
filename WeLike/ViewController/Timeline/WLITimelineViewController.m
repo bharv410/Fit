@@ -16,6 +16,8 @@
 #import "ParseSingleton.h"
 #import "FitovateData.h"
 #import <ooVooSDK-iOS/ooVooSDK-iOS.h>
+#import <Atlas/Atlas.h>
+#import "PGConversationListViewController.h"
 
 @implementation WLITimelineViewController
 
@@ -54,10 +56,15 @@
 
 
 -(void)goToMessages {
-    NSLog(@"Eh up, someone just pressed the button!");
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
-    LQSViewController *newVc = [[LQSViewController alloc]init];
-    [self.navigationController pushViewController:newVc animated:NO];
+    WLIConnect *sharedConnect = [WLIConnect sharedConnect];
+     PGConversationListViewController *conversationListViewController = [PGConversationListViewController conversationListViewControllerWithLayerClient:sharedConnect.layerClient];
+    [self.navigationController pushViewController:conversationListViewController animated:YES];
+    
+    NSLog(@"Eh up, someone just pressed the button!");
+    
+//    LQSViewController *newVc = [[LQSViewController alloc]init];
+//    [self.navigationController pushViewController:newVc animated:NO];
     
 }
 

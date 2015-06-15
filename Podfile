@@ -3,6 +3,7 @@
 
 target 'Fitovate' do
 pod 'LayerKit'
+pod 'Atlas'
 
 end
 

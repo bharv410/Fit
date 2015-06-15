@@ -138,6 +138,11 @@
 		2CCE1A9D17ECD32B00680126 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCE1A9C17ECD32B00680126 /* UIKit.framework */; };
 		6B0A19D41A69E86A002A35C2 /* i386Symbols.c in Sources */ = {isa = PBXBuildFile; fileRef = 6B0A19D31A69E86A002A35C2 /* i386Symbols.c */; };
 		6B0A19D91A69ED86002A35C2 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B0A19D81A69ED86002A35C2 /* libstdc++.dylib */; };
+		6B0DECB51B2E3EDB0057033C /* PGUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB41B2E3EDB0057033C /* PGUser.m */; };
+		6B0DECB81B2E41950057033C /* PGConversationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB71B2E41950057033C /* PGConversationListViewController.m */; };
+		6B0DECBB1B2E42970057033C /* PGConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECBA1B2E42970057033C /* PGConversationViewController.m */; };
+		6B0DECBC1B2E46710057033C /* PGConversationListViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB61B2E41950057033C /* PGConversationListViewController.h */; };
+		6B0DECBD1B2E46760057033C /* PGConversationViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB91B2E42970057033C /* PGConversationViewController.h */; };
 		6B130BDB1A730BBC00FE0E0C /* tabbarnewpost.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B130BD91A730BBC00FE0E0C /* tabbarnewpost.png */; };
 		6B130BDC1A730BBC00FE0E0C /* tabbarnewpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B130BDA1A730BBC00FE0E0C /* tabbarnewpost@2x.png */; };
 		6B130BE41A730E9300FE0E0C /* LQSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B130BE21A730E9300FE0E0C /* LQSViewController.m */; };
@@ -439,6 +444,12 @@
 		6B0A19D31A69E86A002A35C2 /* i386Symbols.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = i386Symbols.c; sourceTree = "<group>"; };
 		6B0A19D61A69ED4A002A35C2 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		6B0A19D81A69ED86002A35C2 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		6B0DECB31B2E3EDB0057033C /* PGUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGUser.h; sourceTree = "<group>"; };
+		6B0DECB41B2E3EDB0057033C /* PGUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGUser.m; sourceTree = "<group>"; };
+		6B0DECB61B2E41950057033C /* PGConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGConversationListViewController.h; sourceTree = "<group>"; };
+		6B0DECB71B2E41950057033C /* PGConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGConversationListViewController.m; sourceTree = "<group>"; };
+		6B0DECB91B2E42970057033C /* PGConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGConversationViewController.h; sourceTree = "<group>"; };
+		6B0DECBA1B2E42970057033C /* PGConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGConversationViewController.m; sourceTree = "<group>"; };
 		6B130BD91A730BBC00FE0E0C /* tabbarnewpost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbarnewpost.png; sourceTree = "<group>"; };
 		6B130BDA1A730BBC00FE0E0C /* tabbarnewpost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbarnewpost@2x.png"; sourceTree = "<group>"; };
 		6B130BE11A730E9300FE0E0C /* LQSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LQSViewController.h; path = LayerMessaging/LQSViewController.h; sourceTree = "<group>"; };
@@ -602,6 +613,7 @@
 		2C6D26741896BACA00C459CB /* WeLike */ = {
 			isa = PBXGroup;
 			children = (
+				6B0DECB21B2E3EB80057033C /* AtlasMessaging */,
 				6B7368CF1AF6AC72008B9495 /* FitovateData */,
 				2C6D26751896BACA00C459CB /* 3rdParty */,
 				2C6D26DC1896BACA00C459CB /* AppDelegate */,
@@ -1367,6 +1379,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6B0DECB21B2E3EB80057033C /* AtlasMessaging */ = {
+			isa = PBXGroup;
+			children = (
+				6B0DECB31B2E3EDB0057033C /* PGUser.h */,
+				6B0DECB41B2E3EDB0057033C /* PGUser.m */,
+				6B0DECB61B2E41950057033C /* PGConversationListViewController.h */,
+				6B0DECB71B2E41950057033C /* PGConversationListViewController.m */,
+				6B0DECB91B2E42970057033C /* PGConversationViewController.h */,
+				6B0DECBA1B2E42970057033C /* PGConversationViewController.m */,
+			);
+			name = AtlasMessaging;
+			sourceTree = "<group>";
+		};
 		6B130BDD1A730D3900FE0E0C /* LayerMessaging */ = {
 			isa = PBXGroup;
 			children = (
@@ -1711,6 +1736,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B0DECBD1B2E46760057033C /* PGConversationViewController.h in Sources */,
+				6B0DECBC1B2E46710057033C /* PGConversationListViewController.h in Sources */,
 				ADD1E6381A423FD100E1F8D4 /* MNMPullToRefreshManager.m in Sources */,
 				6B7368D21AF6ACA0008B9495 /* FitovateData.m in Sources */,
 				2C6D27BD1896BACA00C459CB /* SBJsonStreamParserAdapter.m in Sources */,
@@ -1741,6 +1768,7 @@
 				2C6D27D81896BACA00C459CB /* WLIPostCell.m in Sources */,
 				2C6D27FA1896BACA00C459CB /* WLITimelineViewController.m in Sources */,
 				6BA374E91A8031A000250A62 /* LQSChatMessageCell.m in Sources */,
+				6B0DECBB1B2E42970057033C /* PGConversationViewController.m in Sources */,
 				2C6D27EF1896BACA00C459CB /* WLIPostViewController.m in Sources */,
 				2C6D27B21896BACA00C459CB /* MBProgressHUD.m in Sources */,
 				2C6D27CF1896BACA00C459CB /* WLIUser.m in Sources */,
@@ -1777,8 +1805,10 @@
 				2C5B5C841A1A8F9500175A58 /* UIWebView+AFNetworking.m in Sources */,
 				2C6D27C11896BACA00C459CB /* SBJsonStreamWriterAccumulator.m in Sources */,
 				2C6D27F11896BACA00C459CB /* WLIEditProfileViewController.m in Sources */,
+				6B0DECB81B2E41950057033C /* PGConversationListViewController.m in Sources */,
 				6B30FB991AEEACE000BEBAD2 /* ParseSingleton.m in Sources */,
 				2C6D27CB1896BACA00C459CB /* WLIFollow.m in Sources */,
+				6B0DECB51B2E3EDB0057033C /* PGUser.m in Sources */,
 				2C6D27C91896BACA00C459CB /* WLIComment.m in Sources */,
 				6B1D25251A96B209003D9EB5 /* WLINearbyViewController.m in Sources */,
 				2C6D27E11896BACA00C459CB /* WLIFollowersViewController.m in Sources */,
@@ -1931,8 +1961,8 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VALID_ARCHS = "armv7 armv7s arm64";
-				"VALID_ARCHS[sdk=*]" = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 armv7s arm64 i386";
+				"VALID_ARCHS[sdk=*]" = "armv7 armv7s arm64 i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1976,7 +2006,7 @@
 				PRODUCT_NAME = Fitovate;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 armv7s arm64 i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

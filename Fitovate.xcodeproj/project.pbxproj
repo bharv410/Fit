@@ -154,6 +154,8 @@
 		6B1D25251A96B209003D9EB5 /* WLINearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D25241A96B209003D9EB5 /* WLINearbyViewController.m */; };
 		6B1D25271A96B212003D9EB5 /* WLINearbyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B1D25261A96B212003D9EB5 /* WLINearbyViewController.xib */; };
 		6B1D25521AAB823C003D9EB5 /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D25511AAB823C003D9EB5 /* NIDropDown.m */; };
+		6B25A4C61B30907D004D103E /* videochatimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B25A4C41B30907D004D103E /* videochatimage.png */; };
+		6B25A4C71B30907D004D103E /* videochatimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B25A4C51B30907D004D103E /* videochatimage@2x.png */; };
 		6B267D321A65ED3B00F0C056 /* tabbartimeline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B267D301A65ED3B00F0C056 /* tabbartimeline@2x.png */; };
 		6B267D331A65ED3B00F0C056 /* tabbartimeline.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B267D311A65ED3B00F0C056 /* tabbartimeline.png */; };
 		6B267D361A65EE5000F0C056 /* nav-btn-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B267D341A65EE5000F0C056 /* nav-btn-close.png */; };
@@ -475,6 +477,8 @@
 		6B1D254B1AA10460003D9EB5 /* chatapp-ios-icon_1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chatapp-ios-icon_1x.png"; path = "../../../../../../../../Volumes/Transcend/chatapp-ios-icon_1x.png"; sourceTree = "<group>"; };
 		6B1D25501AAB823C003D9EB5 /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
 		6B1D25511AAB823C003D9EB5 /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
+		6B25A4C41B30907D004D103E /* videochatimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videochatimage.png; sourceTree = "<group>"; };
+		6B25A4C51B30907D004D103E /* videochatimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videochatimage@2x.png"; sourceTree = "<group>"; };
 		6B267D301A65ED3B00F0C056 /* tabbartimeline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbartimeline@2x.png"; sourceTree = "<group>"; };
 		6B267D311A65ED3B00F0C056 /* tabbartimeline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbartimeline.png; sourceTree = "<group>"; };
 		6B267D341A65EE5000F0C056 /* nav-btn-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-btn-close.png"; sourceTree = "<group>"; };
@@ -1181,6 +1185,8 @@
 		2C6D275A1896BACA00C459CB /* WLI-images */ = {
 			isa = PBXGroup;
 			children = (
+				6B25A4C41B30907D004D103E /* videochatimage.png */,
+				6B25A4C51B30907D004D103E /* videochatimage@2x.png */,
 				6B130BE61A73108E00FE0E0C /* messagesbutton@2x.png */,
 				6B130BE71A73108E00FE0E0C /* messagesbutton.png */,
 				6BA07B101A5F4B8000382FF1 /* Default@2x.jpg */,
@@ -1630,6 +1636,7 @@
 				AD71603E1A38BAC60043E740 /* autoscaling-2011-01-01.json in Resources */,
 				6B267D331A65ED3B00F0C056 /* tabbartimeline.png in Resources */,
 				6B774EDA1A6A197A007A8277 /* tabbarprofile@2x.png in Resources */,
+				6B25A4C71B30907D004D103E /* videochatimage@2x.png in Resources */,
 				6B59A3031B1A597800F1F92A /* iTunesArtwork@2x.png in Resources */,
 				AD71604A1A38BAC60043E740 /* sns-2010-03-31.json in Resources */,
 				6BA07B111A5F4B8000382FF1 /* Default@2x.jpg in Resources */,
@@ -1676,6 +1683,7 @@
 				6B59A2FC1B1A597800F1F92A /* AppIcon29x29@2x.png in Resources */,
 				6B5E08A91A609B160020D78B /* WLIChooseVideoViewController.xib in Resources */,
 				2C6D28051896BACA00C459CB /* btn-like@2x.png in Resources */,
+				6B25A4C61B30907D004D103E /* videochatimage.png in Resources */,
 				2C6D283B1896BACA00C459CB /* welcome-logo.png in Resources */,
 				2C6D27FD1896BACA00C459CB /* WLIWelcomeViewController.xib in Resources */,
 				2C6D28381896BACA00C459CB /* layout-timeline.png in Resources */,

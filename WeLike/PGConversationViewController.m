@@ -9,6 +9,8 @@
 #import "PGConversationViewController.h"
 #import "PGUser.h"
 #import "WLIConnect.h"
+#import "ConferenceViewController.h"
+#import "FitovateData.h"
 
 @interface PGConversationViewController ()
 
@@ -29,7 +31,19 @@
 }
 
 - (void)videoCallThisUser{
-    NSLog(@"video calling");
+    NSSet *participantsInConvo = [self.conversation participants];
+    for(NSString* participant in participantsInConvo) {
+        
+        if(![participant containsString:[WLIConnect sharedConnect].currentUser.userUsername]){
+            NSLog(@"%@ is videocalling = %@",[WLIConnect sharedConnect].currentUser.userUsername,participant);
+            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+            cvc.conferenceToJoin = participant;
+            [self.navigationController pushViewController:cvc animated:NO];
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            [myData joinConference:participant];
+            return;
+        }
+    }
 }
 
 //benmark1010

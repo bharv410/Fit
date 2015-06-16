@@ -20,7 +20,19 @@
     [super viewDidLoad];
     self.delegate = self;
     self.dataSource = self;
+    
+    UIBarButtonItem *btn=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"videochatimage.png"]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:@selector(videoCallThisUser)];
+    self.navigationItem.rightBarButtonItem=btn;
 }
+
+- (void)videoCallThisUser{
+    NSLog(@"video calling");
+}
+
+//benmark1010
 
 #pragma mark - Conversation Data Source
 

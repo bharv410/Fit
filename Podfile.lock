@@ -1,14 +1,17 @@
 PODS:
   - Atlas (1.0.6):
     - LayerKit (>= 0.13.0)
+  - Haneke (1.0.1)
   - LayerKit (0.13.1)
 
 DEPENDENCIES:
   - Atlas
+  - Haneke (~> 1.0)
   - LayerKit
 
 SPEC CHECKSUMS:
   Atlas: 8c1ded7ff0d3bdcdb49934e2f3cb01525fb977d1
+  Haneke: d60be8b96b228633b24708dd153169d6849d6f78
   LayerKit: f466325b803cc311f33edd1e715685c20509a3b0
 
 COCOAPODS: 0.35.0

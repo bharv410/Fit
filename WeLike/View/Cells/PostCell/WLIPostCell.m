@@ -9,6 +9,7 @@
 #import "WLIPostCell.h"
 #import "WLIConnect.h"
 #import <Parse/Parse.h>
+#import <Haneke/Haneke.h>
 #import "FitovateData.h"
 
 static WLIPostCell *sharedCell = nil;
@@ -74,7 +75,7 @@ static WLIPostCell *sharedCell = nil;
     if (self.post) {
         
         if (downloads) {
-            [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.post.user.userAvatarPath]];
+            [self.imageViewUser hnk_setImageFromURL:[NSURL URLWithString:self.post.user.userAvatarPath]];
         }
         self.labelUserName.text = self.post.user.userFullName;
         self.labelTimeAgo.text = self.post.postTimeAgo;
@@ -96,7 +97,7 @@ static WLIPostCell *sharedCell = nil;
             self.buttonLikes.frame = CGRectMake(self.buttonLikes.frame.origin.x, CGRectGetMaxY(self.imageViewPostImage.frame) -self.buttonLike.frame.size.height, self.buttonLikes.frame.size.width, self.buttonLikes.frame.size.height);
             
             if (downloads) {
-                [self.imageViewPostImage setImageWithURL:[NSURL URLWithString:self.post.postImagePath]];
+                [self.imageViewPostImage hnk_setImageFromURL:[NSURL URLWithString:self.post.postImagePath]];
             }
         } else {
             self.buttonLike.frame = CGRectMake(self.buttonLike.frame.origin.x, CGRectGetMinY(self.imageViewPostImage.frame), self.buttonLike.frame.size.width, self.buttonLike.frame.size.height);

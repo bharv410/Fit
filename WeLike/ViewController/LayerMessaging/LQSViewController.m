@@ -91,19 +91,19 @@
 
 - (IBAction) videoCall: (id) sender
 {
-    NSSet *participantsInConvo = [self.conversation participants];
-    for(NSString* participant in participantsInConvo) {
-        
-        if(![participant containsString:[WLIConnect sharedConnect].currentUser.userUsername]){
-            NSLog(@"videocall = %@",participant);
-            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
-            cvc.conferenceToJoin = participant;
-            [self.navigationController pushViewController:cvc animated:NO];
-            FitovateData *myData = [FitovateData sharedFitovateData];
-            [myData joinConference:participant];
-            return;
-        }
-    }
+//    NSSet *participantsInConvo = [self.conversation participants];
+//    for(NSString* participant in participantsInConvo) {
+//        
+//        if(![participant containsString:[WLIConnect sharedConnect].currentUser.userUsername]){
+//            NSLog(@"videocall = %@",participant);
+//            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+//            cvc.conferenceToJoin = participant;
+//            [self.navigationController pushViewController:cvc animated:NO];
+//            FitovateData *myData = [FitovateData sharedFitovateData];
+//            [myData joinConference:participant];
+//            return;
+//        }
+//    }
 }
 
 - (void)sendMessage:(NSString *)messageText{

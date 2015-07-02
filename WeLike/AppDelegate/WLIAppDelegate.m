@@ -26,6 +26,12 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //benmark parse
+    [Parse enableLocalDatastore];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:@"M7f82n8HbyJZs9tmXpi4LXg0kRnIc1GaxYbFfzxr"
+                  clientKey:@"cXd06hH0Ox8DNUoyZxFQ5RvWipg0UagSEvYuzBPW"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -85,13 +91,6 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     [self.window makeKeyAndVisible];
     
     [Fabric with:@[CrashlyticsKit]];
-
-    //benmark parse
-    [Parse enableLocalDatastore];
-    
-    // Initialize Parse.
-    [Parse setApplicationId:@"M7f82n8HbyJZs9tmXpi4LXg0kRnIc1GaxYbFfzxr"
-                  clientKey:@"cXd06hH0Ox8DNUoyZxFQ5RvWipg0UagSEvYuzBPW"];
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

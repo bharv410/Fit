@@ -48,16 +48,13 @@
 
 
 -(void)goToMessages {
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
     WLIConnect *sharedConnect = [WLIConnect sharedConnect];
-     PGConversationListViewController *conversationListViewController = [PGConversationListViewController conversationListViewControllerWithLayerClient:sharedConnect.layerClient];
-    [self.navigationController pushViewController:conversationListViewController animated:YES];
-    
-    NSLog(@"Eh up, someone just pressed the button!");
-    
-//    LQSViewController *newVc = [[LQSViewController alloc]init];
-//    [self.navigationController pushViewController:newVc animated:NO];
-    
+    if(sharedConnect.layerClient!=nil && sharedConnect.layerClient.isConnected){
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+        
+        PGConversationListViewController *conversationListViewController = [PGConversationListViewController conversationListViewControllerWithLayerClient:sharedConnect.layerClient];
+        [self.navigationController pushViewController:conversationListViewController animated:YES];
+    }
 }
 
 -(void)getPosts {
@@ -174,6 +171,28 @@
 }
 
 - (void)firstLogin{
+    WLIConnect *myConnect = [WLIConnect sharedConnect];
+    if(myConnect.currentUser==nil){
+            [myConnect loginUserWithUsername:@"kylie" andPassword:@"abcd1234" onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+                [hud hide:YES];
+                if (serverResponseCode == OK) {
+                    myConnect.currentUser = user;
+                    [myConnect authentWithLayer:^{
+                        NSLog(@"done");
+                    }];
+                } else if (serverResponseCode == NO_CONNECTION) {
+                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                } else if (serverResponseCode == NOT_FOUND) {
+                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong username. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                } else if (serverResponseCode == UNAUTHORIZED) {
+                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                } else {
+                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                }
+            }];
+        }
+    
+    
     [self.tableViewRefresh reloadData];
     
     FitovateData *myData = [FitovateData sharedFitovateData];

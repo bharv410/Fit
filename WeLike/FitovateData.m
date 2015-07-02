@@ -82,10 +82,12 @@
     NSLog(@"Oovoo conference started");
 }
 
--(void) joinConference : (NSString *)userToJoin{
+-(void) joinConference : (NSString *)currentUsername :(NSString *)userToJoin{
+    NSLog(@"user to join = %@",userToJoin );
+    NSLog(@"myUsername= %@",currentUsername );
     NSDictionary *data = @{
-                           @"sender" : myUsername,
-                           @"channel" : userToJoin // Photo's object id
+                           @"sender" : currentUsername,
+                           @"channel" : userToJoin
                            };
     
     PFPush *push = [[PFPush alloc] init];

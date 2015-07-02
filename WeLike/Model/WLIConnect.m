@@ -68,15 +68,16 @@ static WLIConnect *sharedConnect;
         
         NSData *archivedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"_currentUser"];
         if (archivedUser) {
+            [self logBackIn];
             _currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUser];
             FitovateData *myData = [FitovateData sharedFitovateData];
             myData.currentUser = _currentUser;
             NSLog(@"archived user %@", _currentUser.userUsername);
             if(_currentUser.userUsername !=nil && !myData.layerAuthenticated){
-                [self authentWithLayer:^{
-                    myData.layerAuthenticated = YES;
-                    NSLog(@"AUTHED!");
-                }];
+//                [self authentWithLayer:^{
+//                    myData.layerAuthenticated = YES;
+//                    NSLog(@"AUTHED!");
+//                }];
             }
             
             }
@@ -87,11 +88,45 @@ static WLIConnect *sharedConnect;
 - (void)saveCurrentUser {
     
     if (self.currentUser) {
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];  //load NSUserDefaults
+        
+        NSString *userUsername = self.currentUser.userUsername;
+        NSString *userpassword = self.currentUser.userPassword;
+        [prefs setObject:userUsername forKey:@"username"];
+        [prefs setObject:userpassword forKey:@"password"];
+        
+        
         FitovateData *myData = [FitovateData sharedFitovateData];
         myData.currentUser = _currentUser;
         NSData *archivedUser = [NSKeyedArchiver archivedDataWithRootObject:_currentUser];
         [[NSUserDefaults standardUserDefaults] setObject:archivedUser forKey:@"_currentUser"];
     }
+}
+
+- (void)logBackIn {
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favorites = [prefs arrayForKey:@"favourites"];
+    NSString *userUsername = [prefs stringForKey:@"username"];
+    NSString *userpassword = [prefs stringForKey:@"password"];
+    
+    
+    [self loginUserWithUsername:userUsername andPassword:userpassword onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
+        if (serverResponseCode == OK) {
+            self.currentUser = user;
+            [self authentWithLayer:^{
+                NSLog(@"done");
+            }];
+        } else if (serverResponseCode == NO_CONNECTION) {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        } else if (serverResponseCode == NOT_FOUND) {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong username. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        } else if (serverResponseCode == UNAUTHORIZED) {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
+    }];
 }
 
 - (void)authentWithLayer : (void (^)(void))completion {

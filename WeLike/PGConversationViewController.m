@@ -40,7 +40,8 @@
             cvc.conferenceToJoin = participant;
             [self.navigationController pushViewController:cvc animated:NO];
             FitovateData *myData = [FitovateData sharedFitovateData];
-            [myData joinConference:participant];
+            
+            [myData joinConference:[WLIConnect sharedConnect].currentUser.userUsername : participant];
             return;
         }
     }

@@ -34,7 +34,7 @@
 - (void) commentFromUserIdWithPostId : (NSNumber *) liker :(NSNumber *) liking :(NSString *) text : (void (^)(WLIComment *comment))completion;
 - (void) oovooConferenceStarted;
 - (void) startOovoo;
--(void) joinConference: (NSString *)userToJoin;
+-(void) joinConference : (NSString *)currentUsername :(NSString *)userToJoin;
 -(PGAvater *)avatarForUser : (NSString *) participant;
 
 @end

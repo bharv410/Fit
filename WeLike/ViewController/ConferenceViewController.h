@@ -15,8 +15,9 @@
 @property (strong, nonatomic) UIActivityIndicatorView *indicator;
 @property (weak, nonatomic) IBOutlet UILabel *callingTextLabel;
 @property (strong, nonatomic) NSString *conferenceToJoin;
+@property (weak, nonatomic) IBOutlet UIView *cameraPreviewView;
 @property (strong, nonatomic) NSString *notificationSender;
-
+@property (strong, nonatomic) IBOutlet UIButton *hangupButton;
 
 + (CGFloat) window_height;
 + (CGFloat) window_width;

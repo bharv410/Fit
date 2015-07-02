@@ -10,9 +10,12 @@
 #import <ooVooSDK-iOS/ooVooSDK-iOS.h>
 #import <ooVooSDK-iOS/ooVooVideoView.h>
 #import "FitovateData.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface ConferenceViewController ()
-
+@interface ConferenceViewController (){
+    AVCaptureVideoPreviewLayer *_previewLayer;
+    AVCaptureSession *_captureSession;
+}
 @end
 
 @implementation ConferenceViewController
@@ -59,8 +62,22 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
         [self.indicator startAnimating];
     }
+    
+    UIImage *btnImage = [UIImage imageNamed:@"hangup.png"];
+    UIButton *hangBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height/2 - 50, 100.0, 50.0)];
+    
+    [hangBtn setImage:btnImage forState:UIControlStateNormal];
+    [hangBtn addTarget:self action:@selector(hangUp) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:hangBtn];
+
+    [self startPreview];
 }
 
+
+-(void) hangUp{
+    [[ooVooController sharedController] leaveConference];
+    NSLog(@"hanging up");
+}
 
 -(void) setupIndicator{
     self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -68,6 +85,40 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     [self.videoView addSubview:self.indicator];
     [self.indicator bringSubviewToFront:self.videoView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = TRUE;
+}
+
+-(void) startPreview{
+    //-- Setup Capture Session.
+    _captureSession = [[AVCaptureSession alloc] init];
+    
+    //-- Creata a video device and input from that Device.  Add the input to the capture session.
+    AVCaptureDevice * videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if(videoDevice == nil)
+        return;
+    
+    //-- Add the device to the session.
+    NSError *error;
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice
+                                                                        error:&error];
+    if(error)
+        return;
+    
+    [_captureSession addInput:input];
+    
+    //-- Configure the preview layer
+    _previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
+    _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
+    [_previewLayer setFrame:CGRectMake(0, 0,
+                                       self.cameraPreviewView.frame.size.width,
+                                       self.cameraPreviewView.frame.size.height)];
+    
+    //-- Add the layer to the view that should display the camera input
+    [self.cameraPreviewView.layer addSublayer:_previewLayer];
+    
+    //-- Start the camera
+    [_captureSession startRunning];
+    NSLog(@"started");
 }
 
 + (CGFloat) window_height   {

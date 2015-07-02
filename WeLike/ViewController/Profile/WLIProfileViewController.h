@@ -38,6 +38,7 @@
 
 @property (strong, nonatomic, setter = setUser:) WLIUser *user;
 @property (strong, nonatomic) NSArray *allFollowings;
+@property (strong, nonatomic) UIAlertView *messageAlert;
 
 
 - (IBAction)goToMessages:(id)sender;

@@ -195,6 +195,8 @@
 		6B7C6AF01A6EC562007230B8 /* tabbarpopular@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B7C6AEE1A6EC562007230B8 /* tabbarpopular@2x.png */; };
 		6B7C6AF11A6EC562007230B8 /* tabbarpopular.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B7C6AEF1A6EC562007230B8 /* tabbarpopular.png */; };
 		6B7D56E21A70629A00325793 /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B7D56E11A70629A00325793 /* Pacifico.ttf */; };
+		6B9DE8BA1B43508400BD0D0E /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9DE8B81B43508400BD0D0E /* Fabric.framework */; };
+		6B9DE8BB1B43508400BD0D0E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9DE8B91B43508400BD0D0E /* Crashlytics.framework */; };
 		6BA07B0D1A5F4B3600382FF1 /* Default-568h@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B0C1A5F4B3600382FF1 /* Default-568h@2x.jpg */; };
 		6BA07B0F1A5F4B6600382FF1 /* Default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B0E1A5F4B6600382FF1 /* Default.jpg */; };
 		6BA07B111A5F4B8000382FF1 /* Default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B101A5F4B8000382FF1 /* Default@2x.jpg */; };
@@ -526,6 +528,8 @@
 		6B7C6AEE1A6EC562007230B8 /* tabbarpopular@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbarpopular@2x.png"; sourceTree = "<group>"; };
 		6B7C6AEF1A6EC562007230B8 /* tabbarpopular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbarpopular.png; sourceTree = "<group>"; };
 		6B7D56E11A70629A00325793 /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
+		6B9DE8B81B43508400BD0D0E /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		6B9DE8B91B43508400BD0D0E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		6BA07B0C1A5F4B3600382FF1 /* Default-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Default-568h@2x.jpg"; sourceTree = "<group>"; };
 		6BA07B0E1A5F4B6600382FF1 /* Default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Default.jpg; sourceTree = "<group>"; };
 		6BA07B101A5F4B8000382FF1 /* Default@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Default@2x.jpg"; sourceTree = "<group>"; };
@@ -581,6 +585,8 @@
 				6B1D24D01A95BC4E003D9EB5 /* LayerKit.framework in Frameworks */,
 				6B28E1A01A69F180007A3C24 /* CoreTelephony.framework in Frameworks */,
 				6B28E19E1A69F14F007A3C24 /* CoreMedia.framework in Frameworks */,
+				6B9DE8BA1B43508400BD0D0E /* Fabric.framework in Frameworks */,
+				6B9DE8BB1B43508400BD0D0E /* Crashlytics.framework in Frameworks */,
 				6B28E19C1A69F111007A3C24 /* AudioToolbox.framework in Frameworks */,
 				6B28E19A1A69F107007A3C24 /* CoreAudio.framework in Frameworks */,
 				6B28E1961A69F0DE007A3C24 /* AVFoundation.framework in Frameworks */,
@@ -1332,6 +1338,8 @@
 		2CCE1A8C17ECD32B00680126 = {
 			isa = PBXGroup;
 			children = (
+				6B9DE8B81B43508400BD0D0E /* Fabric.framework */,
+				6B9DE8B91B43508400BD0D0E /* Crashlytics.framework */,
 				6BEC00731AB1088F00ED4B7C /* Fitovate_background.png */,
 				6B0A19D31A69E86A002A35C2 /* i386Symbols.c */,
 				6BA07B121A5F4BB900382FF1 /* Default-568h@2x.png */,
@@ -1532,6 +1540,7 @@
 				2CCE1A9217ECD32B00680126 /* Frameworks */,
 				2CCE1A9317ECD32B00680126 /* Resources */,
 				BB84E6168D8F3AF8EBC821D7 /* Copy Pods Resources */,
+				6B9DE8B71B43501D00BD0D0E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1712,6 +1721,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6B9DE8B71B43501D00BD0D0E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 6059017b4721428ee79a1821b13ad9c50f3f352a a01b5093488c28c843fd73c45e58b1681fdd081be638c95500c6acfde0277263";
+		};
 		A61AB027566E0190915C5660 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

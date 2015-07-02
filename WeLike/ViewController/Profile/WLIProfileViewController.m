@@ -311,11 +311,13 @@ MPMoviePlayerController *moviePlayerController;
 //    LQSViewController *newVc = [[LQSViewController alloc]init];
 //    [self.navigationController pushViewController:newVc animated:YES];
     
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername] message:@"Enter message text" delegate:self cancelButtonTitle:@"Send" otherButtonTitles:nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    self.messageAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername] message:@"Enter message text" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Send"];
+    self.messageAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
     //[alert show];
-    [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+    [self.messageAlert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
 }
+
+
 
 
 - (IBAction)buttonFollowersTouchUpInside:(id)sender {
@@ -372,11 +374,12 @@ MPMoviePlayerController *moviePlayerController;
         WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
         [appDelegate createViewHierarchy];
     }else if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername]]){
-        NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
-        
-        [self sendMessage:[[alertView textFieldAtIndex:0] text]];
-            
+        if (buttonIndex == [alertView cancelButtonIndex]) {
 
+        }else{
+            NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
+            [self sendMessage:[[alertView textFieldAtIndex:0] text]];
+        }
     }
 }
 

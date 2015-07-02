@@ -15,6 +15,8 @@
 #import "WLINearbyViewController.h"
 #import <Parse/Parse.h>
 #import "ConferenceViewController.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsException";
 
@@ -82,6 +84,8 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    [Fabric with:@[CrashlyticsKit]];
+
     //benmark parse
     [Parse enableLocalDatastore];
     

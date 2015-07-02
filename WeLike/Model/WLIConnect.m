@@ -53,7 +53,7 @@ static WLIConnect *sharedConnect;
     
     // comment for user persistance
     
-    [self removeCurrentUser];
+    //[self removeCurrentUser];
     
     if (self) {
         httpClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kBaseLink]];

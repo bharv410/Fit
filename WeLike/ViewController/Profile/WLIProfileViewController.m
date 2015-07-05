@@ -357,6 +357,9 @@ MPMoviePlayerController *moviePlayerController;
     if (success) {
         NSLog(@"Message queued to be sent: %@", messageText);
         [[[UIAlertView alloc] initWithTitle:@"Sent" message:@"Your message has been sent" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil] show];
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        [myData hasAMessage:_user.userUsername];
+        
     } else {
         NSLog(@"Message send failed: %@", error);
     }

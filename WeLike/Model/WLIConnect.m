@@ -67,22 +67,24 @@ static WLIConnect *sharedConnect;
         [_dateOnlyFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
         
         NSData *archivedUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"_currentUser"];
+        NSString *userUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
         if (archivedUser) {
             [self logBackIn];
             _currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUser];
             FitovateData *myData = [FitovateData sharedFitovateData];
             myData.currentUser = _currentUser;
-            NSLog(@"archived user %@", _currentUser.userUsername);
-            if(_currentUser.userUsername !=nil && !myData.layerAuthenticated){
-//                [self authentWithLayer:^{
-//                    myData.layerAuthenticated = YES;
-//                    NSLog(@"AUTHED!");
-//                }];
-            }
             
-            }
+            NSString *userUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+            NSLog(@"benmark archived user %@", userUsername);
+        }{
+            NSLog(@"benmark no archived user ");
+        }
     }
     return self;
+}
+- (void)setLayerClientNow{
+    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
+    self.layerClient = [LYRClient clientWithAppID:appID];
 }
 
 - (void)saveCurrentUser {
@@ -130,8 +132,9 @@ static WLIConnect *sharedConnect;
 }
 
 - (void)authentWithLayer : (void (^)(void))completion {
-    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
-    self.layerClient = [LYRClient clientWithAppID:appID];
+    
+//    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c6d3dfe6-a1a8-11e4-b169-142b010033d0"];
+//    self.layerClient = [LYRClient clientWithAppID:appID];
     if(self.layerClient.isConnected){
         
         NSString *userIDString = _currentUser.userUsername;
@@ -168,6 +171,8 @@ static WLIConnect *sharedConnect;
 - (void)removeCurrentUser {
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"_currentUser"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -841,7 +846,10 @@ static WLIConnect *sharedConnect;
     
     _currentUser = nil;
     [self removeCurrentUser];
-    self.layerClient = nil;
+    [self.layerClient disconnect];
+    [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+        NSLog(@"deuathenticated");
+    }];
 }
 
 #pragma mark - debugger

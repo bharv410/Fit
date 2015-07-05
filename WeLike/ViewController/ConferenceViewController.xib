@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConferenceViewController">
             <connections>
                 <outlet property="callingTextLabel" destination="tVy-6x-mPs" id="M2w-yB-D5m"/>
-                <outlet property="cameraPreviewView" destination="nLS-7S-vnO" id="K3P-qb-KVc"/>
                 <outlet property="hangupButton" destination="893-FN-lfu" id="Msz-cG-wgh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,13 +26,6 @@
                         <rect key="frame" x="8" y="410" width="384" height="21"/>
                     </variation>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLS-7S-vnO">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="342" y="542" width="250" height="250"/>
-                    </variation>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="893-FN-lfu">
                     <rect key="frame" x="100" y="363" width="46" height="30"/>
                     <state key="normal" title="Hang up">
@@ -48,13 +40,11 @@
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="tVy-6x-mPs"/>
-                    <exclude reference="nLS-7S-vnO"/>
                     <exclude reference="893-FN-lfu"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular">
                 <mask key="subviews">
-                    <include reference="nLS-7S-vnO"/>
                     <include reference="893-FN-lfu"/>
                 </mask>
             </variation>
@@ -64,17 +54,13 @@
                 </mask>
             </variation>
         </view>
-        <view contentMode="scaleToFill" id="twH-j9-Ogg">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-        </view>
         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yl9-ka-IHC">
             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <state key="normal" title="Button">
                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
             </state>
+            <point key="canvasLocation" x="28" y="425"/>
         </button>
     </objects>
 </document>

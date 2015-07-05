@@ -24,6 +24,7 @@
 @property (nonatomic) BOOL layerAuthenticated;
 
 + (id)sharedFitovateData;
+-(void) hasAMessage : (NSString *)username;
 - (NSDictionary *) parseUserToDictionary : (PFObject *) userFromParse;
 - (WLIUser *) pfobjectToWLIUser : (PFObject *) userFromParse;
 - (void) unfollowUserIdWithUserId : (NSNumber *) following :(NSNumber *) follower;

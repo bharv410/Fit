@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    if([WLIConnect sharedConnect].currentUser!=nil)
+    if([WLIConnect sharedConnect].currentUser!=nil)//required
         [self firstLogin];
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Activity" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
@@ -170,31 +170,7 @@
     }];
 }
 
-- (void)firstLogin{
-    WLIConnect *myConnect = [WLIConnect sharedConnect];
-    if(myConnect.currentUser==nil){
-            [myConnect loginUserWithUsername:@"kylie" andPassword:@"abcd1234" onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
-                [hud hide:YES];
-                if (serverResponseCode == OK) {
-                    myConnect.currentUser = user;
-                    [myConnect authentWithLayer:^{
-                        NSLog(@"done");
-                    }];
-                } else if (serverResponseCode == NO_CONNECTION) {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                } else if (serverResponseCode == NOT_FOUND) {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong username. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                } else if (serverResponseCode == UNAUTHORIZED) {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                } else {
-                    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                }
-            }];
-        }
-    
-    
-    [self.tableViewRefresh reloadData];
-    
+- (void)firstLogin{    
     FitovateData *myData = [FitovateData sharedFitovateData];
     [myData startOovoo];
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{

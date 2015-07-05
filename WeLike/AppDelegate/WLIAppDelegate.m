@@ -91,6 +91,8 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     [self.window makeKeyAndVisible];
     
     [Fabric with:@[CrashlyticsKit]];
+    WLIConnect *myConnect = [WLIConnect sharedConnect];
+    [myConnect setLayerClientNow];
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

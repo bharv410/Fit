@@ -37,7 +37,7 @@
         NSString *someString = @" ";
         someProperty = [[NSString alloc] initWithString:someString];
         self.layerAuthenticated = NO;
-        NSLog(@"not authed");
+        NSLog(@"benmark SETTING self.layerAuthenticated = NO");
     }
     return self;
 }
@@ -94,6 +94,13 @@
     [push setChannel:userToJoin];
     [push setData:data];
     [push setMessage:@"Your getting a video call!"];
+    [push sendPushInBackground];
+}
+
+-(void) hasAMessage : (NSString *)username{
+    PFPush *push = [[PFPush alloc] init];
+    [push setChannel:username];
+    [push setMessage:@"You have a new message"];
     [push sendPushInBackground];
 }
 

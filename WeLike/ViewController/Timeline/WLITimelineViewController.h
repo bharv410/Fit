@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSArray *allFollowings;
 
 - (void)firstLogin;
+-(void)showMessagesButton;
 
 
 @end

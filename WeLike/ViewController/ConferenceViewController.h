@@ -10,12 +10,15 @@
 #import <ooVooSDK-iOS/ooVooVideoView.h>
 
 @interface ConferenceViewController : UIViewController
+{
+    IBOutlet UIView *vImagePreview;             //<<<<<ADD THIS
+}
+@property(nonatomic, retain) IBOutlet UIView *vImagePreview;             //<<<<<ADD THIS
 
 @property (strong, nonatomic) ooVooVideoView *videoView;
 @property (strong, nonatomic) UIActivityIndicatorView *indicator;
 @property (weak, nonatomic) IBOutlet UILabel *callingTextLabel;
 @property (strong, nonatomic) NSString *conferenceToJoin;
-@property (weak, nonatomic) IBOutlet UIView *cameraPreviewView;
 @property (strong, nonatomic) NSString *notificationSender;
 @property (strong, nonatomic) IBOutlet UIButton *hangupButton;
 

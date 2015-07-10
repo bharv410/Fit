@@ -311,7 +311,7 @@ MPMoviePlayerController *moviePlayerController;
 //    LQSViewController *newVc = [[LQSViewController alloc]init];
 //    [self.navigationController pushViewController:newVc animated:YES];
     
-    self.messageAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername] message:@"Enter message text" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Send"];
+    self.messageAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername] message:@"Enter message text" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Send",nil];
     self.messageAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
     //[alert show];
     [self.messageAlert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
@@ -335,6 +335,8 @@ MPMoviePlayerController *moviePlayerController;
 - (void)sendMessage:(NSString *)messageText{
     WLIConnect *connect = [WLIConnect sharedConnect];
     // If no conversations exist, create a new conversation object with two participants
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    [myData hasAMessage:_user.userUsername];
         NSError *error = nil;
         self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ _user.userUsername, connect.currentUser.userUsername ]] options:nil error:&error];
         if (!self.conversation) {
@@ -382,6 +384,8 @@ MPMoviePlayerController *moviePlayerController;
         }else{
             NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
             [self sendMessage:[[alertView textFieldAtIndex:0] text]];
+            
+            //benmark10
         }
     }
 }

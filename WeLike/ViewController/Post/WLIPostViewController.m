@@ -139,7 +139,9 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         WLIComment *comment = self.comments[indexPath.row];
-        [sharedConnect removeCommentWithCommentID:comment.commentID onCompletion:^(ServerResponse serverResponseCode) { }];
+        [sharedConnect removeCommentWithCommentID:comment.commentID onCompletion:^(ServerResponse serverResponseCode) {
+            [self reloadData:YES];
+        }];
     }
 }
 

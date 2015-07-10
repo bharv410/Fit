@@ -164,6 +164,7 @@
     
     AFPhotoEditorController *photoEditorController = [[AFPhotoEditorController alloc] initWithImage:image];
     photoEditorController.delegate = self;
+
     [self dismissViewControllerAnimated:YES completion:^{
         [self presentViewController:photoEditorController animated:YES completion:nil];
     }];

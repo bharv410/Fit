@@ -170,7 +170,9 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         WLIComment *comment = self.comments[indexPath.row];
         [sharedConnect removeCommentWithCommentID:comment.commentID onCompletion:^(ServerResponse serverResponseCode) {
-            
+            [self getComments:^{
+                NSLog(@"got comments from parse");
+            }];
         }];
     }
 }

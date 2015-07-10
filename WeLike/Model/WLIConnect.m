@@ -595,19 +595,18 @@ static WLIConnect *sharedConnect;
 }
 
 - (void)removeCommentWithCommentID:(int)commentID onCompletion:(void (^)(ServerResponse serverResponseCode))completion {
-    
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-    [parameters setObject:[NSString stringWithFormat:@"%d", commentID] forKey:@"commentID"];
-    [httpClient POST:@"removeComment" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSDictionary *rawComment = [responseObject objectForKey:@"item"];
-        //WLIComment *comment = [[WLIComment alloc] initWithDictionary:rawComment];
-        
-        [self debugger:parameters.description methodLog:@"api/removeComment" dataLogFormatted:responseObject];
-        completion(OK);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self debugger:parameters.description methodLog:@"api/removeComment" dataLog:error.description];
-        completion(UNKNOWN_ERROR);
+    PFQuery *unfollowUser = [PFQuery queryWithClassName:@"Comments"];
+    [unfollowUser whereKey:@"commentId" equalTo:[NSNumber numberWithInt:commentID]];
+    [unfollowUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error){
+            for(PFObject *object in objects){
+                [object deleteInBackground];
+                NSLog(@"removed");
+                completion(OK);
+            }
+        }else{
+            completion(UNKNOWN_ERROR);
+        }
     }];
 }
 

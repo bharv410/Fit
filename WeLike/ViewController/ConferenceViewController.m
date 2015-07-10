@@ -148,13 +148,10 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     
     NSArray *possibleDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     
-    //AVCaptureDevice* device = [possibleDevices lastObject];
-    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDevice* device = [possibleDevices lastObject];
+    //AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     NSLog(@"RTY BOTH THESE DEVICES TO SEE IF THEY WORK");
-    NSLog(@"RTY BOTH THESE DEVICES TO SEE IF THEY WORK");
-    NSLog(@"RTY BOTH THESE DEVICES TO SEE IF THEY WORK");
-    NSLog(@"RTY BOTH THESE DEVICES TO SEE IF THEY WORK");
-NSLog(@"RTY BOTH THESE DEVICES TO SEE IF THEY WORK");
+    
     
     
     NSError *error = nil;

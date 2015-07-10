@@ -277,30 +277,8 @@
 
 - (void)barButtonItemReportTouchUpInside:(UIBarButtonItem *)barButtonItem {
     if([self.post.user.userUsername isEqualToString:[WLIConnect sharedConnect].currentUser.userUsername]){
-        PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
-        [query whereKey:@"postID" equalTo:[NSNumber numberWithInt:self.post.postID]];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *hospitals, NSError *error) {
-            if (!error)
-            {
-                for (PFObject *hospital in hospitals)
-                {
-                        [hospital deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            if (succeeded){
-                                NSLog(@"BOOOOOM"); // this is my function to refresh the data
-                                [[[UIAlertView alloc] initWithTitle:@"Deleted Photo" message:@"Your photo has been deleted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                            } else {
-                                NSLog(@"DELETE ERRIR");
-                            }
-                        }];
-                }
-            }
-            else
-            {
-                NSLog(@"%@",error);
-            }
-            
-        }];
-        //if its my post delete it. if not then report it
+        [[[UIAlertView alloc] initWithTitle:@"Delete Photo" message:@"Are you sure you want to delete this photo?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil] show];
+                //if its my post delete it. if not then report it
     }else{
         if ([MFMailComposeViewController canSendMail]) {
             [[[UIAlertView alloc] initWithTitle:@"Report" message:@"Are you sure you want to report this post?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Report!", nil] show];
@@ -336,6 +314,30 @@
         [mailComposeViewController setMessageBody:message isHTML:NO];
         [self presentViewController:mailComposeViewController animated:YES completion:^{
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        }];
+    }else if([alertView.title isEqualToString:@"Delete Photo"] && [[alertView buttonTitleAtIndex:buttonIndex]isEqualToString:@"OK"]){
+        PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+        [query whereKey:@"postID" equalTo:[NSNumber numberWithInt:self.post.postID]];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *hospitals, NSError *error) {
+            if (!error)
+            {
+                for (PFObject *hospital in hospitals)
+                {
+                    [hospital deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded){
+                            NSLog(@"BOOOOOM"); // this is my function to refresh the data
+                            [[[UIAlertView alloc] initWithTitle:@"Delete Photo" message:@"Deleted" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        } else {
+                            NSLog(@"DELETE ERRIR");
+                        }
+                    }];
+                }
+            }
+            else
+            {
+                NSLog(@"%@",error);
+            }
+            
         }];
     }
 }

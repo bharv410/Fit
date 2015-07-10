@@ -174,6 +174,11 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     }
     [session addInput:input];
     
+    [self performSelector:@selector(startSession:) withObject:session afterDelay:1.0];
+}
+
+-(void)startSession :(AVCaptureSession *)session
+{
     [session startRunning];
 }
 

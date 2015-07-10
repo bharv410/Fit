@@ -74,6 +74,8 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
 
 
 -(void) hangUp{
+    [self.callingTextLabel removeFromSuperview];
+    
     [[ooVooController sharedController] leaveConference];
     NSLog(@"hanging up");
 }
@@ -163,11 +165,11 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
         NSLog(@"no error. show cam");
         [self.view addSubview:self.vImagePreview];
         
-        UITextView *myTextView = [[UITextView alloc] init];
-        myTextView.text = @"Calling...";
-        [myTextView setTextColor:[UIColor redColor]];
-        [self.videoView addSubview:myTextView];  
-        [myTextView sizeToFit];
+        self.callingTextLabel = [[UITextView alloc] init];
+        self.callingTextLabel.text = @"Calling...";
+        [self.callingTextLabel setTextColor:[UIColor redColor]];
+        [self.videoView addSubview:self.callingTextLabel];
+        [self.callingTextLabel sizeToFit];
         
     }
     [session addInput:input];

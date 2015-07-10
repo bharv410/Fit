@@ -12,6 +12,8 @@
 #import "GlobalDefines.h"
 #import "ParseSingleton.h"
 #import "FitovateData.h"
+#import "WLIConnect.h"
+#import <Parse/Parse.h>
 
 @implementation WLIPostViewController
 
@@ -272,11 +274,37 @@
 #pragma mark - Actions methods
 
 - (void)barButtonItemReportTouchUpInside:(UIBarButtonItem *)barButtonItem {
-    
-    if ([MFMailComposeViewController canSendMail]) {
-        [[[UIAlertView alloc] initWithTitle:@"Report" message:@"Are you sure you want to report this post?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Report!", nil] show];
-    } else {
-        [[[UIAlertView alloc] initWithTitle:@"Report" message:@"This device is not configured to send mails, please enable mail and contact us at report@foodspotting.com" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    if([self.post.user.userUsername isEqualToString:[WLIConnect sharedConnect].currentUser.userUsername]){
+        PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+        [query whereKey:@"postID" equalTo:[NSNumber numberWithInt:self.post.postID]];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *hospitals, NSError *error) {
+            if (!error)
+            {
+                for (PFObject *hospital in hospitals)
+                {
+                        [hospital deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if (succeeded){
+                                NSLog(@"BOOOOOM"); // this is my function to refresh the data
+                                [[[UIAlertView alloc] initWithTitle:@"Deleted Photo" message:@"Your photo has been deleted!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                            } else {
+                                NSLog(@"DELETE ERRIR");
+                            }
+                        }];
+                }
+            }
+            else
+            {
+                NSLog(@"%@",error);
+            }
+            
+        }];
+        //if its my post delete it. if not then report it
+    }else{
+        if ([MFMailComposeViewController canSendMail]) {
+            [[[UIAlertView alloc] initWithTitle:@"Report" message:@"Are you sure you want to report this post?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Report!", nil] show];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Report" message:@"This device is not configured to send mails, please enable mail and contact us at report@foodspotting.com" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     }
 }
 

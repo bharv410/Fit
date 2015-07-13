@@ -41,7 +41,7 @@
     UIButton *reportButton = [UIButton buttonWithType:UIButtonTypeCustom];
     reportButton.adjustsImageWhenHighlighted = NO;
     reportButton.frame = CGRectMake(0.0f, 0.0f, 40.0f, 30.0f);
-    [reportButton setImage:[UIImage imageNamed:@"nav-btn-close"] forState:UIControlStateNormal];
+    [reportButton setImage:[UIImage imageNamed:@"reportimage.png"] forState:UIControlStateNormal];
     [reportButton addTarget:self action:@selector(barButtonItemReportTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:reportButton];
 }

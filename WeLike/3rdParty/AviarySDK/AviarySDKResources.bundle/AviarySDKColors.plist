@@ -7,21 +7,21 @@
 		<key>alpha</key>
 		<real>1</real>
 		<key>hex</key>
-		<string>#ffffff</string>
+		<string>#00baff</string>
 	</dict>
 	<key>badgeColor</key>
 	<dict>
 		<key>alpha</key>
-		<real>0.80000000000000004</real>
+		<real>0.80000001192092896</real>
 		<key>hex</key>
-		<string>#644650</string>
+		<string>#eb1a3c</string>
 	</dict>
 	<key>canvasColor</key>
 	<dict>
 		<key>alpha</key>
 		<real>1</real>
 		<key>hex</key>
-		<string>#e6e6e6</string>
+		<string>#1f252b</string>
 	</dict>
 	<key>contentColor</key>
 	<dict>
@@ -35,7 +35,7 @@
 		<key>alpha</key>
 		<real>1</real>
 		<key>hex</key>
-		<string>#ff4650</string>
+		<string>#434a57</string>
 	</dict>
 	<key>handleColor</key>
 	<dict>
@@ -49,7 +49,7 @@
 		<key>alpha</key>
 		<real>1</real>
 		<key>hex</key>
-		<string>#ff4650</string>
+		<string>#333943</string>
 	</dict>
 	<key>navBarTextColor</key>
 	<dict>
@@ -63,14 +63,14 @@
 		<key>alpha</key>
 		<real>1</real>
 		<key>hex</key>
-		<string>#ff4650</string>
+		<string>#000000</string>
 	</dict>
 	<key>toolBarColor</key>
 	<dict>
 		<key>alpha</key>
 		<real>1</real>
 		<key>hex</key>
-		<string>#ff4650</string>
+		<string>#333943</string>
 	</dict>
 </dict>
 </plist>

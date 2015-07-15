@@ -36,7 +36,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.4</string>
+	<string>1.1.7</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -58,6 +58,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pacifico.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

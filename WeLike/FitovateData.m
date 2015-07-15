@@ -47,9 +47,6 @@
         
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(oovooConferenceStarted) name:OOVOOConferenceDidBeginNotification object:nil];
     
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation addUniqueObject:myUsername forKey:@"channels"];
-    [currentInstallation saveInBackground];
     }
 }
 

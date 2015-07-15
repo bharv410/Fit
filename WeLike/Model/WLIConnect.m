@@ -12,6 +12,7 @@
 #import "ParseSingleton.h"
 #import "FitovateData.h"
 #import <Parse/Parse.h>
+#import "ConferenceViewController.h"
 
 #define kBaseLink @"http://fitovate.elasticbeanstalk.com"
 #define kAPIKey @"!#wli!sdWQDScxzczFžŽYewQsq_?wdX09612627364[3072∑34260-#"
@@ -119,6 +120,7 @@ static WLIConnect *sharedConnect;
             [self authentWithLayer:^{
                 NSLog(@"done");
             }];
+            
         } else if (serverResponseCode == NO_CONNECTION) {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"No connection. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         } else if (serverResponseCode == NOT_FOUND) {
@@ -181,6 +183,7 @@ static WLIConnect *sharedConnect;
 
 - (void)loginUserWithUsername:(NSString*)username andPassword:(NSString*)password onCompletion:(void (^)(WLIUser *user, ServerResponse serverResponseCode))completion {
     
+    
     if (!username.length || !password.length) {
         completion(nil, BAD_REQUEST);
     } else {
@@ -205,6 +208,14 @@ static WLIConnect *sharedConnect;
                 completion(nil, kUNAUTHORIZED);
             }
         }];
+        
+        // When users indicate they are Giants fans, we subscribe them to that channel.
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation addUniqueObject:username forKey:@"channels"];
+        [currentInstallation saveInBackground];
+        
+        
+        
         
         
 //        NSDictionary *parameters = @{@"username": username, @"password": password};
@@ -842,8 +853,10 @@ static WLIConnect *sharedConnect;
 }
 
 - (void)logout {
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation removeObject:_currentUser.userUsername forKey:@"channels"];
+    [currentInstallation saveInBackground];
     
-    _currentUser = nil;
     [self removeCurrentUser];
     [self.layerClient disconnect];
     [self.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {

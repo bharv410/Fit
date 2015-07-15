@@ -57,11 +57,6 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
                                                  name:OOVOOCameraDidStartNotification
                                                object:nil];
     
-    FitovateData *myData = [FitovateData sharedFitovateData];
-    if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
-        [self.indicator startAnimating];
-    }
-    
     UIImage *btnImage = [UIImage imageNamed:@"hangup.png"];
     UIButton *hangBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height/2 - 50, 100.0, 50.0)];
     
@@ -131,11 +126,7 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     [self.vImagePreview removeFromSuperview];
     self.vImagePreview =[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height/2 - 50, 100.0, 250.0)];
     NSLog(@"+50 WAS TOO LOW. 0 WAS HIGHER. THOGUTH -50 WOULD BE EVEN HIGHER N THEREFORE LOOK THE BESTPLACE");
-    NSLog(@"+50 WAS TOO LOW. 0 WAS HIGHER. THOGUTH -50 WOULD BE EVEN HIGHER N THEREFORE LOOK THE BESTPLACE");
-    NSLog(@"+50 WAS TOO LOW. 0 WAS HIGHER. THOGUTH -50 WOULD BE EVEN HIGHER N THEREFORE LOOK THE BESTPLACE");
-    NSLog(@"+50 WAS TOO LOW. 0 WAS HIGHER. THOGUTH -50 WOULD BE EVEN HIGHER N THEREFORE LOOK THE BESTPLACE");
-    NSLog(@"+50 WAS TOO LOW. 0 WAS HIGHER. THOGUTH -50 WOULD BE EVEN HIGHER N THEREFORE LOOK THE BESTPLACE");
-    
+
     //----- SHOW LIVE CAMERA PREVIEW -----
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
     session.sessionPreset = AVCaptureSessionPresetMedium;
@@ -161,20 +152,24 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     if (!input) {
         // Handle the error appropriately.
         NSLog(@"ERROR: trying to open camera: %@", error);
+        
     }else{
         NSLog(@"no error. show cam");
+        
         [self.view addSubview:self.vImagePreview];
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
+            [self.indicator startAnimating];
+            self.callingTextLabel = [[UITextView alloc] init];
+            self.callingTextLabel.text = @"Calling...";
+            [self.callingTextLabel setTextColor:[UIColor redColor]];
+            [self.videoView addSubview:self.callingTextLabel];
+            [self.callingTextLabel sizeToFit];
+        }
+        [session addInput:input];
         
-        self.callingTextLabel = [[UITextView alloc] init];
-        self.callingTextLabel.text = @"Calling...";
-        [self.callingTextLabel setTextColor:[UIColor redColor]];
-        [self.videoView addSubview:self.callingTextLabel];
-        [self.callingTextLabel sizeToFit];
-        
+        [self performSelector:@selector(startSession:) withObject:session afterDelay:1.0];
     }
-    [session addInput:input];
-    
-    [self performSelector:@selector(startSession:) withObject:session afterDelay:1.0];
 }
 
 -(void)startSession :(AVCaptureSession *)session

@@ -109,5 +109,6 @@ typedef enum ServerResponse ServerResponse;
 - (void)followingForUserID:(int)userID page:(int)page pageSize:(int)pageSize onCompletion:(void (^)(NSMutableArray *following, ServerResponse serverResponseCode))completion;
 
 - (void)logout;
+- (void)logBackIn;
 
 @end

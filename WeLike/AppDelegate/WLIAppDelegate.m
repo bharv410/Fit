@@ -26,6 +26,8 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
     //benmark parse
     [Parse enableLocalDatastore];
     
@@ -97,22 +99,74 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    // Extract the notification data
-    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    NSString *sender = [notificationPayload objectForKey:@"sender"];
-    NSString *conference = [notificationPayload objectForKey:@"conference"];
-    if([sender length]>2){
+//    // Extract the notification data
+//    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+//    NSString *sender = [notificationPayload objectForKey:@"sender"];
+//    NSString *conference = [notificationPayload objectForKey:@"conference"];
+//    if([sender length]>2){
+//        ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+//        cvc.conferenceToJoin = conference;
+//        cvc.notificationSender = sender;
+//        [self.window.rootViewController presentViewController:cvc animated:YES completion:^{
+//            NSLog(@"presented oovvoo conference");
+//        }];
+//    }else{
+//        NSLog(@"no conference");
+//    }
+//    
+//    NSString *mes = [NSString stringWithFormat:@"sender = %@, conf = %@", sender, conference];
+//
+    if (launchOptions != nil) {
+        
+        double delayInSeconds = 2.5; // number of seconds to wait
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            NSArray *subscribedChannels = [PFInstallation currentInstallation].channels;
+            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+            cvc.conferenceToJoin = [subscribedChannels firstObject];
+            cvc.notificationSender = [subscribedChannels firstObject];
+            [self.window.rootViewController presentViewController:cvc animated:YES completion:^{
+                NSLog(@"presented oovvoo conference");
+            }];
+        });
+        
+    }else{
+        NSLog(@"opened app not from push");
+    }
+    return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    if(application.applicationState == UIApplicationStateInactive && [WLIConnect sharedConnect].currentUser.userUsername!=nil) {
+        UIAlertView *messageAlert = [[UIAlertView alloc]
+                                     initWithTitle:@"App Inactive" message:@"App Inactive" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        // Display Alert Message
+        [messageAlert show];
+        
+        NSLog(@"App Inactive");
+        
         ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
-        cvc.conferenceToJoin = conference;
-        cvc.notificationSender = sender;
+        cvc.conferenceToJoin = [WLIConnect sharedConnect].currentUser.userUsername;
+        cvc.notificationSender = [WLIConnect sharedConnect].currentUser.userUsername;
         [self.window.rootViewController presentViewController:cvc animated:YES completion:^{
             NSLog(@"presented oovvoo conference");
         }];
-    }else{
-        NSLog(@"no conference");
+        
+        completionHandler(UIBackgroundFetchResultNewData);
+        
+    } else if ([WLIConnect sharedConnect].currentUser.userUsername!=nil){
+            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+            cvc.conferenceToJoin = [WLIConnect sharedConnect].currentUser.userUsername;
+            cvc.notificationSender = [WLIConnect sharedConnect].currentUser.userUsername;
+            [self.window.rootViewController presentViewController:cvc animated:YES completion:^{
+                NSLog(@"presented oovvoo conference");
+            }];
+        
+        completionHandler(UIBackgroundFetchResultNewData);
+        
     }
-    
-    return YES;
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

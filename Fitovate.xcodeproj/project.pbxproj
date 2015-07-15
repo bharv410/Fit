@@ -530,6 +530,7 @@
 		6B7C6AEE1A6EC562007230B8 /* tabbarpopular@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbarpopular@2x.png"; sourceTree = "<group>"; };
 		6B7C6AEF1A6EC562007230B8 /* tabbarpopular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbarpopular.png; sourceTree = "<group>"; };
 		6B7D56E11A70629A00325793 /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
+		6B8F63E01B54582500CA5C4D /* Fitovate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Fitovate.entitlements; sourceTree = "<group>"; };
 		6B9DE8B81B43508400BD0D0E /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		6B9DE8B91B43508400BD0D0E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		6BA07B0C1A5F4B3600382FF1 /* Default-568h@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Default-568h@2x.jpg"; sourceTree = "<group>"; };
@@ -1344,6 +1345,7 @@
 		2CCE1A8C17ECD32B00680126 = {
 			isa = PBXGroup;
 			children = (
+				6B8F63E01B54582500CA5C4D /* Fitovate.entitlements */,
 				6B9DE8B81B43508400BD0D0E /* Fabric.framework */,
 				6B9DE8B91B43508400BD0D0E /* Crashlytics.framework */,
 				6BEC00731AB1088F00ED4B7C /* Fitovate_background.png */,
@@ -1570,8 +1572,14 @@
 					2CCE1A9417ECD32B00680126 = {
 						DevelopmentTeam = 7ULHJW5669;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.InAppPurchase = {
 								enabled = 0;
+							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
 							};
 						};
 					};
@@ -1906,8 +1914,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Navneeth Ramprasad (D439JYQCPH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Navneeth Ramprasad (D439JYQCPH)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1925,7 +1933,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "d3231919-4f6b-4e3f-a726-826481aed37c";
+				PROVISIONING_PROFILE = "7847db15-9e0f-4c6f-9e37-f72042a21877";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1946,8 +1954,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Navneeth Ramprasad (D439JYQCPH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Navneeth Ramprasad (D439JYQCPH)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1959,7 +1967,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "d3231919-4f6b-4e3f-a726-826481aed37c";
+				PROVISIONING_PROFILE = "7847db15-9e0f-4c6f-9e37-f72042a21877";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1971,8 +1979,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Fitovate.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"Users/benjamin.harvey/Desktop/stuff/Fitovate/wlinew/wli/ooVooSDK-iOS.framework",
@@ -2002,7 +2011,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d518d5b8-3c11-452e-9d76-7b9ef54843d0";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "armv7 armv7s arm64 i386";
@@ -2017,8 +2026,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = Fitovate.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"Users/benjamin.harvey/Desktop/stuff/Fitovate/wlinew/wli/ooVooSDK-iOS.framework",
@@ -2048,7 +2058,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d518d5b8-3c11-452e-9d76-7b9ef54843d0";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				VALID_ARCHS = "armv7 armv7s arm64 i386";
 				WRAPPER_EXTENSION = app;

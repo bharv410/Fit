@@ -139,14 +139,7 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
     if(application.applicationState == UIApplicationStateInactive && [WLIConnect sharedConnect].currentUser.userUsername!=nil) {
-        UIAlertView *messageAlert = [[UIAlertView alloc]
-                                     initWithTitle:@"App Inactive" message:@"App Inactive" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        // Display Alert Message
-        [messageAlert show];
-        
-        NSLog(@"App Inactive");
-        
+                
         ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
         cvc.conferenceToJoin = [WLIConnect sharedConnect].currentUser.userUsername;
         cvc.notificationSender = [WLIConnect sharedConnect].currentUser.userUsername;

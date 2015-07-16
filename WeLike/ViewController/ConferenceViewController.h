@@ -24,5 +24,6 @@
 
 + (CGFloat) window_height;
 + (CGFloat) window_width;
+- (void)videoCallThisUser;
 
 @end

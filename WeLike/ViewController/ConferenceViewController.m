@@ -24,14 +24,13 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupIndicator];
+    //[self setupIndicator];
     
     [[ooVooController sharedController] initSdk:@"12349983352060"
                                applicationToken:OOVOOToken baseUrl:[[NSUserDefaults standardUserDefaults] stringForKey:@"production"]];
     
     [[ooVooController sharedController] joinConference:self.conferenceToJoin applicationToken:OOVOOToken  applicationId:@"12349983352060" participantInfo:@"participant info"];
     
-    self.title = [NSString stringWithFormat:@"%@",self.conferenceToJoin];
     
     self.videoView = [[ooVooVideoView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height/2)];
     [self.view addSubview:self.videoView];
@@ -56,20 +55,39 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
                                              selector:@selector(cameraDidStart:)
                                                  name:OOVOOCameraDidStartNotification
                                                object:nil];
-    
-    UIImage *btnImage = [UIImage imageNamed:@"hangup.png"];
-    UIButton *hangBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height/2 - 50, 100.0, 50.0)];
-    
-    [hangBtn setImage:btnImage forState:UIControlStateNormal];
-    [hangBtn addTarget:self action:@selector(hangUp) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:hangBtn];
 
     [self startPreview];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoDidStart:) name:OOVOOPreviewDidStartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cameraDidStart:) name:OOVOOCameraDidStartNotification object:nil];
+        [ooVooController sharedController].cameraEnabled = YES;
+    
+}
+
+- (void)cameraDidStart:(NSNotification *)notification
+{
+    NSNumber *errorNumber = notification.userInfo[OOVOOErrorKey];
+    BOOL ok = (errorNumber.intValue == 0);
+    
+    [ooVooController sharedController].previewEnabled = ok;
+    [ooVooController sharedController].transmitEnabled = ok;
+}
+
+- (void)videoDidStart:(NSNotification *)notification
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //[self.preview associateToID:kDefaultParticipantId];
+        NSLog(@"video started");
+    });
+}
 
 -(void) hangUp{
     [self.callingTextLabel removeFromSuperview];
+    [[self navigationController] popViewControllerAnimated:YES];
     
     [[ooVooController sharedController] leaveConference];
     NSLog(@"hanging up");
@@ -123,16 +141,13 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
 //    [_captureSession startRunning];
 //    NSLog(@"started");
     
-    [self.vImagePreview removeFromSuperview];
     self.vImagePreview =[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height/2 - 50, 100.0, 250.0)];
-    NSLog(@"+50 WAS TOO LOW. 0 WAS HIGHER. THOGUTH -50 WOULD BE EVEN HIGHER N THEREFORE LOOK THE BESTPLACE");
 
-    //----- SHOW LIVE CAMERA PREVIEW -----
+    
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
     session.sessionPreset = AVCaptureSessionPresetMedium;
     
     CALayer *viewLayer = self.vImagePreview.layer;
-    NSLog(@"viewLayer = %@", viewLayer);
     
     AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
     
@@ -142,30 +157,44 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     NSArray *possibleDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     
     AVCaptureDevice* device = [possibleDevices lastObject];
-    //AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    NSLog(@"RTY BOTH THESE DEVICES TO SEE IF THEY WORK");
-    
-    
     
     NSError *error = nil;
+    
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+    
     if (!input) {
         // Handle the error appropriately.
-        NSLog(@"ERROR: trying to open camera: %@", error);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!"
+                                                        message:@"ERROR: trying to open camera"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
         
     }else{
         NSLog(@"no error. show cam");
         
         [self.view addSubview:self.vImagePreview];
+        
+        
         FitovateData *myData = [FitovateData sharedFitovateData];
-        if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
-            [self.indicator startAnimating];
+        if(myData.currentUser.userUsername==nil || [self.conferenceToJoin containsString:myData.currentUser.userUsername]){
+            
+        }else{
             self.callingTextLabel = [[UITextView alloc] init];
             self.callingTextLabel.text = @"Calling...";
             [self.callingTextLabel setTextColor:[UIColor redColor]];
             [self.videoView addSubview:self.callingTextLabel];
             [self.callingTextLabel sizeToFit];
         }
+        UIImage *btnImage = [UIImage imageNamed:@"hangup.png"];
+        UIButton *hangBtn = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height/2 - 50, 100.0, 50.0)];
+        
+        [hangBtn setImage:btnImage forState:UIControlStateNormal];
+        [hangBtn addTarget:self action:@selector(hangUp) forControlEvents:UIControlEventTouchUpInside];
+        [self.videoView addSubview:hangBtn];
+        [self.videoView bringSubviewToFront:hangBtn];
+        
         [session addInput:input];
         
         [self performSelector:@selector(startSession:) withObject:session afterDelay:1.0];
@@ -190,18 +219,31 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     dispatch_async(dispatch_get_main_queue(), ^{
         
         NSLog(@"participant joined");
+        NSDictionary *userInfo = notification.userInfo;
+        NSString *participantID = userInfo[OOVOOParticipantIdKey];
+        NSString *stringWithFormat = [NSString stringWithFormat:@"%@ has joined the conference", participantID];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!"
+                                                        message:stringWithFormat
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [[ooVooController sharedController] receiveParticipantVideo:YES
+                                                   forParticipantID:participantID];
+        [self.videoView associateToID:participantID];
+        [self.videoView showVideo:YES];
         
-        FitovateData *myData = [FitovateData sharedFitovateData];
-        
-        if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
-            //if I called them and they picked up
-            [[ooVooController sharedController] receiveParticipantVideo:YES forParticipantID:self.conferenceToJoin];
-            [self.indicator stopAnimating];
-        }else{
-            
-            //they called me and I just joined
-            [[ooVooController sharedController] receiveParticipantVideo:YES forParticipantID:self.notificationSender];
-        }
+//        FitovateData *myData = [FitovateData sharedFitovateData];
+//        
+//        if(![self.conferenceToJoin containsString:myData.currentUser.userUsername]){
+//            //if I called them and they picked up
+//            [[ooVooController sharedController] receiveParticipantVideo:YES forParticipantID:self.conferenceToJoin];
+//            [self.indicator stopAnimating];
+//        }else{
+//            
+//            //they called me and I just joined
+//            [[ooVooController sharedController] receiveParticipantVideo:YES forParticipantID:self.notificationSender];
+//        }
     });
 }
 
@@ -232,10 +274,6 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     });
 }
 
-- (void)cameraDidStart:(NSNotification *)notification
-{
-    
-}
 /*
 #pragma mark - Navigation
 

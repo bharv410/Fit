@@ -18,6 +18,7 @@
 #import "LQSViewController.h"
 #import "FitovateData.h"
 #import <Parse/Parse.h>
+#import "ConferenceViewController.h"
 
 @implementation WLIProfileViewController
 MPMoviePlayerController *moviePlayerController;
@@ -76,6 +77,11 @@ MPMoviePlayerController *moviePlayerController;
         self.buttonEditProfile.alpha = 0.0f;
         self.buttonLogout.alpha = 0.0f;
         self.scrollViewUserProfile.contentSize = CGSizeMake(self.view.frame.size.width, CGRectGetMaxY(self.labelEmail.frame) +20.0f);
+        UIBarButtonItem *btn=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"videochatimage.png"]
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(videoCallThisUser)];
+        self.navigationItem.rightBarButtonItem=btn;
     }
     
     if (self.user.userType != WLIUserTypeCompany) {
@@ -110,6 +116,16 @@ MPMoviePlayerController *moviePlayerController;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
     LQSViewController *newVc = [[LQSViewController alloc]init];
     [self.navigationController pushViewController:newVc animated:YES];
+    
+}
+
+- (void)videoCallThisUser{
+    
+            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+            cvc.conferenceToJoin = self.user.userUsername;
+            [self.navigationController pushViewController:cvc animated:NO];
+            FitovateData *myData = [FitovateData sharedFitovateData];
+            [myData joinConference:[WLIConnect sharedConnect].currentUser.userUsername : self.user.userUsername];
     
 }
 

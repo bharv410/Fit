@@ -121,6 +121,7 @@ MPMoviePlayerController *moviePlayerController;
 }
 
 - (void)videoCallThisUser{
+    
         FitovateData *fd =[FitovateData sharedFitovateData];
         fd.confernceId = self.user.userUsername;
         fd.participantId = [WLIConnect sharedConnect].currentUser.userUsername;

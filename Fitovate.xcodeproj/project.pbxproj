@@ -197,10 +197,6 @@
 		6B11909F1B5B0C1900AAF9A6 /* message-received.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190791B5B0C1900AAF9A6 /* message-received.aiff */; };
 		6B1190A01B5B0C1900AAF9A6 /* message-sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 6B11907A1B5B0C1900AAF9A6 /* message-sent.aiff */; };
 		6B1190B51B5B0C4300AAF9A6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A21B5B0C4300AAF9A6 /* Default-568h@2x.png */; };
-		6B1190B61B5B0C4300AAF9A6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A31B5B0C4300AAF9A6 /* Icon@2x.png */; };
-		6B1190B71B5B0C4300AAF9A6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A41B5B0C4300AAF9A6 /* Icon.png */; };
-		6B1190B81B5B0C4300AAF9A6 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A51B5B0C4300AAF9A6 /* Icon-72@2x.png */; };
-		6B1190B91B5B0C4300AAF9A6 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A61B5B0C4300AAF9A6 /* Icon-72.png */; };
 		6B1190BA1B5B0C4300AAF9A6 /* ic_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A71B5B0C4300AAF9A6 /* ic_camera.png */; };
 		6B1190BB1B5B0C4300AAF9A6 /* ic_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A81B5B0C4300AAF9A6 /* ic_camera@2x.png */; };
 		6B1190BC1B5B0C4300AAF9A6 /* video-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190A91B5B0C4300AAF9A6 /* video-camera.png */; };
@@ -606,10 +602,6 @@
 		6B1190791B5B0C1900AAF9A6 /* message-received.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-received.aiff"; sourceTree = "<group>"; };
 		6B11907A1B5B0C1900AAF9A6 /* message-sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-sent.aiff"; sourceTree = "<group>"; };
 		6B1190A21B5B0C4300AAF9A6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		6B1190A31B5B0C4300AAF9A6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		6B1190A41B5B0C4300AAF9A6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		6B1190A51B5B0C4300AAF9A6 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
-		6B1190A61B5B0C4300AAF9A6 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		6B1190A71B5B0C4300AAF9A6 /* ic_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_camera.png; sourceTree = "<group>"; };
 		6B1190A81B5B0C4300AAF9A6 /* ic_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_camera@2x.png"; sourceTree = "<group>"; };
 		6B1190A91B5B0C4300AAF9A6 /* video-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video-camera.png"; sourceTree = "<group>"; };
@@ -1734,10 +1726,6 @@
 			isa = PBXGroup;
 			children = (
 				6B1190A21B5B0C4300AAF9A6 /* Default-568h@2x.png */,
-				6B1190A31B5B0C4300AAF9A6 /* Icon@2x.png */,
-				6B1190A41B5B0C4300AAF9A6 /* Icon.png */,
-				6B1190A51B5B0C4300AAF9A6 /* Icon-72@2x.png */,
-				6B1190A61B5B0C4300AAF9A6 /* Icon-72.png */,
 				6B1190A71B5B0C4300AAF9A6 /* ic_camera.png */,
 				6B1190A81B5B0C4300AAF9A6 /* ic_camera@2x.png */,
 				6B1190A91B5B0C4300AAF9A6 /* video-camera.png */,
@@ -1957,7 +1945,6 @@
 				2C6D27E01896BACA00C459CB /* WLICommentsViewController.xib in Resources */,
 				6B1190C51B5B0C4300AAF9A6 /* ic_speaker_off@2x.png in Resources */,
 				6B7C6AF01A6EC562007230B8 /* tabbarpopular@2x.png in Resources */,
-				6B1190B61B5B0C4300AAF9A6 /* Icon@2x.png in Resources */,
 				2C6D28171896BACA00C459CB /* map-pin@2x.png in Resources */,
 				6B66C77C1A8C1FA20057962A /* WLIActivityViewController.xib in Resources */,
 				6B1190961B5B0C1900AAF9A6 /* input-field-cover@2x.png in Resources */,
@@ -2010,7 +1997,6 @@
 				6B59A3031B1A597800F1F92A /* iTunesArtwork@2x.png in Resources */,
 				AD71604A1A38BAC60043E740 /* sns-2010-03-31.json in Resources */,
 				6B1190901B5B0C1900AAF9A6 /* bubble-tailless@2x.png in Resources */,
-				6B1190B91B5B0C4300AAF9A6 /* Icon-72.png in Resources */,
 				6BA07B111A5F4B8000382FF1 /* Default@2x.jpg in Resources */,
 				2C6D27F61896BACA00C459CB /* WLIRegisterViewController.xib in Resources */,
 				AD8CF6F31A3131710002250B /* fatlogo.png in Resources */,
@@ -2054,7 +2040,6 @@
 				6B774ED71A6A1509007A8277 /* tabbarnearby.png in Resources */,
 				2C6D282A1896BACA00C459CB /* custom-activity.png in Resources */,
 				6B11909B1B5B0C1900AAF9A6 /* button-photo.png in Resources */,
-				6B1190B71B5B0C4300AAF9A6 /* Icon.png in Resources */,
 				6B267D371A65EE5000F0C056 /* nav-btn-close@2x.png in Resources */,
 				6B11909A1B5B0C1900AAF9A6 /* send-button@2x.png in Resources */,
 				2C6D282C1896BACA00C459CB /* pulldown-refresh-icon.png in Resources */,
@@ -2097,7 +2082,6 @@
 				6B130BE91A73108E00FE0E0C /* messagesbutton.png in Resources */,
 				6B1190BC1B5B0C4300AAF9A6 /* video-camera.png in Resources */,
 				2C6D28031896BACA00C459CB /* btn-follow@2x.png in Resources */,
-				6B1190B81B5B0C4300AAF9A6 /* Icon-72@2x.png in Resources */,
 				2C6D28261896BACA00C459CB /* avatar-empty.png in Resources */,
 				6B11908F1B5B0C1900AAF9A6 /* bubble-tailless.png in Resources */,
 				2C6D27E81896BACA00C459CB /* WLILoginViewController.xib in Resources */,
@@ -2312,6 +2296,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2352,6 +2337,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

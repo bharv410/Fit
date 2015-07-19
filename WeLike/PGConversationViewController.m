@@ -11,6 +11,7 @@
 #import "WLIConnect.h"
 #import "ConferenceViewController.h"
 #import "FitovateData.h"
+#import "MainViewController.h"
 
 @interface PGConversationViewController ()
 
@@ -35,13 +36,25 @@
     for(NSString* participant in participantsInConvo) {
         
         if(![participant containsString:[WLIConnect sharedConnect].currentUser.userUsername]){
-            NSLog(@"%@ is videocalling = %@",[WLIConnect sharedConnect].currentUser.userUsername,participant);
-            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
-            cvc.conferenceToJoin = participant;
-            [self.navigationController pushViewController:cvc animated:NO];
-            FitovateData *myData = [FitovateData sharedFitovateData];
+//            NSLog(@"%@ is videocalling = %@",[WLIConnect sharedConnect].currentUser.userUsername,participant);
+//            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
+//            cvc.conferenceToJoin = participant;
+//            [self.navigationController pushViewController:cvc animated:NO];
+//            FitovateData *myData = [FitovateData sharedFitovateData];
+//            
+//            [myData joinConference:[WLIConnect sharedConnect].currentUser.userUsername : participant];
             
-            [myData joinConference:[WLIConnect sharedConnect].currentUser.userUsername : participant];
+            FitovateData *fd =[FitovateData sharedFitovateData];
+            fd.confernceId = participant;
+            fd.participantId = [WLIConnect sharedConnect].currentUser.userUsername;
+            
+            [fd joinConference:[WLIConnect sharedConnect].currentUser.userUsername : participant];
+            
+            UIStoryboard *mainstoryBoard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+            MainViewController *mainViewController = [mainstoryBoard instantiateViewControllerWithIdentifier:@"MainNav"];
+            [self.navigationController presentViewController:mainViewController animated:YES completion:^{
+                NSLog(@"presented");
+            }];
             return;
         }
     }

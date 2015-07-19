@@ -18,6 +18,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) WLITabBarController *tabBarController;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (assign, nonatomic) BOOL isSdkInited;
 
 - (void)createViewHierarchy;
 

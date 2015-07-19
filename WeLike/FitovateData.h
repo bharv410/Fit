@@ -14,10 +14,14 @@
 
 @interface FitovateData : NSObject {
     NSString *someProperty;
+    NSString *confernceId;
+    NSString *participantId;
     WLIUser *currentUser;
 }
 
 @property (nonatomic, retain) NSString *someProperty;
+@property (nonatomic, retain) NSString *participantId;
+@property (nonatomic, retain) NSString *confernceId;
 @property (nonatomic, retain) WLIUser *currentUser;
 @property (nonatomic, retain) NSString *myUsername;
 @property (nonatomic, retain) NSMutableDictionary *allUsersDictionary;

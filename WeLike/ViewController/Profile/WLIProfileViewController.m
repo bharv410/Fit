@@ -19,6 +19,7 @@
 #import "FitovateData.h"
 #import <Parse/Parse.h>
 #import "ConferenceViewController.h"
+#import "MainViewController.h"
 
 @implementation WLIProfileViewController
 MPMoviePlayerController *moviePlayerController;
@@ -120,13 +121,17 @@ MPMoviePlayerController *moviePlayerController;
 }
 
 - (void)videoCallThisUser{
-    
-            ConferenceViewController *cvc = [[ConferenceViewController alloc]init];
-            cvc.conferenceToJoin = self.user.userUsername;
-            [self.navigationController pushViewController:cvc animated:NO];
-            FitovateData *myData = [FitovateData sharedFitovateData];
-            [myData joinConference:[WLIConnect sharedConnect].currentUser.userUsername : self.user.userUsername];
-    
+        FitovateData *fd =[FitovateData sharedFitovateData];
+        fd.confernceId = self.user.userUsername;
+        fd.participantId = [WLIConnect sharedConnect].currentUser.userUsername;
+        
+        [fd joinConference:[WLIConnect sharedConnect].currentUser.userUsername : self.user.userUsername];
+        
+        UIStoryboard *mainstoryBoard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+        MainViewController *mainViewController = [mainstoryBoard instantiateViewControllerWithIdentifier:@"MainNav"];
+        [self.navigationController presentViewController:mainViewController animated:YES completion:^{
+            NSLog(@"presented");
+        }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

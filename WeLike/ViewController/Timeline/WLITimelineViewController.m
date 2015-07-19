@@ -17,6 +17,7 @@
 #import "FitovateData.h"
 #import <ooVooSDK-iOS/ooVooSDK-iOS.h>
 #import <Atlas/Atlas.h>
+#import "MainViewController.h"
 #import "PGConversationListViewController.h"
 
 @implementation WLITimelineViewController

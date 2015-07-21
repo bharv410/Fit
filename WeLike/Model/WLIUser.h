@@ -19,7 +19,7 @@ typedef enum {
 @interface WLIUser : WLIObject <MKAnnotation>
 
 @property (nonatomic) int userID;
-@property (nonatomic) WLIUserType userType;
+@property (nonatomic) NSString *userType;
 @property (nonatomic, strong) NSString *userPassword;
 @property (nonatomic, strong) NSString *userEmail;
 @property (nonatomic, strong) NSString *userFullName;

@@ -19,6 +19,7 @@
 #import <Atlas/Atlas.h>
 #import "MainViewController.h"
 #import "PGConversationListViewController.h"
+#import "WLINearbyViewController.h"
 
 @implementation WLITimelineViewController
 
@@ -40,11 +41,13 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    [self setAlertShowing:NO];
     if([WLIConnect sharedConnect].currentUser!=nil)//required
         [self firstLogin];
     
     UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Activity" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
     self.navigationItem.leftBarButtonItem = anotherButton;
+    
    }
 
 
@@ -103,6 +106,17 @@
 - (void)reloadData:(BOOL)reloadAll {
     loading = YES;
     FitovateData *myData = [FitovateData sharedFitovateData];
+    
+    if([myData.currentUser.userType isEqualToString:@"trainer"] ){
+        WLINearbyViewController *nearbyViewController = [self.tabBarController.viewControllers objectAtIndex:3];
+        UITabBarItem *nearbyTabBarItem = [[UITabBarItem alloc] initWithTitle:@"Nearby Followers" image:[[UIImage imageNamed:@"tabbarnearby"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabbarnearby"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        nearbyViewController.tabBarItem = nearbyTabBarItem;
+    }else{
+        WLINearbyViewController *nearbyViewController = [self.tabBarController.viewControllers objectAtIndex:3];
+        UITabBarItem *nearbyTabBarItem = [[UITabBarItem alloc] initWithTitle:@"Trainers" image:[[UIImage imageNamed:@"tabbarnearby"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"tabbarnearby"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        nearbyViewController.tabBarItem = nearbyTabBarItem;
+    }
+    
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
         
         int page;
@@ -120,8 +134,6 @@
         //        [refreshManager tableViewReloadFinishedAnimated:YES];
         //    }];
         
-        
-        FitovateData *myData = [FitovateData sharedFitovateData];
         
         NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
         __block NSUInteger postCount = 0;
@@ -161,7 +173,17 @@
                     self.posts = wliPosts;
                     [self.tableViewRefresh reloadData];
                     [refreshManager tableViewReloadFinishedAnimated:YES];
-                    
+                }
+                if(self.posts.count<1){
+                    if(!self.alertShowing){
+                        [self setAlertShowing:YES];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Welcome"
+                                                                        message:@"Follow some users to get started!"
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                    }
                 }
             } else {
                 // Log details of the failure
@@ -177,17 +199,7 @@
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
         [self getPosts];
     }];
-    
-    if(self.allFollowings.count == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New User"
-                                                        message:@"Follow some users in the nearby section!"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
     [self performSelector:@selector(showMessagesButton) withObject:nil afterDelay:2.0];
-    
 }
 
 

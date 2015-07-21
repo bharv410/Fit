@@ -16,7 +16,7 @@
     self = [self init];
     if (self) {
         _userID = [self integerFromDictionary:userWithInfo forKey:@"userID"];
-        _userType = [self integerFromDictionary:userWithInfo forKey:@"userTypeID"];
+        _userType = [self stringFromDictionary:userWithInfo forKey:@"userTypeID"];
         _userPassword = [self stringFromDictionary:userWithInfo forKey:@"password"];
         _userEmail = [self stringFromDictionary:userWithInfo forKey:@"email"];
         _userFullName = [self stringFromDictionary:userWithInfo forKey:@"userFullname"];
@@ -58,7 +58,7 @@
     self = [self init];
     if (self) {
         _userID = [self integerFromDictionary:userWithInfo forKey:@"userID"];
-        _userType = [self integerFromDictionary:userWithInfo forKey:@"usertype"];
+        _userType = [self stringFromDictionary:userWithInfo forKey:@"usertype"];
         _userPassword = [self stringFromDictionary:userWithInfo forKey:@"password"];
         _userEmail = [self stringFromDictionary:userWithInfo forKey:@"email"];
         _userFullName = [self stringFromDictionary:userWithInfo forKey:@"fullname"];
@@ -123,7 +123,7 @@
     self = [super init];
     if (self) {
         self.userID = [decoder decodeIntForKey:@"userID"];
-        self.userType = [decoder decodeIntForKey:@"userType"];
+        self.userType = [decoder decodeObjectForKey:@"userType"];
         self.userPassword = [decoder decodeObjectForKey:@"userPassword"];
         self.userEmail = [decoder decodeObjectForKey:@"userEmail"];
         self.userFullName = [decoder decodeObjectForKey:@"userFullName"];

@@ -45,7 +45,9 @@
                 [self loadNearbyUsers];
             }];
     
-    
+    if([myData.currentUser.userType isEqualToString:@"trainer"] ){
+        self.title= @"Nearby Followers";
+    }
 }
 
 - (void)loadNearbyUsers{

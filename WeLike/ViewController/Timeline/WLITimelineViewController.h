@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewRefresh;
 @property (strong, nonatomic) NSArray *posts;
 @property (strong, nonatomic) NSArray *allFollowings;
+@property (nonatomic, assign) BOOL alertShowing;
 
 - (void)firstLogin;
 -(void)showMessagesButton;

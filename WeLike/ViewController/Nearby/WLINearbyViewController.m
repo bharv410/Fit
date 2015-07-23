@@ -52,34 +52,81 @@
 
 - (void)loadNearbyUsers{
     FitovateData *myData = [FitovateData sharedFitovateData];
-    // Create a query for places
-    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
-    // Interested in locations near user.
-    //[query whereKey:@"location" nearGeoPoint:self.userCurrentLocation];
-    query.limit = 50;
-    [query whereKey:@"usertype" equalTo:@"trainer"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if(!error){
-            NSLog(@"got  results without error!");
-            //[self.users removeAllObjects];
-            for(PFObject *parseObject in objects){
-                WLIUser *parseUser = [myData pfobjectToWLIUser:parseObject];
-                if([self.allFollowings containsObject:[NSNumber numberWithInt:parseUser.userID]]){
-                    parseUser.followingUser = YES;
-                }else{
-                    parseUser.followingUser = NO;
+    if([myData.currentUser.userType isEqualToString:@"trainer"] ){
+        // Create a query for places
+        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+        // Interested in locations near user.
+        [query whereKey:@"location" nearGeoPoint:self.userCurrentLocation];
+        query.limit = 50;
+        [query whereKey:@"usertype" equalTo:@"trainee"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error){
+                
+                if(objects.count<1)
+                    [self noneNearby];
+                
+                
+                NSLog(@"got  results without error!");
+                //[self.users removeAllObjects];
+                for(PFObject *parseObject in objects){
+                    WLIUser *parseUser = [myData pfobjectToWLIUser:parseObject];
+                    if([self.allFollowings containsObject:[NSNumber numberWithInt:parseUser.userID]]){
+                        parseUser.followingUser = YES;
+                    }else{
+                        parseUser.followingUser = NO;
+                    }
+                    [self.users addObject:parseUser];
                 }
-                [self.users addObject:parseUser];
+                //loadMore = objects.count == kDefaultPageSize;
+                [self reloadTable];
+                [refreshManager tableViewReloadFinishedAnimated:YES];
+            }else{
+                NSLog(@"error geoquerying");
             }
-            //loadMore = objects.count == kDefaultPageSize;
-            [self reloadTable];
-            [refreshManager tableViewReloadFinishedAnimated:YES];
-            [self loadMoreUsersFromAWS];
-        }else{
-            NSLog(@"error geoquerying");
-        }
-    }];
+        }];
+    }else{
+
+        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+        [query whereKey:@"location" nearGeoPoint:self.userCurrentLocation];
+        query.limit = 50;
+        [query whereKey:@"usertype" equalTo:@"trainer"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error){
+                
+                if(objects.count<1)
+                    [self noneNearby];
+                
+                
+                //[self.users removeAllObjects];
+                for(PFObject *parseObject in objects){
+                    WLIUser *parseUser = [myData pfobjectToWLIUser:parseObject];
+                    if([self.allFollowings containsObject:[NSNumber numberWithInt:parseUser.userID]]){
+                        parseUser.followingUser = YES;
+                    }else{
+                        parseUser.followingUser = NO;
+                    }
+                    [self.users addObject:parseUser];
+                }
+                //loadMore = objects.count == kDefaultPageSize;
+                [self reloadTable];
+                [refreshManager tableViewReloadFinishedAnimated:YES];
+            }else{
+                NSLog(@"error geoquerying");
+            }
+        }];
+    }
 }
+
+-(void) noneNearby{
+    NSString *message = [NSString stringWithFormat:@"There are 0 %@",self.title];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (void)reloadData:(BOOL)reloadAll {
     
     loading = YES;

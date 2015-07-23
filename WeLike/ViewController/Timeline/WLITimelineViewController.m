@@ -167,17 +167,6 @@
                     [self.tableViewRefresh reloadData];
                     [refreshManager tableViewReloadFinishedAnimated:YES];
                 }
-                if(self.posts.count<1){
-                    if(!self.alertShowing){
-                        [self setAlertShowing:YES];
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Welcome"
-                                                                        message:@"Follow some users to get started!"
-                                                                       delegate:nil
-                                                              cancelButtonTitle:@"OK"
-                                                              otherButtonTitles:nil];
-                        [alert show];
-                    }
-                }
             } else {
                 // Log details of the failure
                 NSLog(@"Error: %@ %@", error, [error userInfo]);

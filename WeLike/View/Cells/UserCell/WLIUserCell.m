@@ -42,9 +42,19 @@
     self.labelUserProfession.text = self.user.userSpecialty;
     //self.labelLocation.text = self.user.
     
+    [self performSelectorOnMainThread:@selector(setLoc) withObject:nil waitUntilDone:YES];
+    
+    if (self.user.followingUser) {
+        [self.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-unfollow.png"] forState:UIControlStateNormal];
+    } else {
+        [self.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-follow.png"] forState:UIControlStateNormal];
+    }
+}
+
+- (void) setLoc{
     __block WLIUserCell *blocksafeSelf = self;
     
-    if([blocksafeSelf.labelLocation.text isEqualToString:@"No location entered"]){
+    //if([blocksafeSelf.labelLocation.text isEqualToString:@"No location entered"]){
         
         CLGeocoder *ceo = [[CLGeocoder alloc]init];
         CLLocation *loc = [[CLLocation alloc]initWithLatitude:self.user.coordinate.latitude longitude:self.user.coordinate.longitude]; //insert your coordinates
@@ -58,16 +68,8 @@
             
         }];
         
-    }
-    
-    if (self.user.followingUser) {
-        [self.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-unfollow.png"] forState:UIControlStateNormal];
-    } else {
-        [self.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-follow.png"] forState:UIControlStateNormal];
-    }
+    //}
 }
-
-        
 
 #pragma mark - Action methods
 

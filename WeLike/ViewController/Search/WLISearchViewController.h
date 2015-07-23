@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBarSearchUsers;
 
 @property (strong, nonatomic) NSMutableArray *users;
+@property (nonatomic) BOOL pressed;
 
 @end

@@ -33,6 +33,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.pressed = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,19 +49,37 @@
     
     loading = YES;
     [self.tableViewSearch reloadData];
+    NSString *searchString = self.searchBarSearchUsers.text;
     int page = reloadAll ? 1 : (self.users.count / kDefaultPageSize) + 1;
-    [sharedConnect usersForSearchString:self.searchBarSearchUsers.text page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *users, ServerResponse serverResponseCode) {
+    [sharedConnect usersForSearchString:searchString page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *users, ServerResponse serverResponseCode) {
         loading = NO;
         if (reloadAll) {
             [self.users removeAllObjects];
         }
+        
+        if (users.count<1 && self.pressed) {
+            [self noResults:searchString];
+        }
+        
+        
         [self.users addObjectsFromArray:users];
         loadMore = users.count == kDefaultPageSize;
         [self.tableViewSearch reloadData];
         [refreshManager tableViewReloadFinishedAnimated:YES];
     }];
+    
+    
 }
 
+-(void) noResults : (NSString *)searchString{
+    NSString *message = [NSString stringWithFormat:@"There are 0 results for %@. Remember searching names is case sensitive",searchString];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
 
 #pragma mark - UITableViewDataSource methods
 
@@ -74,6 +93,7 @@
             cell.delegate = self;
         }
         cell.user = self.users[indexPath.row];
+        [cell setLoc];
         return cell;
     } else {
         static NSString *CellIdentifier = @"WLILoadingCell";
@@ -141,7 +161,7 @@
 #pragma mark - UISearchBarDelegate methods
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
+    self.pressed = YES;
     [self reloadData:YES];
     [self.searchBarSearchUsers resignFirstResponder];
     self.searchBarSearchUsers.text = @"";

@@ -393,26 +393,21 @@ static WLIConnect *sharedConnect;
     if (!searchString.length) {
         completion(nil, BAD_REQUEST);
     } else {
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
-        [parameters setObject:searchString forKey:@"searchTerm"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
-        [parameters setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"take"];
-        
-        [httpClient POST:@"findUsers" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSArray *rawUsers = [responseObject objectForKey:@"items"];
-            
-            NSMutableArray *users = [NSMutableArray arrayWithCapacity:rawUsers.count];
-            for (NSDictionary *rawUser in rawUsers) {
-                WLIUser *user = [[WLIUser alloc] initWithDictionary:rawUser];
-                [users addObject:user];
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+        [query whereKey:@"fullname" containsString:searchString];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error){
+                NSMutableArray *users = [NSMutableArray arrayWithCapacity:objects.count];
+                for(PFObject *parseObject in objects){
+                    WLIUser *parseUser = [myData pfobjectToWLIUser:parseObject];
+                    [users addObject:parseUser];
+                }
+                completion(users, OK);
+            }else{
+                NSLog(@"error searching");
+                completion(nil, UNKNOWN_ERROR);
             }
-            
-            [self debugger:parameters.description methodLog:@"api/findUsers" dataLogFormatted:responseObject];
-            completion(users, OK);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self debugger:parameters.description methodLog:@"api/findUsers" dataLog:error.description];
-            completion(nil, UNKNOWN_ERROR);
         }];
     }
 }

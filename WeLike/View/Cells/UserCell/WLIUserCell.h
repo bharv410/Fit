@@ -22,5 +22,6 @@
 @property (weak, nonatomic) id<WLICellDelegate> delegate;
 
 - (IBAction)buttonFollowUnfollowTouchUpInside:(UIButton *)sender;
+- (void) setLoc;
 
 @end

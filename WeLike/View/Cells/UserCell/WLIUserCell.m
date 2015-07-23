@@ -29,7 +29,9 @@
     self.imageViewUserImage.layer.masksToBounds = YES;
 }
 
-
+- (void)setLocation : (NSString *)loc{
+    self.labelLocation.text = loc;
+}
 #pragma mark - Cell methods
 
 - (void)layoutSubviews {
@@ -37,6 +39,27 @@
     [super layoutSubviews];
     [self.imageViewUserImage setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
     self.labelUserName.text = self.user.userFullName;
+    self.labelUserProfession.text = self.user.userSpecialty;
+    //self.labelLocation.text = self.user.
+    
+    __block WLIUserCell *blocksafeSelf = self;
+    
+    if([blocksafeSelf.labelLocation.text isEqualToString:@"No location entered"]){
+        
+        CLGeocoder *ceo = [[CLGeocoder alloc]init];
+        CLLocation *loc = [[CLLocation alloc]initWithLatitude:self.user.coordinate.latitude longitude:self.user.coordinate.longitude]; //insert your coordinates
+        
+        [ceo reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+            
+            NSArray* myArray = [locatedAt componentsSeparatedByString:@","];
+            [blocksafeSelf setLocation:[NSString stringWithFormat:@"%@, %@", placemark.locality, placemark.country]];
+            
+        }];
+        
+    }
+    
     if (self.user.followingUser) {
         [self.buttonFollowUnfollow setImage:[UIImage imageNamed:@"btn-unfollow.png"] forState:UIControlStateNormal];
     } else {
@@ -44,6 +67,7 @@
     }
 }
 
+        
 
 #pragma mark - Action methods
 
@@ -53,6 +77,8 @@
         [self.delegate showUser:self.user sender:self];
     }
 }
+        
+
 
 - (IBAction)buttonFollowUnfollowTouchUpInside:(UIButton *)sender {
     

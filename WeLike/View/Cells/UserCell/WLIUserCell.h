@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageViewUserImage;
 @property (strong, nonatomic) IBOutlet UILabel *labelUserName;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollowUnfollow;
+@property (strong, nonatomic) IBOutlet UILabel *labelUserProfession;
+@property (strong, nonatomic) IBOutlet UILabel *labelLocation;
 
 @property (strong, nonatomic) WLIUser *user;
 @property (weak, nonatomic) id<WLICellDelegate> delegate;

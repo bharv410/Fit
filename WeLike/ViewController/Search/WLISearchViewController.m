@@ -122,11 +122,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 1) {
-        return 44;
+        return 91;
     } else if (indexPath.section == 0){
-        return 44 * loading * self.users.count == 0;
+        return 91 * loading * self.users.count == 0;
     } else {
-        return 44 * loadMore;
+        return 91 * loadMore;
     }
 }
 

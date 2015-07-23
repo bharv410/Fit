@@ -71,7 +71,7 @@
         _followersCount = [self integerFromDictionary:userWithInfo forKey:@"followersCount"];
         _followingCount = [self integerFromDictionary:userWithInfo forKey:@"followingCount"];
         
-        _companyAddress = [self stringFromDictionary:userWithInfo forKey:@"specialty"];
+        _userSpecialty = [self stringFromDictionary:userWithInfo forKey:@"specialty"];
         _companyPhone = [self stringFromDictionary:userWithInfo forKey:@"phone"];
         _companyWeb = [self stringFromDictionary:userWithInfo forKey:@"website"];
         _companyEmail = [self stringFromDictionary:userWithInfo forKey:@"email"];

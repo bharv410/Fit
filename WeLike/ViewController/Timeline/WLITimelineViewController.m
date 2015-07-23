@@ -126,13 +126,6 @@
         } else {
             page  = (self.posts.count / kDefaultPageSize) + 1;
         }
-        //    [sharedConnect timelineForUserID:sharedConnect.currentUser.userID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *posts, ServerResponse serverResponseCode) {
-        //        loading = NO;
-        //        self.posts = posts;
-        //        loadMore = posts.count == kDefaultPageSize;
-        //        [self.tableViewRefresh reloadData];
-        //        [refreshManager tableViewReloadFinishedAnimated:YES];
-        //    }];
         
         
         NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
@@ -285,18 +278,6 @@
             [senderCell updateLikes];
         }];
         
-//        [[WLIConnect sharedConnect] removeLikeWithLikeID:post.postID onCompletion:^(ServerResponse serverResponseCode) {
-//            if (serverResponseCode != OK) {
-//                [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];
-//                post.postLikesCount++;
-//                post.likedThisPost = YES;
-//                if (post.postLikesCount == 1) {
-//                    [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", post.postLikesCount] forState:UIControlStateNormal];
-//                } else {
-//                    [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
-//                }
-//            }
-//        }];
     } else {
         [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];
         post.postLikesCount++;
@@ -313,19 +294,6 @@
         
         [ParseSingleton new];
         [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:post.user.userUsername withActivitytype:@"like" withPostId:[NSString stringWithFormat:@"%d",post.postID]];
-        
-//        [[WLIConnect sharedConnect] setLikeOnPostID:post.postID onCompletion:^(WLILike *like, ServerResponse serverResponseCode) {
-//            if (serverResponseCode != OK) {
-//                [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];
-//                post.postLikesCount--;
-//                post.likedThisPost = NO;
-//                if (post.postLikesCount == 1) {
-//                    [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", post.postLikesCount] forState:UIControlStateNormal];
-//                } else {
-//                    [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
-//                }
-//            }
-//        }];
     }
 }
 -(void)showMessagesButton{

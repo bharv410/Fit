@@ -12,5 +12,5 @@
 @interface WLITabBarController : UITabBarController <WLIWelcomeViewControllerDelegate> {
     WLIWelcomeViewController *welcomeViewController;
 }
-
+- (void) showWelcome;
 @end

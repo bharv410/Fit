@@ -400,6 +400,7 @@ MPMoviePlayerController *moviePlayerController;
         [[WLIConnect sharedConnect] logout];
         WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
         [appDelegate createViewHierarchy];
+        [appDelegate.tabBarController showWelcome];
     }else if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.user.userUsername]]){
         if (buttonIndex == [alertView cancelButtonIndex]) {
 

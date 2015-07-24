@@ -54,6 +54,10 @@
     }
 }
 
+- (void) showWelcome{
+    welcomeViewController.view.alpha = 1.0f;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     
     [super viewDidAppear:animated];

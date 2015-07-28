@@ -12,7 +12,7 @@
 @interface WLIUserPhotoControllerTableViewController : UITableViewController
 
 @property (nonatomic, retain) WLIUser *currentUser;
-@property (strong, nonatomic) NSArray *posts;
+@property (strong, nonatomic) NSMutableArray *posts;
 @property (strong, nonatomic) NSArray *allFollowings;
 
 @property (nonatomic, assign) BOOL loading;

@@ -28,24 +28,30 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    NSLog(@"current username = %@", self.currentUser.userUsername);
     [self reloadData:YES];
 }
 
 - (void)reloadData:(BOOL)reloadAll {
     self.loading = YES;
+    self.posts = [[NSMutableArray alloc]initWithCapacity:20];
     FitovateData *myData = [FitovateData sharedFitovateData];
-    
-        NSMutableArray *wliPosts = [[NSMutableArray alloc]initWithCapacity:10];
-        __block NSUInteger postCount = 0;
+    __block NSUInteger postCount = 0;
         
         PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
         
         [query addDescendingOrder:@"createdAt"];
-        [query whereKey:@"username" equalTo:self.currentUser.userUsername];
+    
+        [query whereKey:@"userID" equalTo:[NSNumber numberWithInt:self.currentUser.userID]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             self.loading = NO;
             if (!error) {
+                NSLog(@"returned photos size = %tu", objects.count);
+                
+                
                 for (PFObject *object in objects) {
+                    NSLog(@"post title on parse = %@", object[@"postTitle"]);
                         PFFile *tempPhotoForUrl = object[@"userImage"];
                         
                         NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
@@ -63,10 +69,10 @@
                         postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
                         NSNumber *number = object[@"totalLikes"];
                         postFromParse.postLikesCount =[number integerValue];
-                        [wliPosts insertObject:postFromParse atIndex:postCount];
+                        [self.posts insertObject:postFromParse atIndex:postCount];
                         postCount++;
-                    NSLog(@"printing %@", postFromParse.user.userUsername);
-                    self.posts = wliPosts;
+                    WLIPost *lasP = self.posts.lastObject;
+                    self.tableView.rowHeight = [WLIPostCell sizeWithPost:lasP].height;
                     [self.tableView reloadData];
                 }
             } else {
@@ -109,20 +115,18 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return self.posts.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1){
+    //if (indexPath.section == 1){
         static NSString *CellIdentifier = @"WLIPostCell";
         WLIPostCell *cell = (WLIPostCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -131,15 +135,16 @@
         }
         cell.post = self.posts[indexPath.row];
         return cell;
-    } else {
-        static NSString *CellIdentifier = @"WLILoadingCell";
-        WLILoadingCell *cell = (WLILoadingCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"WLILoadingCell" owner:self options:nil] lastObject];
-        }
-        
-        return cell;
-    }
+//    }
+//    else {
+//        static NSString *CellIdentifier = @"WLILoadingCell";
+//        WLILoadingCell *cell = (WLILoadingCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        if (cell == nil) {
+//            cell = [[[NSBundle mainBundle] loadNibNamed:@"WLILoadingCell" owner:self options:nil] lastObject];
+//        }
+//        
+//        return cell;
+//    }
 }
 
 

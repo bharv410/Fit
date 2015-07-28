@@ -20,6 +20,8 @@
 #import <Parse/Parse.h>
 #import "ConferenceViewController.h"
 #import "MainViewController.h"
+#import "WLIUserPhotoControllerTableViewController.h"
+
 
 @implementation WLIProfileViewController
 MPMoviePlayerController *moviePlayerController;
@@ -112,11 +114,18 @@ MPMoviePlayerController *moviePlayerController;
     
     }
 
--(void)goToMessages {
+-(void)goToMorePhotos {
     NSLog(@"%d",self.labelBio.bounds.origin.y);
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
-    LQSViewController *newVc = [[LQSViewController alloc]init];
-    [self.navigationController pushViewController:newVc animated:YES];
+    //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+    //    LQSViewController *newVc = [[LQSViewController alloc]init];
+    //    [self.navigationController pushViewController:newVc animated:YES];
+    
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+        WLIUserPhotoControllerTableViewController *newVc = [[WLIUserPhotoControllerTableViewController alloc]init];
+    newVc.currentUser = self.user;
+        [self.navigationController pushViewController:newVc animated:YES];
+    
+    
     
 }
 
@@ -297,6 +306,10 @@ MPMoviePlayerController *moviePlayerController;
     
     WLIEditProfileViewController *editProfileViewController = [[WLIEditProfileViewController alloc] initWithNibName:@"WLIEditProfileViewController" bundle:nil];
     [self.navigationController pushViewController:editProfileViewController animated:YES];
+}
+
+- (IBAction)onMorePhotosClick:(id)sender {
+    [self goToMorePhotos];
 }
 
 - (IBAction)buttonFollowToggleTouchUpInside:(id)sender {

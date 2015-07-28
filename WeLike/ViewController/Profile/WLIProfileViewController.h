@@ -47,6 +47,7 @@
 - (IBAction)buttonFollowersTouchUpInside:(id)sender;
 - (IBAction)buttonLogoutTouchUpInside:(UIButton *)sender;
 - (IBAction)barButtonItemEditTouchUpInside:(id)sender;
+- (IBAction)onMorePhotosClick:(id)sender;
 
 @end
 

@@ -86,6 +86,7 @@
     }];
     
 }
+
 -(void)goToActivity {
     NSLog(@"Going to activity!");
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];

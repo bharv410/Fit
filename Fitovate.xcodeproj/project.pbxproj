@@ -238,6 +238,8 @@
 		6B30FBA91AEEBBE100BEBAD2 /* ActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */; };
 		6B32A4461B050249002E172C /* ConversationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B32A4441B050249002E172C /* ConversationTableViewController.m */; };
 		6B32A4471B050249002E172C /* ConversationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B32A4451B050249002E172C /* ConversationTableViewController.xib */; };
+		6B33EB911B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B33EB8F1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m */; };
+		6B33EB921B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B33EB901B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib */; };
 		6B37FE9F1AE41BD700021F4F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B37FE9E1AE41BD700021F4F /* Parse.framework */; };
 		6B59A2FB1B1A597800F1F92A /* AppIcon29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B59A2F21B1A597800F1F92A /* AppIcon29x29.png */; };
 		6B59A2FC1B1A597800F1F92A /* AppIcon29x29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B59A2F31B1A597800F1F92A /* AppIcon29x29@2x.png */; };
@@ -658,6 +660,9 @@
 		6B32A4431B050249002E172C /* ConversationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationTableViewController.h; path = LayerMessaging/ConversationTableViewController.h; sourceTree = "<group>"; };
 		6B32A4441B050249002E172C /* ConversationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationTableViewController.m; path = LayerMessaging/ConversationTableViewController.m; sourceTree = "<group>"; };
 		6B32A4451B050249002E172C /* ConversationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ConversationTableViewController.xib; path = LayerMessaging/ConversationTableViewController.xib; sourceTree = "<group>"; };
+		6B33EB8E1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIUserPhotoControllerTableViewController.h; sourceTree = "<group>"; };
+		6B33EB8F1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIUserPhotoControllerTableViewController.m; sourceTree = "<group>"; };
+		6B33EB901B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLIUserPhotoControllerTableViewController.xib; sourceTree = "<group>"; };
 		6B37FE9E1AE41BD700021F4F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6B410FD51A5E12D8004B4823 /* ooVooSDK-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ooVooSDK-iOS.framework"; sourceTree = "<group>"; };
 		6B59A2F21B1A597800F1F92A /* AppIcon29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon29x29.png; sourceTree = "<group>"; };
@@ -1159,6 +1164,7 @@
 		2C6D27151896BACA00C459CB /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				6B33EB8D1B67EF9F00C7C053 /* UserPhotos */,
 				6B30FB9F1AEEBB9600BEBAD2 /* Activity */,
 				6B1D25031A95EFF3003D9EB5 /* Nearby */,
 				6B130BDD1A730D3900FE0E0C /* LayerMessaging */,
@@ -1820,6 +1826,16 @@
 			name = Activity;
 			sourceTree = "<group>";
 		};
+		6B33EB8D1B67EF9F00C7C053 /* UserPhotos */ = {
+			isa = PBXGroup;
+			children = (
+				6B33EB8E1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.h */,
+				6B33EB8F1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m */,
+				6B33EB901B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib */,
+			);
+			name = UserPhotos;
+			sourceTree = "<group>";
+		};
 		6B7368CF1AF6AC72008B9495 /* FitovateData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1975,6 +1991,7 @@
 				6B1190941B5B0C1900AAF9A6 /* input-bar-background@2x.png in Resources */,
 				2C6D27F41896BACA00C459CB /* WLIProfileViewController.xib in Resources */,
 				6B11908D1B5B0C1900AAF9A6 /* bubble-stroked.png in Resources */,
+				6B33EB921B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib in Resources */,
 				6B774ED51A6A14C5007A8277 /* tabbarnearby@2x.png in Resources */,
 				6B1190BA1B5B0C4300AAF9A6 /* ic_camera.png in Resources */,
 				6BA07B0D1A5F4B3600382FF1 /* Default-568h@2x.jpg in Resources */,
@@ -2166,6 +2183,7 @@
 				2C6D27FC1896BACA00C459CB /* WLIWelcomeViewController.m in Sources */,
 				2C5B5CA01A1A8FAE00175A58 /* AFURLSessionManager.m in Sources */,
 				6B11907B1B5B0C1900AAF9A6 /* NSString+JSMessagesView.m in Sources */,
+				6B33EB911B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m in Sources */,
 				2C6D27CA1896BACA00C459CB /* WLIConnect.m in Sources */,
 				2C6D27C21896BACA00C459CB /* SBJsonStreamWriterState.m in Sources */,
 				2C5B5C7E1A1A8F9500175A58 /* UIActivityIndicatorView+AFNetworking.m in Sources */,

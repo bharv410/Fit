@@ -24,6 +24,7 @@
 
 
 @implementation WLIProfileViewController
+NSArray *recipes;
 MPMoviePlayerController *moviePlayerController;
 
 #pragma mark - Object lifecycle
@@ -44,6 +45,8 @@ MPMoviePlayerController *moviePlayerController;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    recipes = [NSArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
+    NSLog(@"benmark");
     
     self.imageViewUser.layer.cornerRadius = self.imageViewUser.frame.size.width/2;
     self.imageViewUser.layer.masksToBounds = YES;
@@ -190,6 +193,18 @@ MPMoviePlayerController *moviePlayerController;
     self.labelBio.sizeToFit;
     self.labelBio.textAlignment = NSTextAlignmentCenter;
     
+    NSLog(@"Specialty equals %@", self.user.userSpecialty);
+    
+    if([self.user.userSpecialty isEqualToString:@""] || self.user.userSpecialty==nil){
+        //user is not a trainer
+        NSLog(@"not a trainer");
+        [self.movieView setHidden:YES];
+        [self reloadUsersPosts:YES];
+    }else{
+        [self.postsTableView setHidden:YES];
+        NSLog(@"is a trainer");
+    }
+    
     if (downloads) {
 //        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
 //        
@@ -291,6 +306,7 @@ MPMoviePlayerController *moviePlayerController;
                     // Log details of the failure
                     NSLog(@"Error: %@ %@", error, [error userInfo]);
                     [_movieView setHidden:YES];
+                    
                 }
             }];
         }else{
@@ -424,6 +440,71 @@ MPMoviePlayerController *moviePlayerController;
             //benmark10
         }
     }
+}
+
+//tablesource protocol methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.posts count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"WLIPostCell";
+    WLIPostCell *cell = (WLIPostCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"WLIPostCell" owner:self options:nil] lastObject];
+        cell.delegate = self;
+    }
+    cell.post = self.posts[indexPath.row];
+    return cell;
+}
+
+- (void)reloadUsersPosts:(BOOL)reloadAll {
+    self.posts = [[NSMutableArray alloc]initWithCapacity:20];
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    __block NSUInteger postCount = 0;
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
+    
+    [query addDescendingOrder:@"createdAt"];
+    
+    [query whereKey:@"userID" equalTo:[NSNumber numberWithInt:self.user.userID]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSLog(@"returned photos size = %tu", objects.count);
+            
+            
+            for (PFObject *object in objects) {
+                NSLog(@"post title on parse = %@", object[@"postTitle"]);
+                PFFile *tempPhotoForUrl = object[@"userImage"];
+                
+                NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
+                                      object[@"postTitle"], @"postTitle",
+                                      tempPhotoForUrl.url, @"postImage",
+                                      object[@"createdAt"], @"postDate",
+                                      object[@"createdAt"], @"timeAgo",
+                                      object[@"totalLikes"], @"totalLikes",
+                                      object[@"totalComments"], @"totalComments",
+                                      object[@"isLiked"], @"isLiked",
+                                      object[@"isCommented"], @"isCommented"
+                                      , nil];
+                
+                WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
+                postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
+                NSNumber *number = object[@"totalLikes"];
+                postFromParse.postLikesCount =[number integerValue];
+                [self.posts insertObject:postFromParse atIndex:postCount];
+                postCount++;
+                WLIPost *lasP = self.posts.lastObject;
+                self.postsTableView.rowHeight= [WLIPostCell sizeWithPost:lasP].height;
+                [self.postsTableView reloadData];
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 @end

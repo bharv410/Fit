@@ -126,7 +126,6 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //if (indexPath.section == 1){
         static NSString *CellIdentifier = @"WLIPostCell";
         WLIPostCell *cell = (WLIPostCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -135,16 +134,6 @@
         }
         cell.post = self.posts[indexPath.row];
         return cell;
-//    }
-//    else {
-//        static NSString *CellIdentifier = @"WLILoadingCell";
-//        WLILoadingCell *cell = (WLILoadingCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//        if (cell == nil) {
-//            cell = [[[NSBundle mainBundle] loadNibNamed:@"WLILoadingCell" owner:self options:nil] lastObject];
-//        }
-//        
-//        return cell;
-//    }
 }
 
 

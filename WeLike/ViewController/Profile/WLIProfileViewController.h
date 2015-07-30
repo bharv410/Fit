@@ -12,7 +12,7 @@
 #import "WLIViewController.h"
 #import "LQSChatMessageCell.h"
 
-@interface WLIProfileViewController : WLIViewController <UIAlertViewDelegate> {
+@interface WLIProfileViewController : WLIViewController <UIAlertViewDelegate,UITableViewDelegate, UITableViewDataSource> {
     WLIUser *_user;
 }
 
@@ -35,10 +35,15 @@
 
 @property (weak, nonatomic) IBOutlet UIView *movieView;
 @property (nonatomic) LYRConversation *conversation;
+@property (strong, nonatomic) IBOutlet UITableView *postsTableView;
 
 @property (strong, nonatomic, setter = setUser:) WLIUser *user;
 @property (strong, nonatomic) NSArray *allFollowings;
 @property (strong, nonatomic) UIAlertView *messageAlert;
+
+//postsview stuff
+@property (nonatomic, retain) WLIUser *currentUser;
+@property (strong, nonatomic) NSMutableArray *posts;
 
 
 - (IBAction)goToMessages:(id)sender;

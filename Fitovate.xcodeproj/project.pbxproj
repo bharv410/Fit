@@ -252,6 +252,10 @@
 		6B59A3031B1A597800F1F92A /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B59A2FA1B1A597800F1F92A /* iTunesArtwork@2x.png */; };
 		6B5E08A81A609B160020D78B /* WLIChooseVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E08A61A609B160020D78B /* WLIChooseVideoViewController.m */; };
 		6B5E08A91A609B160020D78B /* WLIChooseVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B5E08A71A609B160020D78B /* WLIChooseVideoViewController.xib */; };
+		6B64DD241B7BD6C20045B9DB /* NormalUserProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B64DD221B7BD6C20045B9DB /* NormalUserProfileTableViewController.m */; };
+		6B64DD251B7BD6C20045B9DB /* NormalUserProfileTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B64DD231B7BD6C20045B9DB /* NormalUserProfileTableViewController.xib */; };
+		6B64DD271B7BD9550045B9DB /* TraineeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B64DD261B7BD9550045B9DB /* TraineeHeaderView.xib */; };
+		6B64DD2A1B7BDA800045B9DB /* CustomHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B64DD291B7BDA800045B9DB /* CustomHeaderView.m */; };
 		6B66C77B1A8C1FA20057962A /* WLIActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B66C7791A8C1FA20057962A /* WLIActivityViewController.m */; };
 		6B66C77C1A8C1FA20057962A /* WLIActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B66C77A1A8C1FA20057962A /* WLIActivityViewController.xib */; };
 		6B7368D21AF6ACA0008B9495 /* FitovateData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B7368D11AF6ACA0008B9495 /* FitovateData.m */; };
@@ -677,6 +681,12 @@
 		6B5E08A51A609B160020D78B /* WLIChooseVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIChooseVideoViewController.h; sourceTree = "<group>"; };
 		6B5E08A61A609B160020D78B /* WLIChooseVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIChooseVideoViewController.m; sourceTree = "<group>"; };
 		6B5E08A71A609B160020D78B /* WLIChooseVideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLIChooseVideoViewController.xib; sourceTree = "<group>"; };
+		6B64DD211B7BD6C20045B9DB /* NormalUserProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalUserProfileTableViewController.h; sourceTree = "<group>"; };
+		6B64DD221B7BD6C20045B9DB /* NormalUserProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalUserProfileTableViewController.m; sourceTree = "<group>"; };
+		6B64DD231B7BD6C20045B9DB /* NormalUserProfileTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NormalUserProfileTableViewController.xib; sourceTree = "<group>"; };
+		6B64DD261B7BD9550045B9DB /* TraineeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TraineeHeaderView.xib; sourceTree = "<group>"; };
+		6B64DD281B7BDA800045B9DB /* CustomHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomHeaderView.h; sourceTree = "<group>"; };
+		6B64DD291B7BDA800045B9DB /* CustomHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomHeaderView.m; sourceTree = "<group>"; };
 		6B66C7781A8C1FA20057962A /* WLIActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIActivityViewController.h; sourceTree = "<group>"; };
 		6B66C7791A8C1FA20057962A /* WLIActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIActivityViewController.m; sourceTree = "<group>"; };
 		6B66C77A1A8C1FA20057962A /* WLIActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLIActivityViewController.xib; sourceTree = "<group>"; };
@@ -1164,6 +1174,7 @@
 		2C6D27151896BACA00C459CB /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				6B64DD201B7BD6730045B9DB /* NormalUserProfile */,
 				6B33EB8D1B67EF9F00C7C053 /* UserPhotos */,
 				6B30FB9F1AEEBB9600BEBAD2 /* Activity */,
 				6B1D25031A95EFF3003D9EB5 /* Nearby */,
@@ -1836,6 +1847,19 @@
 			name = UserPhotos;
 			sourceTree = "<group>";
 		};
+		6B64DD201B7BD6730045B9DB /* NormalUserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				6B64DD211B7BD6C20045B9DB /* NormalUserProfileTableViewController.h */,
+				6B64DD221B7BD6C20045B9DB /* NormalUserProfileTableViewController.m */,
+				6B64DD231B7BD6C20045B9DB /* NormalUserProfileTableViewController.xib */,
+				6B64DD261B7BD9550045B9DB /* TraineeHeaderView.xib */,
+				6B64DD281B7BDA800045B9DB /* CustomHeaderView.h */,
+				6B64DD291B7BDA800045B9DB /* CustomHeaderView.m */,
+			);
+			name = NormalUserProfile;
+			sourceTree = "<group>";
+		};
 		6B7368CF1AF6AC72008B9495 /* FitovateData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1967,6 +1991,7 @@
 				AD7160491A38BAC60043E740 /* sdb-2009-04-15.json in Resources */,
 				6B130BDC1A730BBC00FE0E0C /* tabbarnewpost@2x.png in Resources */,
 				6B30FBA91AEEBBE100BEBAD2 /* ActivityController.xib in Resources */,
+				6B64DD271B7BD9550045B9DB /* TraineeHeaderView.xib in Resources */,
 				AD71604B1A38BAC60043E740 /* sqs-2012-11-05.json in Resources */,
 				2C6D27F21896BACA00C459CB /* WLIEditProfileViewController.xib in Resources */,
 				6B7D56E21A70629A00325793 /* Pacifico.ttf in Resources */,
@@ -2030,6 +2055,7 @@
 				6B1190C41B5B0C4300AAF9A6 /* ic_speaker_off.png in Resources */,
 				2C6D27D71896BACA00C459CB /* WLILoadingCollectionViewCell.xib in Resources */,
 				2C6D28161896BACA00C459CB /* map-pin.png in Resources */,
+				6B64DD251B7BD6C20045B9DB /* NormalUserProfileTableViewController.xib in Resources */,
 				6B1190991B5B0C1900AAF9A6 /* send-button.png in Resources */,
 				6B11908E1B5B0C1900AAF9A6 /* bubble-stroked@2x.png in Resources */,
 				6B59A3001B1A597800F1F92A /* AppIcon60x60@2x.png in Resources */,
@@ -2215,7 +2241,9 @@
 				2C5B5C9C1A1A8FAE00175A58 /* AFSecurityPolicy.m in Sources */,
 				2C6D27ED1896BACA00C459CB /* WLIPopularViewController.m in Sources */,
 				2C6D27FE1896BACA00C459CB /* WLIViewController.m in Sources */,
+				6B64DD241B7BD6C20045B9DB /* NormalUserProfileTableViewController.m in Sources */,
 				6B1190261B5B0B2000AAF9A6 /* TextFieldCell.m in Sources */,
+				6B64DD2A1B7BDA800045B9DB /* CustomHeaderView.m in Sources */,
 				2C5B5C981A1A8FAE00175A58 /* AFHTTPRequestOperation.m in Sources */,
 				2C5B5C9E1A1A8FAE00175A58 /* AFURLRequestSerialization.m in Sources */,
 				2C6D27C41896BACA00C459CB /* UIDevice+Resolutions.m in Sources */,

@@ -21,7 +21,6 @@
                 <outlet property="labelPhone" destination="3ES-TU-kVB" id="EJD-N0-Br1"/>
                 <outlet property="labelWeb" destination="mLc-4H-VDV" id="Idc-aV-9I3"/>
                 <outlet property="movieView" destination="4cK-ac-ivy" id="zFM-bK-sx7"/>
-                <outlet property="postsTableView" destination="Zhu-K7-YSG" id="x0N-xV-Ssf"/>
                 <outlet property="scrollViewUserProfile" destination="Kdl-4c-3qY" id="cg9-Yr-fQB"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -185,15 +184,6 @@
                                 <action selector="onMorePhotosClick:" destination="-1" eventType="touchUpInside" id="re5-vO-El8"/>
                             </connections>
                         </button>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zhu-K7-YSG">
-                            <rect key="frame" x="20" y="276" width="280" height="284"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="dataSource" destination="-1" id="gho-Lv-RVS"/>
-                                <outlet property="delegate" destination="-1" id="fJG-de-C5p"/>
-                            </connections>
-                        </tableView>
                     </subviews>
                 </scrollView>
             </subviews>

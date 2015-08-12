@@ -11,7 +11,8 @@
 #import "WLILikesViewController.h"
 #import "WLIProfileViewController.h"
 #import "WLIPostViewController.h"
-#import "FitovateData.h";
+#import "FitovateData.h"
+#import "NormalUserProfileTableViewController.h"
 
 @implementation WLIViewController
 
@@ -84,10 +85,15 @@
 #pragma mark - WLIPostCellDelegate methods
 
 - (void)showUser:(WLIUser*)user sender:(WLIPostCell*)senderCell {
-    
-    WLIProfileViewController *profileViewController = [[WLIProfileViewController alloc] initWithNibName:@"WLIProfileViewController" bundle:nil];
-    profileViewController.user = user;
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    if([user.userType isEqualToString:@"trainer"]){
+        WLIProfileViewController *profileViewController = [[WLIProfileViewController alloc] initWithNibName:@"WLIProfileViewController" bundle:nil];
+        profileViewController.user = user;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }else{
+        NormalUserProfileTableViewController *profileViewController = [[NormalUserProfileTableViewController alloc] initWithNibName:@"NormalUserProfileTableViewController" bundle:nil];
+        profileViewController.currentUser = user;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 - (void)showImageForPost:(WLIPost*)post sender:(WLIPostCell*)senderCell {

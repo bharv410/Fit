@@ -11,6 +11,7 @@
 #import "WLIPostCell.h"
 #import "WLILoadingCell.h"
 #import "FitovateData.h"
+#import "WLIConnect.h"
 #import "CustomHeaderView.h"
 
 @interface NormalUserProfileTableViewController ()
@@ -101,9 +102,30 @@
 //    
 //    self.tableView.tableHeaderView = headerView;
     
-    CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 320)];
+    CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 220)];
         [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
-    self.tableView.tableHeaderView = headerView;
+    
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+        if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
+            [headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+            NSLog(@"Set to following1");
+        }else{
+            [headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+            NSLog(@"Set to follow1");
+        }
+    }];
+    
+
+        headerView.labelName.text = self.currentUser.userFullName;
+        headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
+        headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
+        
+//        self.labelAddress.text = self.user.companyAddress;
+//        self.labelPhone.text = self.user.companyPhone;
+//        self.labelWeb.text = self.user.companyWeb;
+//        self.labelEmail.text = self.user.companyEmail;
+self.tableView.tableHeaderView = headerView;
     
     
 }

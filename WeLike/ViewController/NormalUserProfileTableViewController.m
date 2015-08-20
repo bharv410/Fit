@@ -102,7 +102,7 @@
 //    
 //    self.tableView.tableHeaderView = headerView;
     
-    CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 220)];
+    CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
         [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
     
     FitovateData *myData = [FitovateData sharedFitovateData];
@@ -120,6 +120,8 @@
         headerView.labelName.text = self.currentUser.userFullName;
         headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
         headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
+    
+    headerView.labelBio.text = self.currentUser.userBio;
         
 //        self.labelAddress.text = self.user.companyAddress;
 //        self.labelPhone.text = self.user.companyPhone;

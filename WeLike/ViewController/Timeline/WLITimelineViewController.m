@@ -167,6 +167,7 @@
                     self.posts = wliPosts;
                     [self.tableViewRefresh reloadData];
                     [refreshManager tableViewReloadFinishedAnimated:YES];
+                    
                 }
             } else {
                 // Log details of the failure
@@ -174,9 +175,23 @@
             }
         }];
     }];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    
+    UITapGestureRecognizer *gesRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)]; // Declare the Gesture.
+    gesRecognizer.delegate = self;
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 40)];
+    headerView.backgroundColor = [UIColor grayColor];
+    UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 40)];
+    labelView.textAlignment = NSTextAlignmentCenter;
+    labelView.text = @"Fitness tips and motivation";
+    labelView.textColor = [UIColor whiteColor];
+    [headerView addSubview:labelView];
+    [headerView addGestureRecognizer:gesRecognizer];
+    self.tableViewRefresh.tableHeaderView = headerView;
 }
 
-- (void)firstLogin{    
+- (void)firstLogin{
     FitovateData *myData = [FitovateData sharedFitovateData];
     [myData startOovoo];
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
@@ -185,6 +200,9 @@
     [self performSelector:@selector(showMessagesButton) withObject:nil afterDelay:2.0];
 }
 
+- (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
+}
 
 #pragma mark - UITableViewDataSource methods
 

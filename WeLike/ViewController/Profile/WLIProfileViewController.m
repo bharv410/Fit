@@ -175,7 +175,7 @@ MPMoviePlayerController *moviePlayerController;
 
 - (void)updateFramesAndDataWithDownloads:(BOOL)downloads {
     
-    self.labelName.text = self.user.userFullName;
+    self.labelName.text = self.user.userUsername;
     if (self.user.followingUser) {
         [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
     } else {
@@ -238,7 +238,7 @@ MPMoviePlayerController *moviePlayerController;
         [sharedConnect userWithUserID:self.user.userID onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
             _user = user;
             [self.imageViewUser setImageWithURL:[NSURL URLWithString:self.user.userAvatarPath]];
-            self.labelName.text = self.user.userFullName;
+            self.labelName.text = self.user.userUsername;
             self.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.user.followingCount];
             self.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.user.followersCount];
             

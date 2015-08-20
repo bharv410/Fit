@@ -274,7 +274,6 @@
 		6BA07B131A5F4BB900382FF1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B121A5F4BB900382FF1 /* Default-568h@2x.png */; };
 		6BA374E91A8031A000250A62 /* LQSChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA374E81A8031A000250A62 /* LQSChatMessageCell.m */; };
 		6BA9D6AA1B86839D00A989D1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9D6A91B86839D00A989D1 /* WebViewController.m */; };
-		6BA9D6AD1B8683EC00A989D1 /* CustomButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9D6AC1B8683EC00A989D1 /* CustomButtons.m */; };
 		6BCFD4771AE56D2600622F01 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCFD4761AE56D2600622F01 /* Social.framework */; };
 		6BCFD4791AE56D3100622F01 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCFD4781AE56D3100622F01 /* Accounts.framework */; };
 		6BDEA6941A7844270077651F /* avatar-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDEA6921A7844270077651F /* avatar-overlay.png */; };
@@ -713,7 +712,6 @@
 		6BA9D6A81B86839D00A989D1 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		6BA9D6A91B86839D00A989D1 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		6BA9D6AB1B8683EC00A989D1 /* CustomButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButtons.h; sourceTree = "<group>"; };
-		6BA9D6AC1B8683EC00A989D1 /* CustomButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButtons.m; sourceTree = "<group>"; };
 		6BCFD4761AE56D2600622F01 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		6BCFD4781AE56D3100622F01 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		6BDEA6921A7844270077651F /* avatar-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-overlay.png"; sourceTree = "<group>"; };
@@ -1349,7 +1347,6 @@
 				6BA9D6A81B86839D00A989D1 /* WebViewController.h */,
 				6BA9D6A91B86839D00A989D1 /* WebViewController.m */,
 				6BA9D6AB1B8683EC00A989D1 /* CustomButtons.h */,
-				6BA9D6AC1B8683EC00A989D1 /* CustomButtons.m */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -2307,7 +2304,6 @@
 				2C6D27DD1896BACA00C459CB /* WLIUserCell.m in Sources */,
 				2C5B5C821A1A8F9500175A58 /* UIProgressView+AFNetworking.m in Sources */,
 				6B0A19D41A69E86A002A35C2 /* i386Symbols.c in Sources */,
-				6BA9D6AD1B8683EC00A989D1 /* CustomButtons.m in Sources */,
 				6B1190411B5B0BA200AAF9A6 /* SwitchCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2445,7 +2441,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
@@ -2492,7 +2488,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",

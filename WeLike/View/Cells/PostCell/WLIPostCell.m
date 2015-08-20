@@ -78,7 +78,7 @@ static WLIPostCell *sharedCell = nil;
             [self.imageViewUser hnk_setImageFromURL:[NSURL URLWithString:self.post.user.userAvatarPath]];
         }
         self.labelUserName.text = self.post.user.userFullName;
-        self.labelTimeAgo.text = self.post.postTimeAgo;
+        self.labelTimeAgo.text = [NSString stringWithFormat:@"@%@",self.post.user.userUsername];
         
         //Set and resize
         self.labelPostTitle.text = self.post.postTitle;

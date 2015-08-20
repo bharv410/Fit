@@ -117,7 +117,7 @@
     }];
     
 
-        headerView.labelName.text = self.currentUser.userFullName;
+        headerView.labelName.text = self.currentUser.userUsername;
         headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
         headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
     

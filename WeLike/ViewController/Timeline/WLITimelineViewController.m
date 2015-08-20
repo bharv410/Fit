@@ -202,7 +202,7 @@
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer{
-    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
     
     WebViewController *webViewController = [[WebViewController alloc] init];
     [webViewController setURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];

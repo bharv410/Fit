@@ -20,7 +20,6 @@
 #import "MainViewController.h"
 #import "PGConversationListViewController.h"
 #import "WLINearbyViewController.h"
-#import "WebViewController.h"
 
 @implementation WLITimelineViewController
 
@@ -204,9 +203,9 @@
 - (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
     
-    WebViewController *webViewController = [[WebViewController alloc] init];
-    [webViewController setURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
-    [self.navigationController pushViewController:webViewController animated:YES];
+//    WebViewController *webViewController = [[WebViewController alloc] init];
+//    [webViewController setURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
+//    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 #pragma mark - UITableViewDataSource methods

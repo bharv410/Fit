@@ -12,13 +12,17 @@
 #import "WLILoadingCell.h"
 #import "FitovateData.h"
 #import "WLIConnect.h"
+#import <MediaPlayer/MediaPlayer.h>
 #import "CustomHeaderView.h"
 
 @interface NormalUserProfileTableViewController ()
 
 @end
 
-@implementation NormalUserProfileTableViewController
+@implementation NormalUserProfileTableViewController{
+    MPMoviePlayerController *moviePlayerController;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -101,6 +105,76 @@
 //                                 , labelView.frame.size.width, labelView.frame.size.height);
 //    
 //    self.tableView.tableHeaderView = headerView;
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    
+    if([self.currentUser.userType isEqualToString:@"trainer"] ){
+
+        CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240 + screenWidth)];
+        [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
+        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+            if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
+                [headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+                NSLog(@"Set to following1");
+            }else{
+                [headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+                NSLog(@"Set to follow1");
+            }
+        }];
+        headerView.labelName.text = [NSString stringWithFormat:@"@%@",self.currentUser.userUsername];
+        headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
+        headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
+        
+        headerView.labelBio.text = self.currentUser.userBio;
+        
+        UIView *videoPlaceHolderVIew = [[UIView alloc]initWithFrame:CGRectMake(0, 240, screenWidth, screenWidth)];
+        
+        [headerView addSubview:videoPlaceHolderVIew];
+        
+        self.tableView.tableHeaderView = headerView;
+        
+        
+        NSString *usernameWithoutSpaces=[self.currentUser.userUsername
+                                         stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        
+        PFQuery *videoQuery = [PFQuery queryWithClassName:@"Videos"];
+        [videoQuery whereKey:@"username" equalTo:self.currentUser.userUsername];
+        NSLog(@"%@",self.currentUser.userUsername);
+        [videoQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                for (PFObject *object in objects) {
+                    
+                    PFFile *videoFile = object[@"video"];
+                    NSString *urlOfVideo = videoFile.url;
+                    NSURL *url =[[NSURL alloc]initWithString:urlOfVideo];
+                    
+                    moviePlayerController = [[MPMoviePlayerController alloc] initWithContentURL:url];
+                    [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];  // player's frame must match parent's
+                    [videoPlaceHolderVIew addSubview:moviePlayerController.view];
+                    
+                    // Configure the movie player controller
+                    moviePlayerController.controlStyle = MPMovieControlStyleNone;
+                    [moviePlayerController prepareToPlay];
+                    // Start the movie
+                    [moviePlayerController play];
+                    
+//                    CGRect rect = CGRectMake(videoPlaceHolderVIew.frame.origin.x, self.labelBio.frame.origin.y + 20.0f + self.labelBio.bounds.size.height, self.movieView.bounds.size.width, self.movieView.bounds.size.height);
+//                    self.movieView.frame = rect;
+                    self.automaticallyAdjustsScrollViewInsets = NO;
+                    
+                }
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+                [videoPlaceHolderVIew setHidden:YES];
+            }
+        }];
+        
+        
+    }else{
+    
     
     CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
         [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
@@ -115,19 +189,18 @@
             NSLog(@"Set to follow1");
         }
     }];
-    
-
         headerView.labelName.text = self.currentUser.userUsername;
         headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
         headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
     
-    headerView.labelBio.text = self.currentUser.userBio;
-        
+        headerView.labelBio.text = self.currentUser.userBio;
+        self.tableView.tableHeaderView = headerView;
+    }
+    
 //        self.labelAddress.text = self.user.companyAddress;
 //        self.labelPhone.text = self.user.companyPhone;
 //        self.labelWeb.text = self.user.companyWeb;
 //        self.labelEmail.text = self.user.companyEmail;
-self.tableView.tableHeaderView = headerView;
     
     
 }

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WLIUser.h"
 #import <LayerKit/LayerKit.h>
+#import "CustomHeaderView.h"
 
 @interface NormalUserProfileTableViewController : UITableViewController
 
@@ -17,6 +18,7 @@
 @property (strong, nonatomic) NSArray *allFollowings;
 @property (strong, nonatomic) UIAlertView *messageAlert;
 @property (nonatomic) LYRConversation *conversation;
+@property (nonatomic) CustomHeaderView *headerView;
 
 @property (nonatomic, assign) BOOL loading;
 

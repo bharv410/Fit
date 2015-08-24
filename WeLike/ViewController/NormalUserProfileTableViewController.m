@@ -109,35 +109,35 @@
     
     if([self.currentUser.userType isEqualToString:@"trainer"] ){
 
-        CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240 + screenWidth)];
-        [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
+        self.headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240 + screenWidth)];
+        [self.headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
         
         FitovateData *myData = [FitovateData sharedFitovateData];
         self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
             if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
-                [headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+                [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
                 NSLog(@"Set to following1");
             }else{
-                [headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+                [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
                 NSLog(@"Set to follow1");
             }
         }];
-        [headerView.buttonFollow addTarget:self
+        [self.headerView.buttonFollow addTarget:self
                      action:@selector(buttonFollowToggleTouchUpInside)
            forControlEvents:UIControlEventTouchUpInside];
-        [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+        [self.headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
         
-        headerView.labelName.text = [NSString stringWithFormat:@"@%@",self.currentUser.userUsername];
-        headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
-        headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
+        self.headerView.labelName.text = [NSString stringWithFormat:@"@%@",self.currentUser.userUsername];
+        self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
+        self.headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
         
-        headerView.labelBio.text = self.currentUser.userBio;
+        self.headerView.labelBio.text = self.currentUser.userBio;
         
         UIView *videoPlaceHolderVIew = [[UIView alloc]initWithFrame:CGRectMake(0, 240, screenWidth, screenWidth)];
         
-        [headerView addSubview:videoPlaceHolderVIew];
+        [self.headerView addSubview:videoPlaceHolderVIew];
         
-        self.tableView.tableHeaderView = headerView;
+        self.tableView.tableHeaderView = self.headerView;
         
         
         NSString *usernameWithoutSpaces=[self.currentUser.userUsername
@@ -307,7 +307,8 @@
     if (self.currentUser.followingUser) {
         self.currentUser.followingUser = NO;
         self.currentUser.followersCount--;
-        [self setHeader];
+
+        [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
         
         FitovateData *myData = [FitovateData sharedFitovateData];
         
@@ -315,8 +316,9 @@
     } else {
         self.currentUser.followingUser = YES;
         self.currentUser.followersCount++;
-        [self setHeader];
+
         FitovateData *myData = [FitovateData sharedFitovateData];
+        [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
         
         [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
     }

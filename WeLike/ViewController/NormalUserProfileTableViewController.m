@@ -122,6 +122,11 @@
                 NSLog(@"Set to follow1");
             }
         }];
+        [headerView.buttonFollow addTarget:self
+                     action:@selector(buttonFollowToggleTouchUpInside)
+           forControlEvents:UIControlEventTouchUpInside];
+        [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+        
         headerView.labelName.text = [NSString stringWithFormat:@"@%@",self.currentUser.userUsername];
         headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
         headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
@@ -189,6 +194,10 @@
             NSLog(@"Set to follow1");
         }
     }];
+        [headerView.buttonFollow addTarget:self
+                                    action:@selector(buttonFollowToggleTouchUpInside)
+                          forControlEvents:UIControlEventTouchUpInside];
+        [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
         headerView.labelName.text = self.currentUser.userUsername;
         headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
         headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
@@ -293,5 +302,86 @@
  // Pass the selected object to the new view controller.
  }
  */
+- (void)buttonFollowToggleTouchUpInside {
+    
+    if (self.currentUser.followingUser) {
+        self.currentUser.followingUser = NO;
+        self.currentUser.followersCount--;
+        [self setHeader];
+        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
+        [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
+    } else {
+        self.currentUser.followingUser = YES;
+        self.currentUser.followersCount++;
+        [self setHeader];
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
+        [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
+    }
+}
+
+-(void)goToMessages {
+    
+    //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
+    //    LQSViewController *newVc = [[LQSViewController alloc]init];
+    //    [self.navigationController pushViewController:newVc animated:YES];
+    
+    self.messageAlert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Send to: %@",self.currentUser.userUsername] message:@"Enter message text" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Send",nil];
+    self.messageAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    //[alert show];
+    [self.messageAlert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    WLIConnect *connect = [WLIConnect sharedConnect];
+    if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.currentUser.userUsername]]){
+        if (buttonIndex == [alertView cancelButtonIndex]) {
+            
+        }else{
+            NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
+            [self sendMessage:[[alertView textFieldAtIndex:0] text]];
+            
+            //benmark10
+        }
+    }
+}
+
+- (void)sendMessage:(NSString *)messageText{
+    WLIConnect *connect = [WLIConnect sharedConnect];
+    // If no conversations exist, create a new conversation object with two participants
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    [myData hasAMessage:self.currentUser.userUsername];
+    NSError *error = nil;
+    self.conversation = [connect.layerClient newConversationWithParticipants:[NSSet setWithArray:@[ self.currentUser.userUsername, connect.currentUser.userUsername ]] options:nil error:&error];
+    if (!self.conversation) {
+        NSLog(@"New Conversation creation failed: %@", error);
+    }else{
+        NSSet *participantsInConvo = [self.conversation participants];
+        for(NSString* participant in participantsInConvo) {
+            NSLog(@"participant name = %@",participant);
+        }
+    }
+    
+    // Creates a message part with text/plain MIME Type
+    LYRMessagePart *messagePart = [LYRMessagePart messagePartWithText:messageText];
+    
+    // Creates and returns a new message object with the given conversation and array of message parts
+    LYRMessage *message = [connect.layerClient newMessageWithParts:@[messagePart] options:@{LYRMessageOptionsPushNotificationAlertKey: messageText} error:nil];
+    
+    // Sends the specified message
+    BOOL success = [self.conversation sendMessage:message error:&error];
+    if (success) {
+        NSLog(@"Message queued to be sent: %@", messageText);
+        [[[UIAlertView alloc] initWithTitle:@"Sent" message:@"Your message has been sent" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil] show];
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        [myData hasAMessage:self.currentUser.userUsername];
+        
+    } else {
+        NSLog(@"Message send failed: %@", error);
+    }
+}
+
 
 @end

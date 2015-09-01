@@ -36,6 +36,9 @@
     
     [super viewDidLoad];
     self.title = @"Post";
+    
+    [self.textFieldEnterComment setPlaceholder:@"... Leave a comment!"];
+    
     [self reloadData:YES];
     
     UIButton *reportButton = [UIButton buttonWithType:UIButtonTypeCustom];

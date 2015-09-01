@@ -8,7 +8,6 @@
 
 #import "WLIAppDelegate.h"
 #import "WLIPopularViewController.h"
-#import "WLIProfileViewController.h"
 #import "WLITimelineViewController.h"
 #import "WLIConnect.h"
 #import "WLINewPostViewController.h"
@@ -19,6 +18,7 @@
 #import "FitovateData.h"
 #import <Crashlytics/Crashlytics.h>
 #import "MainViewController.h"
+#import "NormalUserProfileTableViewController.h"
 
 NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsException";
 NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE%2FTxwzvba3Wy%2FupvESaKZhg1ngT4E8V7bqvT1RpL5F0UIW8FKbWarcsUJ51Nx%2BGwlHpeETeLbU4B8AYBUSRsopL5aGEZx7OrKL%2B%2B60kOeKuNLZuf%2FTVdRXKNLa1LuXU%3D";
@@ -209,8 +209,8 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     [Parse enableLocalDatastore];
     
     // Initialize Parse.
-    [Parse setApplicationId:@"M7f82n8HbyJZs9tmXpi4LXg0kRnIc1GaxYbFfzxr"
-                  clientKey:@"cXd06hH0Ox8DNUoyZxFQ5RvWipg0UagSEvYuzBPW"];
+    [Parse setApplicationId:@"prImNW9LEf5veTsrho2Xt1HhB1wPA9gO1VxofNUQ"
+                  clientKey:@"76prGLiWiOOWwnxYXjDccecpAvRS77mF9HrwSTnG"];
     
     
     ooVooInitResult result = [[ooVooController sharedController] initSdk:@"12349983352060"
@@ -263,7 +263,9 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     UINavigationController *nearbyNavigationController = [[UINavigationController alloc] initWithRootViewController:nearbyViewController];
     nearbyNavigationController.navigationBar.translucent = NO;
     
-    WLIProfileViewController *profileViewController = [[WLIProfileViewController alloc] initWithNibName:@"WLIProfileViewController" bundle:nil];
+    NormalUserProfileTableViewController *profileViewController = [[NormalUserProfileTableViewController alloc] initWithNibName:@"NormalUserProfileTableViewController" bundle:nil];
+    profileViewController.currentUser = [WLIConnect sharedConnect].currentUser;
+    profileViewController.currentUser.userUsername = @"xyzxyz";
     UINavigationController *profileNavigationController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
     profileNavigationController.navigationBar.translucent = NO;
     

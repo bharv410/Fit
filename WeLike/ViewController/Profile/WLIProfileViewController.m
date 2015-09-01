@@ -72,6 +72,8 @@ MPMoviePlayerController *moviePlayerController;
         
         //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:editButton];
         
+        
+        
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(buttonLogoutTouchUpInside:)];
         
         
@@ -349,12 +351,7 @@ MPMoviePlayerController *moviePlayerController;
     }
 }
 
-- (IBAction)buttonFollowingTouchUpInside:(id)sender {
-    
-    WLIFollowingViewController *followingViewController = [[WLIFollowingViewController alloc] initWithNibName:@"WLIFollowingViewController" bundle:nil];
-    followingViewController.user = self.user;
-    [self.navigationController pushViewController:followingViewController animated:YES];
-}
+
 
 -(IBAction)goToMessages:(id)sender {
     
@@ -368,15 +365,6 @@ MPMoviePlayerController *moviePlayerController;
     [self.messageAlert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
 }
 
-
-
-
-- (IBAction)buttonFollowersTouchUpInside:(id)sender {
-    
-    WLIFollowersViewController *followersViewController = [[WLIFollowersViewController alloc] initWithNibName:@"WLIFollowersViewController" bundle:nil];
-    followersViewController.user = self.user;
-    [self.navigationController pushViewController:followersViewController animated:YES];
-}
 
 - (IBAction)buttonLogoutTouchUpInside:(UIButton *)sender {
     

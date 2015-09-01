@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelFollowersCount;
 
 @property (strong, nonatomic) IBOutlet UILabel *labelBio;
+@property (strong, nonatomic) IBOutlet UIButton *editProfileButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMessage;

@@ -10,8 +10,9 @@
 #import "WLIUser.h"
 #import <LayerKit/LayerKit.h>
 #import "CustomHeaderView.h"
+#import <MessageUI/MessageUI.h>
 
-@interface NormalUserProfileTableViewController : UITableViewController
+@interface NormalUserProfileTableViewController : UITableViewController <MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, retain) WLIUser *currentUser;
 @property (strong, nonatomic) NSMutableArray *posts;

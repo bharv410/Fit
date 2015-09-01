@@ -5,6 +5,7 @@ target 'Fitovate' do
 pod 'LayerKit'
 pod 'Atlas'
 pod 'Haneke', '~> 1.0'
+pod 'Google/Analytics'
 
 end
 

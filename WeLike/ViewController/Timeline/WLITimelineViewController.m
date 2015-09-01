@@ -45,14 +45,14 @@
     if([WLIConnect sharedConnect].currentUser!=nil)//required
         [self firstLogin];
     
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Activity" style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"activityicon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
+    
     self.navigationItem.leftBarButtonItem = anotherButton;
     
    }
 
 
 -(void)goToMessages {
-    WLIConnect *sharedConnect = [WLIConnect sharedConnect];
     if(sharedConnect.layerClient!=nil && sharedConnect.layerClient.isConnected){
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
         
@@ -91,7 +91,7 @@
     NSLog(@"Going to activity!");
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
     ActivityController *newVc = [[ActivityController alloc]init];
-    [self.navigationController pushViewController:newVc animated:NO];
+    [self.navigationController pushViewController:newVc animated:YES];
     
 }
 

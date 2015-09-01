@@ -13,9 +13,15 @@
 #import "FitovateData.h"
 #import "WLIConnect.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "WLIAppDelegate.h"
 #import "CustomHeaderView.h"
+#import "WLIFollowersViewController.h"
+#import "WLIFollowingViewController.h"
+#import "WLIEditProfileViewController.h"
 
-@interface NormalUserProfileTableViewController ()
+@interface NormalUserProfileTableViewController (){
+    BOOL playing;
+}
 
 @end
 
@@ -26,15 +32,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    playing = YES;
+    
+    if([self.currentUser.userUsername containsString:@"xyzxyz"]){
+        self.currentUser = [WLIConnect sharedConnect].currentUser;
+    }
     [self setHeader];
     self.loading = NO;
     
-    NSLog(@"current username = %@", self.currentUser.userUsername);
     [self reloadData:YES];
+    
+}
+
+- (void)buttonLogoutTouchUpInside {
+    [[[UIAlertView alloc] initWithTitle:@"Logout" message:@"Are you sure that you want to logout?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
 }
 
 - (void)reloadData:(BOOL)reloadAll {
     self.loading = YES;
+    [self.posts removeAllObjects];
     self.posts = [[NSMutableArray alloc]initWithCapacity:20];
     FitovateData *myData = [FitovateData sharedFitovateData];
     __block NSUInteger postCount = 0;
@@ -82,6 +98,20 @@
     }];
 }
 
+- (IBAction)buttonFollowingTouchUpInside:(id)sender {
+    
+    WLIFollowingViewController *followingViewController = [[WLIFollowingViewController alloc] initWithNibName:@"WLIFollowingViewController" bundle:nil];
+    followingViewController.user = self.currentUser;
+    [self.navigationController pushViewController:followingViewController animated:YES];
+}
+
+- (IBAction)buttonFollowersTouchUpInside:(id)sender {
+    
+    WLIFollowersViewController *followersViewController = [[WLIFollowersViewController alloc] initWithNibName:@"WLIFollowersViewController" bundle:nil];
+    followersViewController.user = self.currentUser;
+    [self.navigationController pushViewController:followersViewController animated:YES];
+}
+
 
 - (void) setHeader {
 //    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
@@ -112,20 +142,8 @@
         self.headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240 + screenWidth)];
         [self.headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
         
-        FitovateData *myData = [FitovateData sharedFitovateData];
-        self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
-            if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
-                [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-                NSLog(@"Set to following1");
-            }else{
-                [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-                NSLog(@"Set to follow1");
-            }
-        }];
-        [self.headerView.buttonFollow addTarget:self
-                     action:@selector(buttonFollowToggleTouchUpInside)
-           forControlEvents:UIControlEventTouchUpInside];
         [self.headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+        
         
         self.headerView.labelName.text = [NSString stringWithFormat:@"@%@",self.currentUser.userUsername];
         self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
@@ -162,6 +180,9 @@
                     // Configure the movie player controller
                     moviePlayerController.controlStyle = MPMovieControlStyleNone;
                     [moviePlayerController prepareToPlay];
+                    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+                    tap.delegate = self;
+                    [moviePlayerController.view addGestureRecognizer:tap];
                     // Start the movie
                     [moviePlayerController play];
                     
@@ -184,34 +205,37 @@
     CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
         [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
     
-    FitovateData *myData = [FitovateData sharedFitovateData];
-    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
-        if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
-            [headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-            NSLog(@"Set to following1");
-        }else{
-            [headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-            NSLog(@"Set to follow1");
-        }
-    }];
-        [headerView.buttonFollow addTarget:self
-                                    action:@selector(buttonFollowToggleTouchUpInside)
-                          forControlEvents:UIControlEventTouchUpInside];
         [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+        
         headerView.labelName.text = self.currentUser.userUsername;
         headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
         headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
     
         headerView.labelBio.text = self.currentUser.userBio;
         self.tableView.tableHeaderView = headerView;
+        
     }
     
-//        self.labelAddress.text = self.user.companyAddress;
-//        self.labelPhone.text = self.user.companyPhone;
-//        self.labelWeb.text = self.user.companyWeb;
-//        self.labelEmail.text = self.user.companyEmail;
-    
-    
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+        if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
+            [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+        }else{
+            [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+        }
+        if ([self.currentUser.userUsername containsString:[WLIConnect sharedConnect].currentUser.userUsername]) {
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Contact Us" style:UIBarButtonItemStylePlain target:self action:@selector(buttonContactUsTouchUpInside)];
+            
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(buttonLogoutTouchUpInside)];
+            self.headerView.buttonMessage.hidden = YES;
+            [self.headerView.buttonFollow setTitle:@"Edit Profile" forState:UIControlStateNormal];
+            [self.headerView.buttonFollow addTarget:self action:@selector(editProfileButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            [self.headerView.buttonFollow addTarget:self
+                                             action:@selector(buttonFollowToggleTouchUpInside)
+                                   forControlEvents:UIControlEventTouchUpInside];
+        }
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -222,7 +246,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -304,16 +328,16 @@
  */
 - (void)buttonFollowToggleTouchUpInside {
     
-    if (self.currentUser.followingUser) {
-        self.currentUser.followingUser = NO;
-        self.currentUser.followersCount--;
-
-        [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-        
-        FitovateData *myData = [FitovateData sharedFitovateData];
-        
-        [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
-    } else {
+//    if (self.currentUser.followingUser) {
+//        self.currentUser.followingUser = NO;
+//        self.currentUser.followersCount--;
+//
+//        [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
+//        
+//        FitovateData *myData = [FitovateData sharedFitovateData];
+//        
+//        [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
+//    } else {
         self.currentUser.followingUser = YES;
         self.currentUser.followersCount++;
 
@@ -321,7 +345,7 @@
         [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
         
         [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
-    }
+    //}
 }
 
 -(void)goToMessages {
@@ -334,20 +358,6 @@
     self.messageAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
     //[alert show];
     [self.messageAlert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    WLIConnect *connect = [WLIConnect sharedConnect];
-    if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.currentUser.userUsername]]){
-        if (buttonIndex == [alertView cancelButtonIndex]) {
-            
-        }else{
-            NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
-            [self sendMessage:[[alertView textFieldAtIndex:0] text]];
-            
-            //benmark10
-        }
-    }
 }
 
 - (void)sendMessage:(NSString *)messageText{
@@ -385,5 +395,97 @@
     }
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    WLIConnect *connect = [WLIConnect sharedConnect];
+    if ([alertView.title isEqualToString:@"Logout"] && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Yes"]) {
+        if (connect.layerClient.authenticatedUserID) {
+            [connect.layerClient deauthenticateWithCompletion:^(BOOL success, NSError *error) {
+                
+            }];
+        }
+        [[WLIConnect sharedConnect] logout];
+        WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate createViewHierarchy];
+        [appDelegate.tabBarController showWelcome];
+    }else if([alertView.title isEqualToString:[NSString stringWithFormat:@"Send to: %@",self.currentUser.userUsername]]){
+        if (buttonIndex == [alertView cancelButtonIndex]) {
+            
+        }else{
+            NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
+            [self sendMessage:[[alertView textFieldAtIndex:0] text]];
+            
+            //benmark10
+        }
+    }
+}
+- (IBAction)editProfileButtonTouchUpInside:(id)sender{
+    WLIEditProfileViewController *editProfileViewController = [[WLIEditProfileViewController alloc] initWithNibName:@"WLIEditProfileViewController" bundle:nil];
+    [self.navigationController pushViewController:editProfileViewController animated:YES];
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)gesture {
+    NSLog(@"tapped");
+    if(playing){
+        [moviePlayerController pause];
+        playing = NO;
+    }else{
+        [moviePlayerController play];
+        playing = YES;
+    }
+}
+
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+- (void)buttonContactUsTouchUpInside{
+    
+    // Email Subject
+    NSString *emailTitle = @"Contacting Fitovate";
+    // Email Content
+    NSString *messageBody = @"Enter text here";
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"fitovate@gmail.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+}
+
+// this allows you to dispatch touches
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return YES;
+}
+// this enables you to handle multiple recognizers on single view
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
 
 @end

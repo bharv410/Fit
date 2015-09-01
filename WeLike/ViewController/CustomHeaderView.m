@@ -79,4 +79,6 @@
 }
 
 
+- (IBAction)editProfileButtonTouchUpInside:(id)sender {
+}
 @end

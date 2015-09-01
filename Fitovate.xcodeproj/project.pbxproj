@@ -233,6 +233,9 @@
 		6B28E19C1A69F111007A3C24 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28E19B1A69F111007A3C24 /* AudioToolbox.framework */; };
 		6B28E19E1A69F14F007A3C24 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28E19D1A69F14F007A3C24 /* CoreMedia.framework */; };
 		6B28E1A01A69F180007A3C24 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28E19F1A69F180007A3C24 /* CoreTelephony.framework */; };
+		6B2A7ABC1B96182400AEC1D7 /* activityicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B2A7AB91B96182400AEC1D7 /* activityicon.png */; };
+		6B2A7ABD1B96182400AEC1D7 /* activityicon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B2A7ABA1B96182400AEC1D7 /* activityicon@3x.png */; };
+		6B2A7ABE1B96182400AEC1D7 /* activityicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B2A7ABB1B96182400AEC1D7 /* activityicon@2x.png */; };
 		6B30FB991AEEACE000BEBAD2 /* ParseSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30FB981AEEACE000BEBAD2 /* ParseSingleton.m */; };
 		6B30FBA81AEEBBE100BEBAD2 /* ActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30FBA61AEEBBE100BEBAD2 /* ActivityController.m */; };
 		6B30FBA91AEEBBE100BEBAD2 /* ActivityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */; };
@@ -657,6 +660,9 @@
 		6B28E19B1A69F111007A3C24 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6B28E19D1A69F14F007A3C24 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		6B28E19F1A69F180007A3C24 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		6B2A7AB91B96182400AEC1D7 /* activityicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activityicon.png; sourceTree = "<group>"; };
+		6B2A7ABA1B96182400AEC1D7 /* activityicon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activityicon@3x.png"; sourceTree = "<group>"; };
+		6B2A7ABB1B96182400AEC1D7 /* activityicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activityicon@2x.png"; sourceTree = "<group>"; };
 		6B30FB971AEEACE000BEBAD2 /* ParseSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseSingleton.h; sourceTree = "<group>"; };
 		6B30FB981AEEACE000BEBAD2 /* ParseSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseSingleton.m; sourceTree = "<group>"; };
 		6B30FBA51AEEBBE100BEBAD2 /* ActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityController.h; sourceTree = "<group>"; };
@@ -1374,6 +1380,9 @@
 		2C6D275A1896BACA00C459CB /* WLI-images */ = {
 			isa = PBXGroup;
 			children = (
+				6B2A7AB91B96182400AEC1D7 /* activityicon.png */,
+				6B2A7ABA1B96182400AEC1D7 /* activityicon@3x.png */,
+				6B2A7ABB1B96182400AEC1D7 /* activityicon@2x.png */,
 				6BE030361B45DD0E00B403C5 /* hangup.png */,
 				6BE030371B45DD0E00B403C5 /* hangup@2x.png */,
 				6B25A4C41B30907D004D103E /* videochatimage.png */,
@@ -2050,6 +2059,7 @@
 				2C6D27F61896BACA00C459CB /* WLIRegisterViewController.xib in Resources */,
 				AD8CF6F31A3131710002250B /* fatlogo.png in Resources */,
 				6B1190BE1B5B0C4300AAF9A6 /* ic_mic.png in Resources */,
+				6B2A7ABE1B96182400AEC1D7 /* activityicon@2x.png in Resources */,
 				2C6D28041896BACA00C459CB /* btn-like.png in Resources */,
 				2C6D27EC1896BACA00C459CB /* WLINewPostViewController.xib in Resources */,
 				6B1190911B5B0C1900AAF9A6 /* bubble.png in Resources */,
@@ -2092,6 +2102,7 @@
 				6B11909B1B5B0C1900AAF9A6 /* button-photo.png in Resources */,
 				6B267D371A65EE5000F0C056 /* nav-btn-close@2x.png in Resources */,
 				6B11909A1B5B0C1900AAF9A6 /* send-button@2x.png in Resources */,
+				6B2A7ABD1B96182400AEC1D7 /* activityicon@3x.png in Resources */,
 				2C6D282C1896BACA00C459CB /* pulldown-refresh-icon.png in Resources */,
 				6BDEA69D1A7847070077651F /* nav-btn-reload@2x.png in Resources */,
 				2C6D283C1896BACA00C459CB /* welcome-logo@2x.png in Resources */,
@@ -2101,6 +2112,7 @@
 				2C6D28391896BACA00C459CB /* welcome-background.png in Resources */,
 				2C6D28081896BACA00C459CB /* btn-unfollow.png in Resources */,
 				6B130BE51A730E9300FE0E0C /* LQSViewController.xib in Resources */,
+				6B2A7ABC1B96182400AEC1D7 /* activityicon.png in Resources */,
 				2C8AF2871A1B77F40003B22E /* AviarySDKResources.bundle in Resources */,
 				6B59A2FC1B1A597800F1F92A /* AppIcon29x29@2x.png in Resources */,
 				6B5E08A91A609B160020D78B /* WLIChooseVideoViewController.xib in Resources */,
@@ -2450,8 +2462,8 @@
 				PROVISIONING_PROFILE = "d518d5b8-3c11-452e-9d76-7b9ef54843d0";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VALID_ARCHS = "armv7 armv7s arm64 i386";
-				"VALID_ARCHS[sdk=*]" = "armv7 armv7s arm64 i386";
+				VALID_ARCHS = "armv7 armv7s i386 arm64";
+				"VALID_ARCHS[sdk=*]" = "armv7 armv7s i386 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2496,7 +2508,7 @@
 				PRODUCT_NAME = Fitovate;
 				PROVISIONING_PROFILE = "d518d5b8-3c11-452e-9d76-7b9ef54843d0";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
-				VALID_ARCHS = "armv7 armv7s arm64 i386";
+				VALID_ARCHS = "armv7 armv7s i386 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

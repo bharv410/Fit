@@ -23,7 +23,7 @@
     // Do any additional setup after loading the view from its nib.
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Choose Promo Video"
-                                                    message:@"Each trainer needs a video on his profile that is 30 seconds or less to complete registration"
+                                                    message:@" Each trainer needs a intro video on their profile that is 45 seconds or less to complete registration. Tell potential clients about yourself and what you have to offer."
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

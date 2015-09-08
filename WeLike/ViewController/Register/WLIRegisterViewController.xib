@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WLIRegisterViewController">
@@ -13,7 +12,6 @@
                 <outlet property="mapViewLocation" destination="rhb-AH-odE" id="zpo-Y4-MU4"/>
                 <outlet property="scrollViewRegister" destination="Dtr-hy-Roh" id="bdG-9h-T33"/>
                 <outlet property="segmentedControlUserType" destination="X8g-J7-h74" id="fnA-p4-lWP"/>
-                <outlet property="textFieldAddress" destination="G21-8z-pdy" id="iA8-6A-2wo"/>
                 <outlet property="textFieldBio" destination="6vx-E5-O4t" id="ddc-CD-LXT"/>
                 <outlet property="textFieldEmail" destination="ti3-lE-yF1" id="dbN-KY-5hq"/>
                 <outlet property="textFieldFullName" destination="ZFq-Hf-Qxw" id="eur-dB-oj7"/>
@@ -61,7 +59,7 @@
             <point key="canvasLocation" x="308" y="228"/>
         </view>
         <view contentMode="scaleToFill" id="Mko-Le-OHc">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="697"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="810"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email address" minimumFontSize="17" id="ti3-lE-yF1">
@@ -128,7 +126,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view hidden="YES" contentMode="scaleToFill" id="B4u-fw-xHf">
-                    <rect key="frame" x="0.0" y="416" width="320" height="318"/>
+                    <rect key="frame" x="0.0" y="416" width="320" height="386"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="phone" minimumFontSize="17" id="nJn-R7-Oad">
@@ -143,21 +141,6 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="long press on map to place pin" minimumFontSize="17" id="G21-8z-pdy">
-                            <rect key="frame" x="20" y="181" width="280" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="rhb-AH-odE">
-                            <rect key="frame" x="0.0" y="164" width="320" height="154"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <gestureRecognizers/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="OWA-XJ-Net"/>
-                                <outletCollection property="gestureRecognizers" destination="BuF-Yj-0hT" appends="YES" id="1iK-oI-Yzi"/>
-                            </connections>
-                        </mapView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="I2w-e6-h3B">
                             <rect key="frame" x="20" y="18" width="280" height="41"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -171,6 +154,25 @@
                                 <action selector="selectClients:" destination="-1" eventType="touchUpInside" id="Dpd-Oa-t6V"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="c20-1h-xdq">
+                            <rect key="frame" x="38" y="157" width="436" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <string key="text">Pinch in and out to zoom on map, 
+then place a pin by long 
+pressing on desired location.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="rhb-AH-odE">
+                            <rect key="frame" x="0.0" y="229" width="320" height="154"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="OWA-XJ-Net"/>
+                                <outletCollection property="gestureRecognizers" destination="BuF-Yj-0hT" appends="YES" id="1iK-oI-Yzi"/>
+                            </connections>
+                        </mapView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
@@ -178,7 +180,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="207" y="394.5"/>
+            <point key="canvasLocation" x="207" y="394"/>
         </view>
         <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BuF-Yj-0hT">
             <connections>

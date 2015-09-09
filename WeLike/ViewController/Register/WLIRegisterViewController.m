@@ -41,6 +41,9 @@
     [super viewDidLoad];
     
     self.title = @"Register";
+    
+    self.cityStateLabel.delegate = self;
+    self.dateLabel.delegate = self;
 
     [self.scrollViewRegister addSubview:self.viewContentRegister];
     [self adjustViewFrames];
@@ -171,6 +174,9 @@
                         newUser[@"followingCount"] = [NSNumber numberWithInt:0];
                         newUser[@"phone"] = self.textFieldPhone.text;
                         newUser[@"website"] = self.textFieldWeb.text;
+                        newUser[@"gender"] = [self.malefemaleControl titleForSegmentAtIndex:self.malefemaleControl.selectedSegmentIndex];
+                        newUser[@"citystate"] = self.cityStateLabel.text;
+                        newUser[@"birthdate"] = self.dateLabel;
                         
                         if(self.chooseSpeciality.titleLabel.text != nil)
                             newUser[@"specialty"] = self.chooseSpeciality.titleLabel.text;
@@ -411,7 +417,7 @@
         
     } else  {
         self.viewCompany.hidden = YES;
-        self.buttonRegister.frame = CGRectMake(self.buttonRegister.frame.origin.x, CGRectGetMaxY(self.textFieldBio.frame) +20.0f, self.buttonRegister.frame.size.width, self.buttonRegister.frame.size.height);
+        self.buttonRegister.frame = CGRectMake(self.buttonRegister.frame.origin.x, CGRectGetMaxY(self.malefemaleControl.frame) +20.0f, self.buttonRegister.frame.size.width, self.buttonRegister.frame.size.height);
         self.viewContentRegister.frame = CGRectMake(self.viewContentRegister.frame.origin.x, self.viewContentRegister.frame.origin.y, self.viewContentRegister.frame.size.width, CGRectGetMaxY(self.buttonRegister.frame) +20.0f);
         PNTToolbar *newToolbar = [PNTToolbar defaultToolbar];
         newToolbar.mainScrollView = self.scrollViewRegister;
@@ -452,9 +458,24 @@
     [self rel];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    //hides keyboard when another part of layout was touched
+    [self.view endEditing:YES];
+    [super touchesBegan:touches withEvent:event];
+}
+
 -(void)rel{
     //[dropDown release];
     dropDown = nil;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+    if (theTextField == self.cityStateLabel) {
+        [theTextField resignFirstResponder];
+    } else if (theTextField == self.dateLabel) {
+        [theTextField resignFirstResponder];
+    }
+    return YES;
 }
 
 

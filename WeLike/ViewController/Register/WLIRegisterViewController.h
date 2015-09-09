@@ -10,7 +10,7 @@
 #import "WLIViewController.h"
 #import "NIDropDown.h"
 
-@interface WLIRegisterViewController : WLIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, MKMapViewDelegate, NIDropDownDelegate> {
+@interface WLIRegisterViewController : WLIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, MKMapViewDelegate, NIDropDownDelegate,UITextFieldDelegate> {
     
     BOOL locatedUser;
     NIDropDown *dropDown;
@@ -18,6 +18,9 @@
    IBOutlet UIButton *chooseSpeciality;
     
 }
+@property (strong, nonatomic) IBOutlet UISegmentedControl *malefemaleControl;
+@property (strong, nonatomic) IBOutlet UITextField *cityStateLabel;
+@property (strong, nonatomic) IBOutlet UITextField *dateLabel;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewRegister;
 @property (strong, nonatomic) IBOutlet UIView *viewContentRegister;

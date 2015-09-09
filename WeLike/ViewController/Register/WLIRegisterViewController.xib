@@ -8,7 +8,10 @@
             <connections>
                 <outlet property="buttonRegister" destination="Y1r-1R-aQB" id="26p-he-yrh"/>
                 <outlet property="chooseSpeciality" destination="I2w-e6-h3B" id="dIs-DF-lqh"/>
+                <outlet property="cityStateLabel" destination="bQi-Nt-9IP" id="G3z-rR-XP5"/>
+                <outlet property="dateLabel" destination="z8a-GU-NeF" id="hzY-Om-e2G"/>
                 <outlet property="imageViewAvatar" destination="tsx-7v-yWS" id="reH-0z-IGj"/>
+                <outlet property="malefemaleControl" destination="VLX-F4-zq8" id="LFb-Ef-s24"/>
                 <outlet property="mapViewLocation" destination="rhb-AH-odE" id="zpo-Y4-MU4"/>
                 <outlet property="scrollViewRegister" destination="Dtr-hy-Roh" id="bdG-9h-T33"/>
                 <outlet property="segmentedControlUserType" destination="X8g-J7-h74" id="fnA-p4-lWP"/>
@@ -59,7 +62,7 @@
             <point key="canvasLocation" x="308" y="228"/>
         </view>
         <view contentMode="scaleToFill" id="Mko-Le-OHc">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="810"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="950"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email address" minimumFontSize="17" id="ti3-lE-yF1">
@@ -107,8 +110,28 @@
                         <action selector="buttonSelectAvatarTouchUpInside:" destination="-1" eventType="touchUpInside" id="NBF-AG-qY5"/>
                     </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bio" minimumFontSize="17" id="6vx-E5-O4t">
+                    <rect key="frame" x="20" y="383" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="mm/dd/yyyy" minimumFontSize="17" id="z8a-GU-NeF">
+                    <rect key="frame" x="20" y="433" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration" hint="mm/dd/yyyy"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City, State / Country" minimumFontSize="17" id="bQi-Nt-9IP">
+                    <rect key="frame" x="20" y="480" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <accessibility key="accessibilityConfiguration" hint="mm/dd/yyyy"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Y1r-1R-aQB">
-                    <rect key="frame" x="20" y="429" width="280" height="40"/>
+                    <rect key="frame" x="20" y="554" width="280" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.25244928300000002" green="0.6731654494" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -119,14 +142,16 @@
                         <action selector="buttonRegisterTouchUpInside:" destination="-1" eventType="touchUpInside" id="C2w-Fy-5Xb"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bio" minimumFontSize="17" id="6vx-E5-O4t">
-                    <rect key="frame" x="20" y="383" width="280" height="30"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="VLX-F4-zq8">
+                    <rect key="frame" x="93" y="518" width="117" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
+                    <segments>
+                        <segment title="Male"/>
+                        <segment title="Female"/>
+                    </segments>
+                </segmentedControl>
                 <view hidden="YES" contentMode="scaleToFill" id="B4u-fw-xHf">
-                    <rect key="frame" x="0.0" y="416" width="320" height="386"/>
+                    <rect key="frame" x="0.0" y="549" width="320" height="386"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="phone" minimumFontSize="17" id="nJn-R7-Oad">

@@ -165,7 +165,6 @@
                         
                         PFObject *newUser = [PFObject objectWithClassName:@"Users"];
                         newUser[@"userID"] = self.numberOfUsers;
-                        newUser[@"userTypeID"] = self.numberOfUsers;
                         newUser[@"password"] = self.textFieldPassword.text;
                         newUser[@"email"] = self.textFieldEmail.text;
                         newUser[@"fullname"] = self.textFieldFullName.text;
@@ -177,8 +176,12 @@
                         newUser[@"phone"] = self.textFieldPhone.text;
                         newUser[@"website"] = self.textFieldWeb.text;
                         newUser[@"gender"] = [self.malefemaleControl titleForSegmentAtIndex:self.malefemaleControl.selectedSegmentIndex];
-                        newUser[@"citystate"] = self.cityStateLabel.text;
-                        newUser[@"birthdate"] = self.dateLabel;
+                        
+                        if(self.dateLabel.text != nil)
+                            newUser[@"citystate"] = self.cityStateLabel.text;
+                        
+                        if(self.dateLabel.text != nil)
+                            newUser[@"birthdate"] = self.dateLabel.text;
                         
                         if(self.chooseSpeciality.titleLabel.text != nil)
                             newUser[@"specialty"] = self.chooseSpeciality.titleLabel.text;
@@ -521,6 +524,8 @@
     if ([self.view viewWithTag:9]) {
         return;
     }
+    
+    [self.view endEditing:YES];
     CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height-216-44, 320, 44);
     CGRect datePickerTargetFrame = CGRectMake(0, self.view.bounds.size.height-216, 320, 216);
     
@@ -534,6 +539,7 @@
     
     UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
     datePicker.tag = 10;
+    datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:datePicker];
     

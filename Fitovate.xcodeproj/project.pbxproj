@@ -2453,7 +2453,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
@@ -2500,7 +2500,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",

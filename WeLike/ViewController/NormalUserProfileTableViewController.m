@@ -18,6 +18,7 @@
 #import "WLIFollowersViewController.h"
 #import "WLIFollowingViewController.h"
 #import "WLIEditProfileViewController.h"
+#import <XCDYouTubeKit/XCDYouTubeKit.h>
 
 @interface NormalUserProfileTableViewController (){
     BOOL playing;
@@ -26,7 +27,7 @@
 @end
 
 @implementation NormalUserProfileTableViewController{
-    MPMoviePlayerController *moviePlayerController;
+    XCDYouTubeVideoPlayerViewController *moviePlayerController;
     
 }
 
@@ -173,19 +174,20 @@
                     NSString *urlOfVideo = videoFile.url;
                     NSURL *url =[[NSURL alloc]initWithString:urlOfVideo];
                     
-                    moviePlayerController = [[MPMoviePlayerController alloc] initWithContentURL:url];
+                    moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:@"9bZkp7q19f0"];
                     [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];  // player's frame must match parent's
-                    [videoPlaceHolderVIew addSubview:moviePlayerController.view];
+                    //[videoPlaceHolderVIew addSubview:moviePlayerController.view];
+                    [moviePlayerController presentInView:videoPlaceHolderVIew];
                     
                     // Configure the movie player controller
-                    moviePlayerController.controlStyle = MPMovieControlStyleNone;
-                    [moviePlayerController prepareToPlay];
+//                    moviePlayerController.controlStyle = MPMovieControlStyleNone;
+//                    [moviePlayerController prepareToPlay];
                     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
                     tap.delegate = self;
                     [moviePlayerController.view addGestureRecognizer:tap];
                     // Start the movie
-                    [moviePlayerController play];
-                    
+                    //[moviePlayerController play];
+                    [moviePlayerController.moviePlayer play];
 //                    CGRect rect = CGRectMake(videoPlaceHolderVIew.frame.origin.x, self.labelBio.frame.origin.y + 20.0f + self.labelBio.bounds.size.height, self.movieView.bounds.size.width, self.movieView.bounds.size.height);
 //                    self.movieView.frame = rect;
                     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -426,10 +428,11 @@
 - (void)handleTap:(UITapGestureRecognizer *)gesture {
     NSLog(@"tapped");
     if(playing){
-        [moviePlayerController pause];
+        [moviePlayerController.moviePlayer pause];
         playing = NO;
+        
     }else{
-        [moviePlayerController play];
+        [moviePlayerController.moviePlayer play];
         playing = YES;
     }
 }

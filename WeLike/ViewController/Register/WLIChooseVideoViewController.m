@@ -31,15 +31,15 @@
                                           otherButtonTitles:nil];
     [alert show];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.5];
-        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-        self.youtubeTextField.frame = CGRectMake(10, 200, 300, 40);
-        self.uploadButton.frame = CGRectMake(10, 260, self.uploadButton.frame.size.width, self.uploadButton.frame.size.height);
-        [UIView commitAnimations];
-    });
-    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [UIView beginAnimations:nil context:nil];
+//        [UIView setAnimationDuration:0.5];
+//        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+//        self.youtubeTextField.frame = CGRectMake(10, 200, 300, 40);
+//        self.uploadButton.frame = CGRectMake(10, 260, self.uploadButton.frame.size.width, self.uploadButton.frame.size.height);
+//        [UIView commitAnimations];
+//    });
+//    
     
      lastName = [[UITextField alloc] initWithFrame:CGRectMake(10, 100, 300, 30)];
     [self.view addSubview:lastName];
@@ -53,9 +53,9 @@
         lastName.returnKeyType = UIReturnKeyDone;              //returnKey type for keyboard
     lastName.delegate = self;
     
-        UIButton *butn = [[UIButton alloc]initWithFrame:CGRectMake(10, 150, self.uploadButton.frame.size.width, self.uploadButton.frame.size.height)];
-    [self.view addSubview: butn];
-                             
+//        UIButton *butn = [[UIButton alloc]initWithFrame:CGRectMake(10, 150, self.uploadButton.frame.size.width, self.uploadButton.frame.size.height)];
+//    [self.view addSubview: butn];
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -141,7 +141,6 @@
 */
 
 - (IBAction)onUploadClicked:(id)sender {
-    NSLog(@" text = %@",self.youtubeTextField.text);
-    [self updateUserYoutubeLink:self.youtubeTextField.text];
+    [self updateUserYoutubeLink:lastName.text];
 }
 @end

@@ -575,7 +575,7 @@ static WLIConnect *sharedConnect;
                                   , nil];
             WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
             postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
-            postFromParse.postLikesCount = [object[@"totalLikes"] integerValue];
+                postFromParse.postLikesCount = [object[@"totalLikes"] integerValue];
             postFromParse.postCommentsCount = [object[@"totalComments"] integerValue];
                 
                 NSLog(@"%d is likes amount",postFromParse.postLikesCount);

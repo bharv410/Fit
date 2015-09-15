@@ -11,5 +11,8 @@
 @interface WLIChooseVideoViewController : UIViewController
 
 @property (strong, nonatomic) NSString *usersName;
+@property (strong, nonatomic) IBOutlet UITextField *youtubeTextField;
+@property (strong, nonatomic) IBOutlet UIButton *uploadButton;
+- (IBAction)onUploadClicked:(id)sender;
 
 @end

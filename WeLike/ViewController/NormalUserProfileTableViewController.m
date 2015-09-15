@@ -85,7 +85,7 @@
                 WLIPost *postFromParse = [[WLIPost alloc]initWithDictionary:dict];
                 postFromParse.user = [myData.allUsersDictionary objectForKey:object[@"userID"]];
                 NSNumber *number = object[@"totalLikes"];
-                postFromParse.postLikesCount =[number integerValue];
+                postFromParse.postLikesCount = [number integerValue];
                 [self.posts insertObject:postFromParse atIndex:postCount];
                 postCount++;
                 WLIPost *lasP = self.posts.lastObject;
@@ -162,50 +162,36 @@
         NSString *usernameWithoutSpaces=[self.currentUser.userUsername
                                          stringByReplacingOccurrencesOfString:@" " withString:@"+"];
         
-        PFQuery *videoQuery = [PFQuery queryWithClassName:@"Videos"];
-        [videoQuery whereKey:@"username" equalTo:self.currentUser.userUsername];
-        NSLog(@"%@",self.currentUser.userUsername);
-        [videoQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                // The find succeeded.
-                for (PFObject *object in objects) {
-                    
-                    PFFile *videoFile = object[@"video"];
-                    NSString *urlOfVideo = videoFile.url;
-                    NSURL *url =[[NSURL alloc]initWithString:urlOfVideo];
-                    
-                    moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:@"9bZkp7q19f0"];
-                    [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];  // player's frame must match parent's
-                    //[videoPlaceHolderVIew addSubview:moviePlayerController.view];
-                    [moviePlayerController presentInView:videoPlaceHolderVIew];
-                    
-                    // Configure the movie player controller
-//                    moviePlayerController.controlStyle = MPMovieControlStyleNone;
-//                    [moviePlayerController prepareToPlay];
-                    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-                    tap.delegate = self;
-                    [moviePlayerController.view addGestureRecognizer:tap];
-                    // Start the movie
-                    //[moviePlayerController play];
-                    [moviePlayerController.moviePlayer play];
-//                    CGRect rect = CGRectMake(videoPlaceHolderVIew.frame.origin.x, self.labelBio.frame.origin.y + 20.0f + self.labelBio.bounds.size.height, self.movieView.bounds.size.width, self.movieView.bounds.size.height);
-//                    self.movieView.frame = rect;
-                    self.automaticallyAdjustsScrollViewInsets = NO;
-                    
-                }
-            } else {
-                // Log details of the failure
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
-                [videoPlaceHolderVIew setHidden:YES];
-            }
-        }];
+        NSURL *url =[[NSURL alloc]initWithString:self.currentUser.youtubeString];
+        
+        moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:@"9bZkp7q19f0"];
+        [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];  // player's frame must match parent's
+        //[videoPlaceHolderVIew addSubview:moviePlayerController.view];
+        [moviePlayerController presentInView:videoPlaceHolderVIew];
+        
+        // Configure the movie player controller
+        //                    moviePlayerController.controlStyle = MPMovieControlStyleNone;
+        //                    [moviePlayerController prepareToPlay];
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+        tap.delegate = self;
+        [moviePlayerController.view addGestureRecognizer:tap];
+        // Start the movie
+        //[moviePlayerController play];
+        [moviePlayerController.moviePlayer play];
+        //                    CGRect rect = CGRectMake(videoPlaceHolderVIew.frame.origin.x, self.labelBio.frame.origin.y + 20.0f + self.labelBio.bounds.size.height, self.movieView.bounds.size.width, self.movieView.bounds.size.height);
+        //                    self.movieView.frame = rect;
+        self.automaticallyAdjustsScrollViewInsets = NO;
+
+        
         
         
     }else{
     
     
     CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
+        if(self.currentUser.userAvatarPath!=nil){
         [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
+        }
     
         [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
         

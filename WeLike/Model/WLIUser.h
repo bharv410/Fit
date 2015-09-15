@@ -28,6 +28,7 @@ typedef enum {
 @property (nonatomic, strong) NSString *userUsername;
 @property (nonatomic, strong) NSString *userSpecialty;
 @property (nonatomic, strong) NSString *userBio;
+@property (nonatomic, strong) NSString *youtubeString;
 @property (nonatomic, assign) BOOL followingUser;
 
 //when userType == WLIUserTypeCompany

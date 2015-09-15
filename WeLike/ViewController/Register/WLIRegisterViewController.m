@@ -170,6 +170,7 @@
                         newUser[@"fullname"] = self.textFieldFullName.text;
                         newUser[@"username"] = self.textFieldUsername.text;
                         newUser[@"usertype"] = @"trainer";
+                        newUser[@"youtubeString"] = @"";
                         newUser[@"userinfo"] = self.textFieldBio.text;
                         newUser[@"followersCount"] = [NSNumber numberWithInt:0];
                         newUser[@"followingCount"] = [NSNumber numberWithInt:0];
@@ -414,9 +415,9 @@
         self.viewContentRegister.frame = CGRectMake(self.viewContentRegister.frame.origin.x, self.viewContentRegister.frame.origin.y, self.viewContentRegister.frame.size.width, CGRectGetMaxY(self.buttonRegister.frame) +20.0f);
         PNTToolbar *newToolbar = [PNTToolbar defaultToolbar];
         newToolbar.mainScrollView = self.scrollViewRegister;
-        newToolbar.textFields = @[self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldUsername, self.textFieldFullName, self.textFieldPhone, self.textFieldWeb];
+        newToolbar.textFields = @[self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldUsername, self.textFieldFullName, self.textFieldBio, self.cityStateLabel ,self.textFieldPhone, self.textFieldWeb];
         
-        
+        NSLog(@"seg = 1");
         
         
         

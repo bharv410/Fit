@@ -44,6 +44,15 @@
     
     self.cityStateLabel.delegate = self;
     self.dateLabel.delegate = self;
+    self.textFieldAddress.delegate = self;
+    self.textFieldBio.delegate = self;
+    self.textFieldEmail.delegate = self;
+    self.textFieldFullName.delegate = self;
+    self.textFieldPassword.delegate = self;
+    self.textFieldPhone.delegate = self;
+    self.textFieldRepassword.delegate = self;
+    self.textFieldUsername.delegate = self;
+    self.textFieldWeb.delegate = self;
 
     [self.scrollViewRegister addSubview:self.viewContentRegister];
     [self adjustViewFrames];
@@ -480,6 +489,8 @@
         [theTextField resignFirstResponder];
     } else if (theTextField == self.dateLabel) {
         [theTextField resignFirstResponder];
+    }else{
+        [theTextField resignFirstResponder];
     }
     return YES;
 }
@@ -525,6 +536,7 @@
     if ([self.view viewWithTag:9]) {
         return;
     }
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
     
     [self.view endEditing:YES];
     CGRect toolbarTargetFrame = CGRectMake(0, self.view.bounds.size.height-216-44, 320, 44);

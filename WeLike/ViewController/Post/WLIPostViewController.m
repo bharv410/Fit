@@ -38,6 +38,7 @@
     self.title = @"Post";
     
     [self.textFieldEnterComment setPlaceholder:@"... Leave a comment!"];
+    self.textFieldEnterComment.autocorrectionType = UITextAutocorrectionTypeNo;
     
     [self reloadData:YES];
     

@@ -171,6 +171,7 @@ static WLIConnect *sharedConnect;
 }
 
 - (void)removeCurrentUser {
+    self.currentUser = nil;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"_currentUser"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];

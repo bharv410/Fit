@@ -38,6 +38,12 @@
     if([self.currentUser.userUsername containsString:@"xyzxyz"]){
         self.currentUser = [WLIConnect sharedConnect].currentUser;
     }
+    
+    
+    NSLog(@"username = %@", self.currentUser.userUsername);
+    NSLog(@"type = %@", self.currentUser.userType);
+    NSLog(@"is me = %@", [WLIConnect sharedConnect].currentUser.userUsername);
+    
     [self setHeader];
     self.loading = NO;
     
@@ -51,26 +57,24 @@
 
 - (void)reloadData:(BOOL)reloadAll {
     self.loading = YES;
+    
     [self.posts removeAllObjects];
     self.posts = [[NSMutableArray alloc]initWithCapacity:20];
+    
+    
     FitovateData *myData = [FitovateData sharedFitovateData];
+    
     __block NSUInteger postCount = 0;
     
     PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
-    
     [query addDescendingOrder:@"createdAt"];
-    
     [query whereKey:@"userID" equalTo:[NSNumber numberWithInt:self.currentUser.userID]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         self.loading = NO;
         if (!error) {
-            NSLog(@"returned photos size = %tu", objects.count);
-            
             
             for (PFObject *object in objects) {
-                NSLog(@"post title on parse = %@", object[@"postTitle"]);
                 PFFile *tempPhotoForUrl = object[@"userImage"];
-                
                 NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:  object[@"postID"], @"postID",
                                       object[@"postTitle"], @"postTitle",
                                       tempPhotoForUrl.url, @"postImage",
@@ -93,7 +97,6 @@
                 [self.tableView reloadData];
             }
         } else {
-            // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
@@ -115,113 +118,22 @@
 
 
 - (void) setHeader {
-//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 90, 90)];
-//    
-//    [imageView hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
-//    
-//    [headerView addSubview:imageView];
-//    UILabel *fakelabelView = [[UILabel alloc] initWithFrame:CGRectMake(110, 25, self.view.frame.size.width - 110, 200)];
-//    
-//    CGSize labelSize = [self.currentUser.userInfo sizeWithFont:fakelabelView.font constrainedToSize:CGSizeMake(self.view.frame.size.width/2, 100) lineBreakMode:NSLineBreakByWordWrapping];
-//    
-//    CGRect rect = [self.currentUser.userInfo boundingRectWithSize:labelSize options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:nil context:nil];
-//    
-//    UILabel *labelView = [[UILabel alloc] initWithFrame:rect];
-//    labelView.numberOfLines = 0;
-//    [labelView setText:self.currentUser.userInfo];
-//    [labelView sizeToFit];
-//    [headerView addSubview:labelView];
-//    labelView.frame = CGRectMake(fakelabelView.frame.origin.x, fakelabelView.frame.origin.y
-//                                 , labelView.frame.size.width, labelView.frame.size.height);
-//    
-//    self.tableView.tableHeaderView = headerView;
-    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     
-    if([self.currentUser.userType isEqualToString:@"trainer"] ){
-
-        self.headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240 + screenWidth)];
-        [self.headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
-        
-        [self.headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
-        
-        
-        self.headerView.labelName.text = [NSString stringWithFormat:@"@%@",self.currentUser.userUsername];
-        self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
-        self.headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
-        
-        self.headerView.labelBio.text = self.currentUser.userBio;
-        
-        UIView *videoPlaceHolderVIew = [[UIView alloc]initWithFrame:CGRectMake(0, 240, screenWidth, screenWidth)];
-        
-        [self.headerView addSubview:videoPlaceHolderVIew];
-        
-        self.tableView.tableHeaderView = self.headerView;
-        
-        
-        NSString *usernameWithoutSpaces=[self.currentUser.userUsername
-                                         stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-        
-        NSURL *url =[[NSURL alloc]initWithString:self.currentUser.youtubeString];
-        
-        moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:@"9bZkp7q19f0"];
-        [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];  // player's frame must match parent's
-        //[videoPlaceHolderVIew addSubview:moviePlayerController.view];
-        [moviePlayerController presentInView:videoPlaceHolderVIew];
-        
-        // Configure the movie player controller
-        //                    moviePlayerController.controlStyle = MPMovieControlStyleNone;
-        //                    [moviePlayerController prepareToPlay];
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-        tap.delegate = self;
-        [moviePlayerController.view addGestureRecognizer:tap];
-        // Start the movie
-        //[moviePlayerController play];
-        [moviePlayerController.moviePlayer play];
-        //                    CGRect rect = CGRectMake(videoPlaceHolderVIew.frame.origin.x, self.labelBio.frame.origin.y + 20.0f + self.labelBio.bounds.size.height, self.movieView.bounds.size.width, self.movieView.bounds.size.height);
-        //                    self.movieView.frame = rect;
-        self.automaticallyAdjustsScrollViewInsets = NO;
-
-        
-        
-        
+    if([self userIsTrainer] ){
+        [self setupTrainerPage];
     }else{
-    
-    
-    CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
-        if(self.currentUser.userAvatarPath!=nil){
-        [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
-        }
-    
-        [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
-        
-        headerView.labelName.text = self.currentUser.userUsername;
-        headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
-        headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
-    
-        headerView.labelBio.text = self.currentUser.userBio;
-        self.tableView.tableHeaderView = headerView;
-        
+        [self setupTraineePage];
     }
+    [self setupMyPage];
     
-    FitovateData *myData = [FitovateData sharedFitovateData];
-    self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
+    
+    
+    self.allFollowings = [[FitovateData sharedFitovateData] getAllIdsThatUsersFollowing:^{
+        
         if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
             [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
         }else{
             [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
-        }
-        if ([self.currentUser.userUsername containsString:[WLIConnect sharedConnect].currentUser.userUsername]) {
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Contact Us" style:UIBarButtonItemStylePlain target:self action:@selector(buttonContactUsTouchUpInside)];
-            
-            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(buttonLogoutTouchUpInside)];
-            self.headerView.buttonMessage.hidden = YES;
-            [self.headerView.buttonFollow setTitle:@"Edit Profile" forState:UIControlStateNormal];
-            [self.headerView.buttonFollow addTarget:self action:@selector(editProfileButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-        }else{
-            [self.headerView.buttonFollow addTarget:self
-                                             action:@selector(buttonFollowToggleTouchUpInside)
-                                   forControlEvents:UIControlEventTouchUpInside];
         }
     }];
 }
@@ -392,6 +304,7 @@
             }];
         }
         [[WLIConnect sharedConnect] logout];
+        
         WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
         [appDelegate createViewHierarchy];
         [appDelegate.tabBarController showWelcome];
@@ -476,5 +389,93 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
 }
+
+-(BOOL)userIsTheCurrentUser{
+    if(self.currentUser.userID == [WLIConnect sharedConnect].currentUser.userID)
+        return YES;
+    else
+        return NO;
+    
+}
+
+-(BOOL)userIsTrainer{
+    if([self.currentUser.userType isEqualToString:@"trainer"] ){
+        NSLog(@"is a trainer");
+        return YES;
+    }else{
+        NSLog(@"is a trainee");
+        return NO;
+    }
+}
+
+-(void)setupTraineePage{
+    CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
+    if(self.currentUser.userAvatarPath!=nil){
+        [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
+    }
+    
+    [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+    
+    headerView.labelName.text = self.currentUser.userUsername;
+    headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
+    headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
+    
+    headerView.labelBio.text = self.currentUser.userBio;
+    self.tableView.tableHeaderView = headerView;
+}
+
+-(void)setupMyPage{
+    if ([self userIsTheCurrentUser]) {
+        NSLog(@"setingupMyPage");
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Contact Us" style:UIBarButtonItemStylePlain target:self action:@selector(buttonContactUsTouchUpInside)];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(buttonLogoutTouchUpInside)];
+        self.headerView.buttonMessage.hidden = YES;
+        self.headerView.buttonFollow.hidden = YES;
+        [self.headerView.editProfileButton addTarget:self action:@selector(editProfileButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [self.headerView.buttonFollow addTarget:self
+                                         action:@selector(buttonFollowToggleTouchUpInside)
+                               forControlEvents:UIControlEventTouchUpInside];
+        self.headerView.editProfileButton.hidden = YES;
+    }
+}
+-(void)setupTrainerPage{
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    self.headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240 + screenWidth)];
+    [self.headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
+    
+    [self.headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.headerView.labelName.text = [NSString stringWithFormat:@"@%@",self.currentUser.userUsername];
+    self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
+    self.headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
+    
+    self.headerView.labelBio.text = self.currentUser.userBio;
+    
+    UIView *videoPlaceHolderVIew = [[UIView alloc]initWithFrame:CGRectMake(0, 240, screenWidth, screenWidth)];
+    
+    [self.headerView addSubview:videoPlaceHolderVIew];
+    
+    self.tableView.tableHeaderView = self.headerView;
+    
+    
+    NSString *usernameWithoutSpaces=[self.currentUser.userUsername
+                                     stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    
+    NSURL *url =[[NSURL alloc]initWithString:self.currentUser.youtubeString];
+    
+    moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:@"9bZkp7q19f0"];
+    [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];
+    [moviePlayerController presentInView:videoPlaceHolderVIew];
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tap.delegate = self;
+    [moviePlayerController.view addGestureRecognizer:tap];
+    
+    [moviePlayerController.moviePlayer play];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
 
 @end

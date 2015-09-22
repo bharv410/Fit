@@ -38,6 +38,7 @@
     self.title = @"Comments";
     self.loaded = NO;
     [self reloadData:YES];
+    self.textFieldEnterComment.autocorrectionType = UITextAutocorrectionTypeNo;
     
     //self.viewEnterComment.frame = CGRectMake(0, CGRectGetMaxY(self.tableViewRefresh.frame), CGRectGetWidth(self.viewEnterComment.frame), CGRectGetHeight(self.viewEnterComment.frame));
     //[self.view addSubview:self.viewEnterComment];

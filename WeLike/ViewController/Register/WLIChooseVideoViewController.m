@@ -71,21 +71,29 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject * userStats, NSError *error) {
         if (!error) {
             // Found UserStats
-            [userStats setObject:youtubeString forKey:@"youtubeString"];
+            
+            NSString *regexString = @"(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)";
+            
+            NSError *error = NULL;
+            NSRegularExpression *regex =
+            [NSRegularExpression regularExpressionWithPattern:regexString
+                                                      options:NSRegularExpressionCaseInsensitive
+                                                        error:&error];
+            NSTextCheckingResult *match = [regex firstMatchInString:youtubeString
+                                                            options:0
+                                                              range:NSMakeRange(0, [youtubeString length])];
+            if (match) {
+                NSRange videoIDRange = [match rangeAtIndex:1];
+                NSString *substringForFirstMatch = [youtubeString substringWithRange:videoIDRange];
+                [userStats setObject:substringForFirstMatch forKey:@"youtubeString"];
+                NSLog(@"youtube id is %@", substringForFirstMatch);
+            }
             
             // Save
             [userStats saveInBackground];
             [self dismissViewControllerAnimated:YES completion:nil];
             
-            
-            
-            
-            
-            
-            
-            
         } else {
-            // Did not find any UserStats for the current user
             NSLog(@"Error: %@", error);
         }
     }];

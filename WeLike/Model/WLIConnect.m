@@ -707,6 +707,32 @@ static WLIConnect *sharedConnect;
 
 - (void)likesForPostID:(int)postID page:(int)page pageSize:(int)pageSize onCompletion:(void (^)(NSMutableArray *likes, ServerResponse serverResponseCode))completion {
     
+    
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    PFQuery *query = [PFQuery queryWithClassName:@"Likes"];
+    [query whereKey:@"postId" equalTo:[NSNumber numberWithInt:postID]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSMutableArray *likes = [NSMutableArray arrayWithCapacity:objects.count];
+            
+            for (PFObject *like in objects) {
+                WLILike *newLike = [[WLILike alloc] init];
+                NSNumber *commentNumber = like[@"postId"];
+                newLike.likeID = [commentNumber integerValue];
+                //newComment.commentDate = comment.createdAt;
+                NSNumber *idOfCommenter = like[@"liker"];
+                WLIUser *commenterUser = [myData.allUsersDictionary objectForKey:idOfCommenter];
+                newLike.user = commenterUser;
+                [likes addObject:newLike];
+            }
+            completion(likes, OK);
+            
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            completion(nil, kUNAUTHORIZED);
+        }
+    }];
+    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     [parameters setObject:[NSString stringWithFormat:@"%d", self.currentUser.userID] forKey:@"userID"];
     [parameters setObject:[NSString stringWithFormat:@"%d", postID] forKey:@"postID"];

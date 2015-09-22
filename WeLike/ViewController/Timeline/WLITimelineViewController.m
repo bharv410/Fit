@@ -198,6 +198,8 @@
         [self getPosts];
     }];
     [self performSelector:@selector(showMessagesButton) withObject:nil afterDelay:2.0];
+    NSLog(@"username is %@", [WLIConnect sharedConnect].currentUser.userUsername);
+    [WLIConnect sharedConnect].currentUser.userUsername = @"xyzxyz";
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer{

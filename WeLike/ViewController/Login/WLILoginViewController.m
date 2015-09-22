@@ -67,6 +67,7 @@
                     WLIAppDelegate *appDelegate = (WLIAppDelegate *)[UIApplication sharedApplication].delegate;
                     WLITimelineViewController *timelineViewController = (WLITimelineViewController *)[appDelegate.tabBarController.viewControllers[0] topViewController];
                     [timelineViewController firstLogin];
+                    
                 }];
                 WLIConnect *myConnect = [WLIConnect sharedConnect];
                 [myConnect authentWithLayer:^{

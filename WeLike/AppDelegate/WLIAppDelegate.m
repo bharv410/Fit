@@ -264,7 +264,7 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
     nearbyNavigationController.navigationBar.translucent = NO;
     
     NormalUserProfileTableViewController *profileViewController = [[NormalUserProfileTableViewController alloc] initWithNibName:@"NormalUserProfileTableViewController" bundle:nil];
-    profileViewController.currentUser = [WLIConnect sharedConnect].currentUser;
+    //profileViewController.currentUser = [WLIConnect sharedConnect].currentUser;
     profileViewController.currentUser.userUsername = @"xyzxyz";
     UINavigationController *profileNavigationController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
     profileNavigationController.navigationBar.translucent = NO;

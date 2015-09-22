@@ -46,6 +46,10 @@
 
 - (void)reloadData {
     
+    
+    
+    
+    
     loading = YES;
     int page = (self.likes.count / kDefaultPageSize) + 1;
     [sharedConnect likesForPostID:self.post.postID page:page pageSize:kDefaultPageSize onCompletion:^(NSMutableArray *likes, ServerResponse serverResponseCode) {

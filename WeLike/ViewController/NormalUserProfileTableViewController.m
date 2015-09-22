@@ -35,14 +35,12 @@
     [super viewDidLoad];
     playing = YES;
     
-    if([self.currentUser.userUsername containsString:@"xyzxyz"]){
+    if([self.currentUser.userUsername containsString:@"xyzxyz"] || (self.currentUser == nil)){
         self.currentUser = [WLIConnect sharedConnect].currentUser;
+        NSLog(@"setit");
+    }else{
+        NSLog(@"name is %@", self.currentUser.userUsername);
     }
-    
-    
-    NSLog(@"username = %@", self.currentUser.userUsername);
-    NSLog(@"type = %@", self.currentUser.userType);
-    NSLog(@"is me = %@", [WLIConnect sharedConnect].currentUser.userUsername);
     
     [self setHeader];
     self.loading = NO;
@@ -126,8 +124,6 @@
     }
     [self setupMyPage];
     
-    
-    
     self.allFollowings = [[FitovateData sharedFitovateData] getAllIdsThatUsersFollowing:^{
         
         if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
@@ -137,6 +133,8 @@
         }
     }];
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

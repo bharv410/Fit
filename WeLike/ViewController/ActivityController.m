@@ -23,6 +23,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                    target:self
+                                    action:@selector(shareAction:)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -188,6 +194,27 @@
 }
 */
 
+-(void)shareAction:(id)sender
+{
+    NSLog(@"share action");
+    [self share];
+}
+
+-(void)share{
+    
+    NSString *string = @"look what I found via @BandoTheApp";
+    NSURL *URL = [NSURL URLWithString:@"http://www.fitovateapp.com"];
+    
+    UIActivityViewController *activityViewController =
+    [[UIActivityViewController alloc] initWithActivityItems:@[string, URL]
+                                      applicationActivities:nil];
+    [self.navigationController presentViewController:activityViewController
+                                            animated:YES
+                                          completion:^{
+                                              // ...
+                                              NSLog(@"sharing");
+                                          }];
+}
 
 #pragma mark - Table view delegate
 

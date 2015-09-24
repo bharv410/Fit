@@ -42,7 +42,7 @@
         NSLog(@"name is %@", self.currentUser.userUsername);
     }
     
-    [self setHeader];
+    
     self.loading = NO;
     
     [self reloadData:YES];
@@ -54,6 +54,11 @@
 }
 
 - (void)reloadData:(BOOL)reloadAll {
+    
+    
+    [self setHeader];
+    
+    
     self.loading = YES;
     
     [self.posts removeAllObjects];
@@ -118,11 +123,12 @@
 - (void) setHeader {
     
     if([self userIsTrainer] ){
+        NSLog(@"userIsTrainer is %@", self.currentUser.userUsername);
         [self setupTrainerPage];
     }else{
+        NSLog(@"userIs NOT A Trainer is %@", self.currentUser.userUsername);
         [self setupTraineePage];
     }
-    [self setupMyPage];
     
     self.allFollowings = [[FitovateData sharedFitovateData] getAllIdsThatUsersFollowing:^{
         
@@ -131,6 +137,7 @@
         }else{
             [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
         }
+        [self setupMyPage];
     }];
 }
 
@@ -389,11 +396,14 @@
 }
 
 -(BOOL)userIsTheCurrentUser{
-    if(self.currentUser.userID == [WLIConnect sharedConnect].currentUser.userID)
+    if(self.currentUser.userID == [WLIConnect sharedConnect].currentUser.userID){
+        NSLog(@"yes");
         return YES;
-    else
+    }
+    else{
+        NSLog(@"no");
         return NO;
-    
+    }
 }
 
 -(BOOL)userIsTrainer{
@@ -407,25 +417,26 @@
 }
 
 -(void)setupTraineePage{
-    CustomHeaderView *headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
+    self.headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
     
     UILabel *headingLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 30)];
     headingLabel.text = self.currentUser.companyAddress;
-    [headerView addSubview:headingLabel];
+    [self.headerView addSubview:headingLabel];
     
     
     if(self.currentUser.userAvatarPath!=nil){
-        [headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
+        [self.headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
     }
     
-    [headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+    [self.headerView.buttonMessage addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
     
-    headerView.labelName.text = self.currentUser.userUsername;
-    headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
-    headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
+    self.headerView.labelName.text = self.currentUser.userUsername;
+    self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
+    self.headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
     
-    headerView.labelBio.text = self.currentUser.userBio;
-    self.tableView.tableHeaderView = headerView;
+    self.headerView.labelBio.text = self.currentUser.userBio;
+    self.tableView.tableHeaderView = self.headerView;
+    [self setupMyPage];
 }
 
 -(void)setupMyPage{
@@ -435,8 +446,12 @@
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(buttonLogoutTouchUpInside)];
         self.headerView.buttonMessage.hidden = YES;
-        self.headerView.buttonFollow.hidden = YES;
-        [self.headerView.editProfileButton addTarget:self action:@selector(editProfileButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+        self.headerView.buttonFollow.hidden = NO;
+        [self.headerView.buttonFollow setTitle:@"Edit Profile" forState:UIControlStateNormal];
+        [self.headerView.buttonFollow addTarget:self action:@selector(editProfileButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+        [self.headerView.buttonFollow.layer setFrame:CGRectMake(self.headerView.buttonFollow.frame.origin.x, self.headerView.buttonFollow.frame.origin.y, [[UIScreen mainScreen] bounds].size.width-20, self.headerView.buttonFollow.frame.size.height)];
+        
+        
     }else{
         [self.headerView.buttonFollow addTarget:self
                                          action:@selector(buttonFollowToggleTouchUpInside)
@@ -487,6 +502,7 @@
     
     [moviePlayerController.moviePlayer play];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [self setupMyPage];
 }
 
 

@@ -225,7 +225,7 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
         } else if(result == ooVooInitResultInvalidToken) {
             reason = @"Token invalid, might be empty.\n\nGet your App ID and App Token at http://developer.oovoo.com.\nGo to Settings->ooVooSample screen and set the values, or set @DEFAULT_APP_ID and @DEFAULT_APP_TOKEN constants in code.";
         } else {
-            reason = [[ooVooController sharedController] errorMessageForOoVooInitResult:result];
+            //reason = [[ooVooController sharedController] errorMessageForOoVooInitResult:result];
         }
         
         double delayInSeconds = 0.75;

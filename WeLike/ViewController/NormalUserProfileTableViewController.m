@@ -19,6 +19,7 @@
 #import "WLIFollowingViewController.h"
 #import "WLIEditProfileViewController.h"
 #import <XCDYouTubeKit/XCDYouTubeKit.h>
+#import <ParseSingleton.h>
 
 @interface NormalUserProfileTableViewController (){
     BOOL playing;
@@ -37,7 +38,7 @@
     
     if([self.currentUser.userUsername containsString:@"xyzxyz"] || (self.currentUser == nil)){
         self.currentUser = [WLIConnect sharedConnect].currentUser;
-        NSLog(@"setit");
+        NSLog(@"wli connect is %@", [WLIConnect sharedConnect].currentUser.userUsername);
     }else{
         NSLog(@"name is %@", self.currentUser.userUsername);
     }
@@ -504,6 +505,47 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self setupMyPage];
 }
+
+#pragma mark - WLIPostCellDelegate methods
+
+- (void)toggleLikeForPost:(WLIPost*)post sender:(WLIPostCell*)senderCell {
+    
+    if (post.likedThisPost) {
+        [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-like.png"] forState:UIControlStateNormal];
+        post.postLikesCount--;
+        post.likedThisPost = NO;
+        if (post.postLikesCount == 1) {
+            [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", post.postLikesCount] forState:UIControlStateNormal];
+        } else {
+            [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
+        }
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        
+        [myData unlikeUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:post.postID] :^{
+            [senderCell updateLikes];
+        }];
+        
+        
+    } else {
+        [senderCell.buttonLike setImage:[UIImage imageNamed:@"btn-liked.png"] forState:UIControlStateNormal];
+        post.postLikesCount++;
+        post.likedThisPost = YES;
+        if (post.postLikesCount == 1) {
+            [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d like", post.postLikesCount] forState:UIControlStateNormal];
+        } else {
+            [senderCell.buttonLikes setTitle:[NSString stringWithFormat:@"%d likes", post.postLikesCount] forState:UIControlStateNormal];
+        }
+        [ParseSingleton new];
+        [ParseSingleton recordActivity:[WLIConnect sharedConnect].currentUser.userUsername forSource:post.user.userUsername withActivitytype:@"like" withPostId:[NSString stringWithFormat:@"%d",post.postID]];
+        
+        FitovateData *myData = [FitovateData sharedFitovateData];
+        [myData likeUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:post.postID] :^{
+            [senderCell updateLikes];
+        }];
+    }
+}
+
+
 
 
 @end

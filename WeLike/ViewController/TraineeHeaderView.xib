@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="buttonFollow" destination="icr-UW-Z2R" id="825-EN-7kT"/>
                 <outlet property="buttonMessage" destination="b2h-b0-vsm" id="fdr-S1-Yg7"/>
-                <outlet property="editProfileButton" destination="lse-rs-Xnl" id="dVr-1H-yI1"/>
                 <outlet property="imageViewUser" destination="fCt-tA-Rtr" id="Pb7-nw-WC9"/>
                 <outlet property="labelBio" destination="4fA-mH-yS6" id="MNO-iZ-T1g"/>
                 <outlet property="labelFollowersCount" destination="s6j-Sz-nHL" id="rsa-HS-0jf"/>
@@ -92,17 +91,6 @@
                         <rect key="frame" x="8" y="175" width="126" height="21"/>
                     </variation>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lse-rs-Xnl">
-                    <rect key="frame" x="20" y="264" width="280" height="40"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.67843137249999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Edit Profile">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="127" width="280" height="40"/>
-                    </variation>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <variation key="default">
@@ -115,7 +103,6 @@
                     <exclude reference="icr-UW-Z2R"/>
                     <exclude reference="tko-GJ-EHO"/>
                     <exclude reference="s6j-Sz-nHL"/>
-                    <exclude reference="lse-rs-Xnl"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -128,7 +115,6 @@
                     <include reference="icr-UW-Z2R"/>
                     <include reference="tko-GJ-EHO"/>
                     <include reference="s6j-Sz-nHL"/>
-                    <include reference="lse-rs-Xnl"/>
                 </mask>
             </variation>
         </view>

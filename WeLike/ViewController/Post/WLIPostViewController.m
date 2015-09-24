@@ -227,7 +227,7 @@
         FitovateData *myData = [FitovateData sharedFitovateData];
         
         [myData unlikeUserIdWithPostId:[NSNumber numberWithInt:myData.currentUser.userID] :[NSNumber numberWithInt:self.post.postID] :^{
-            [senderCell updateLikes];
+            //[senderCell updateLikes];
         }];
         
         

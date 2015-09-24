@@ -144,6 +144,10 @@
 		6B0DECBC1B2E46710057033C /* PGConversationListViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB61B2E41950057033C /* PGConversationListViewController.h */; };
 		6B0DECBD1B2E46760057033C /* PGConversationViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB91B2E42970057033C /* PGConversationViewController.h */; };
 		6B0DECC01B2E5CF00057033C /* PGAvater.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECBF1B2E5CF00057033C /* PGAvater.m */; };
+		6B0E7A9B1BB33B31009BCDA1 /* reportimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A991BB33B31009BCDA1 /* reportimage.jpeg */; settings = {ASSET_TAGS = (); }; };
+		6B0E7A9C1BB33B31009BCDA1 /* reportimage@2x.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9A1BB33B31009BCDA1 /* reportimage@2x.jpeg */; settings = {ASSET_TAGS = (); }; };
+		6B0E7A9F1BB33C47009BCDA1 /* reportphotoimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9D1BB33C47009BCDA1 /* reportphotoimage.png */; settings = {ASSET_TAGS = (); }; };
+		6B0E7AA01BB33C47009BCDA1 /* reportphotoimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9E1BB33C47009BCDA1 /* reportphotoimage@2x.png */; settings = {ASSET_TAGS = (); }; };
 		6B1190191B5B060300AAF9A6 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190181B5B060300AAF9A6 /* MainStoryboard_iPhone.storyboard */; };
 		6B11901C1B5B0A1E00AAF9A6 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B11901B1B5B0A1E00AAF9A6 /* FileLogger.m */; };
 		6B11901F1B5B0ACC00AAF9A6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B11901E1B5B0ACC00AAF9A6 /* MainViewController.m */; };
@@ -534,6 +538,10 @@
 		6B0DECBA1B2E42970057033C /* PGConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGConversationViewController.m; sourceTree = "<group>"; };
 		6B0DECBE1B2E5CF00057033C /* PGAvater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGAvater.h; sourceTree = "<group>"; };
 		6B0DECBF1B2E5CF00057033C /* PGAvater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGAvater.m; sourceTree = "<group>"; };
+		6B0E7A991BB33B31009BCDA1 /* reportimage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reportimage.jpeg; sourceTree = "<group>"; };
+		6B0E7A9A1BB33B31009BCDA1 /* reportimage@2x.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "reportimage@2x.jpeg"; sourceTree = "<group>"; };
+		6B0E7A9D1BB33C47009BCDA1 /* reportphotoimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reportphotoimage.png; sourceTree = "<group>"; };
+		6B0E7A9E1BB33C47009BCDA1 /* reportphotoimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reportphotoimage@2x.png"; sourceTree = "<group>"; };
 		6B1190181B5B060300AAF9A6 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		6B11901A1B5B0A1E00AAF9A6 /* FileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLogger.h; sourceTree = "<group>"; };
 		6B11901B1B5B0A1E00AAF9A6 /* FileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLogger.m; sourceTree = "<group>"; };
@@ -1380,6 +1388,10 @@
 		2C6D275A1896BACA00C459CB /* WLI-images */ = {
 			isa = PBXGroup;
 			children = (
+				6B0E7A9D1BB33C47009BCDA1 /* reportphotoimage.png */,
+				6B0E7A9E1BB33C47009BCDA1 /* reportphotoimage@2x.png */,
+				6B0E7A991BB33B31009BCDA1 /* reportimage.jpeg */,
+				6B0E7A9A1BB33B31009BCDA1 /* reportimage@2x.jpeg */,
 				6B2A7AB91B96182400AEC1D7 /* activityicon.png */,
 				6B2A7ABA1B96182400AEC1D7 /* activityicon@3x.png */,
 				6B2A7ABB1B96182400AEC1D7 /* activityicon@2x.png */,
@@ -1985,6 +1997,7 @@
 				6B130BDB1A730BBC00FE0E0C /* tabbarnewpost.png in Resources */,
 				6BDEA69C1A7847070077651F /* nav-btn-reload.png in Resources */,
 				6B1190871B5B0C1900AAF9A6 /* bubble-min-tailless.png in Resources */,
+				6B0E7A9C1BB33B31009BCDA1 /* reportimage@2x.jpeg in Resources */,
 				2C6D27D11896BACA00C459CB /* WLICommentCell.xib in Resources */,
 				6B1190191B5B060300AAF9A6 /* MainStoryboard_iPhone.storyboard in Resources */,
 				2C6D27FB1896BACA00C459CB /* WLITimelineViewController.xib in Resources */,
@@ -2081,6 +2094,7 @@
 				6B7C6AF11A6EC562007230B8 /* tabbarpopular.png in Resources */,
 				6B1190BF1B5B0C4300AAF9A6 /* ic_mic@2x.png in Resources */,
 				2C6D28181896BACA00C459CB /* nav-back44.png in Resources */,
+				6B0E7AA01BB33C47009BCDA1 /* reportphotoimage@2x.png in Resources */,
 				2C6D28191896BACA00C459CB /* nav-back44@2x.png in Resources */,
 				2C6D28071896BACA00C459CB /* btn-liked@2x.png in Resources */,
 				2C6D28251896BACA00C459CB /* nav-btn-save@2x.png in Resources */,
@@ -2138,6 +2152,7 @@
 				6B11909C1B5B0C1900AAF9A6 /* button-photo@2x.png in Resources */,
 				2C6D28001896BACA00C459CB /* btn-comment.png in Resources */,
 				AD7160401A38BAC60043E740 /* css-2014-06-30.json in Resources */,
+				6B0E7A9F1BB33C47009BCDA1 /* reportphotoimage.png in Resources */,
 				2C6D282D1896BACA00C459CB /* pulldown-refresh-icon@2x.png in Resources */,
 				6BE030381B45DD0E00B403C5 /* hangup.png in Resources */,
 				2C6D28241896BACA00C459CB /* nav-btn-save.png in Resources */,
@@ -2147,6 +2162,7 @@
 				2C6D28261896BACA00C459CB /* avatar-empty.png in Resources */,
 				6B11908F1B5B0C1900AAF9A6 /* bubble-tailless.png in Resources */,
 				2C6D27E81896BACA00C459CB /* WLILoginViewController.xib in Resources */,
+				6B0E7A9B1BB33B31009BCDA1 /* reportimage.jpeg in Resources */,
 				6B59A2FD1B1A597800F1F92A /* AppIcon57x57.png in Resources */,
 				2C6D283A1896BACA00C459CB /* welcome-background@2x.png in Resources */,
 			);
@@ -2455,7 +2471,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
@@ -2502,7 +2518,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",

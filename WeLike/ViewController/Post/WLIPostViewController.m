@@ -45,7 +45,7 @@
     UIButton *reportButton = [UIButton buttonWithType:UIButtonTypeCustom];
     reportButton.adjustsImageWhenHighlighted = NO;
     reportButton.frame = CGRectMake(0.0f, 0.0f, 40.0f, 30.0f);
-    [reportButton setImage:[UIImage imageNamed:@"reportimage.png"] forState:UIControlStateNormal];
+    [reportButton setImage:[UIImage imageNamed:@"reportphotoimage.png"] forState:UIControlStateNormal];
     [reportButton addTarget:self action:@selector(barButtonItemReportTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:reportButton];
 }
@@ -281,7 +281,8 @@
 
 - (void)barButtonItemReportTouchUpInside:(UIBarButtonItem *)barButtonItem {
     if([self.post.user.userUsername isEqualToString:[WLIConnect sharedConnect].currentUser.userUsername]){
-        [[[UIAlertView alloc] initWithTitle:@"Delete Photo" message:@"Are you sure you want to delete this photo?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Report Photo" message:@"Are you sure you want to report this photo?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil] show];
+        
                 //if its my post delete it. if not then report it
     }else{
         if ([MFMailComposeViewController canSendMail]) {
@@ -308,18 +309,20 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    if ([alertView.title isEqualToString:@"Report"] && [[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Report!"]) {
+
         MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
         mailComposeViewController.navigationBar.tintColor = [UIColor whiteColor];
         mailComposeViewController.mailComposeDelegate = self;
-        [mailComposeViewController setToRecipients:@[@"report@foodspotting.com"]];
+        [mailComposeViewController setToRecipients:@[@"claytonminott29@gmail.com"]];
         [mailComposeViewController setSubject:@"Report"];
         NSString *message = [NSString stringWithFormat:@"Reporting post with id: %d\n\nDescription: %@", self.post.postID, self.post.postTitle];
         [mailComposeViewController setMessageBody:message isHTML:NO];
         [self presentViewController:mailComposeViewController animated:YES completion:^{
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         }];
-    }else if([alertView.title isEqualToString:@"Delete Photo"] && [[alertView buttonTitleAtIndex:buttonIndex]isEqualToString:@"OK"]){
+    
+    
+    if([alertView.title isEqualToString:@"Delete Photo"] && [[alertView buttonTitleAtIndex:buttonIndex]isEqualToString:@"OK"]){
         PFQuery *query = [PFQuery queryWithClassName:@"FitovatePhotos"];
         [query whereKey:@"postID" equalTo:[NSNumber numberWithInt:self.post.postID]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *hospitals, NSError *error) {

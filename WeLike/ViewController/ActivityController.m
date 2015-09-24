@@ -39,7 +39,7 @@
     
     PFQuery *query = [PFQuery queryWithClassName:@"Activity"];
     [query addDescendingOrder:@"createdAt"];
-    [query whereKey:@"userID" equalTo:myData.currentUser.userUsername];
+    [query whereKey:@"sourceId" equalTo:myData.currentUser.userUsername];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
@@ -48,13 +48,14 @@
             
             for (PFObject *object in objects) {
                 NSString *activityType = object[@"activityType"];
-                NSString *sourceId = object[@"sourceId"];
+                NSString *sourceId = object[@"userID"];
                 NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
                 f.numberStyle = NSNumberFormatterDecimalStyle;
                 NSNumber *postId = [f numberFromString:object[@"postID"]];
-                NSString *activityText = [NSString stringWithFormat:@"You added a %@ on %@'s photo",activityType,sourceId];
+                NSString *activityText = [NSString stringWithFormat:@"%@ added a %@ on your photo",sourceId,activityType];
                 [stringsOfActivity addObject:activityText];
                 [postIds addObject:postId];
+                NSLog(@" %@ ", activityType);
             }
             self.posts = stringsOfActivity;
             self.postIDs = postIds;

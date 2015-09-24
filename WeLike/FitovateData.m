@@ -141,7 +141,7 @@
     WLIUser *currUser = [[WLIUser alloc]initFromParse:[myData parseUserToDictionary:userFromParse]];
     //inits it to parse and then fixes the userAvatar by using pffile data and pfgeopint data
     currUser.youtubeString = userFromParse[@"youtubeString"];
-    NSLog(@"youtube = %@",currUser.youtubeString);
+    currUser.companyAddress = userFromParse[@"citystate"];
     
     PFFile *imageUrl = userFromParse[@"userAvatar"];
     currUser.userAvatarPath = imageUrl.url;

@@ -75,6 +75,8 @@
         _companyPhone = [self stringFromDictionary:userWithInfo forKey:@"phone"];
         _companyWeb = [self stringFromDictionary:userWithInfo forKey:@"website"];
         _companyEmail = [self stringFromDictionary:userWithInfo forKey:@"email"];
+        _companyAddress = [self stringFromDictionary:userWithInfo forKey:@"citystate"];
+        NSLog(@" _companyAddress %@ ", _companyAddress);
         
         float latitude = [self floatFromDictionary:userWithInfo forKey:@"userLat"];
         float longitude = [self floatFromDictionary:userWithInfo forKey:@"userLong"];

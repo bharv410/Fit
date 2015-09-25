@@ -49,7 +49,6 @@
     self.textFieldEmail.delegate = self;
     self.textFieldFullName.delegate = self;
     self.textFieldPassword.delegate = self;
-    self.textFieldPhone.delegate = self;
     self.textFieldRepassword.delegate = self;
     self.textFieldUsername.delegate = self;
     self.textFieldWeb.delegate = self;
@@ -146,9 +145,7 @@
     } else {
         
         if (self.segmentedControlUserType.selectedSegmentIndex == 1) {
-            if (!self.textFieldPhone.text.length) {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Phone is required for companies." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            } else if (!self.textFieldWeb.text.length || !self.textFieldRepassword.text.length) {
+            if (!self.textFieldWeb.text.length || !self.textFieldRepassword.text.length) {
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Website is required for companies" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else {
                 CLLocationCoordinate2D coordinate;
@@ -183,7 +180,6 @@
                         newUser[@"userinfo"] = self.textFieldBio.text;
                         newUser[@"followersCount"] = [NSNumber numberWithInt:0];
                         newUser[@"followingCount"] = [NSNumber numberWithInt:0];
-                        newUser[@"phone"] = self.textFieldPhone.text;
                         newUser[@"website"] = self.textFieldWeb.text;
                         newUser[@"gender"] = [self.malefemaleControl titleForSegmentAtIndex:self.malefemaleControl.selectedSegmentIndex];
                         
@@ -424,7 +420,7 @@
         self.viewContentRegister.frame = CGRectMake(self.viewContentRegister.frame.origin.x, self.viewContentRegister.frame.origin.y, self.viewContentRegister.frame.size.width, CGRectGetMaxY(self.buttonRegister.frame) +20.0f);
         PNTToolbar *newToolbar = [PNTToolbar defaultToolbar];
         newToolbar.mainScrollView = self.scrollViewRegister;
-        newToolbar.textFields = @[self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldUsername, self.textFieldFullName, self.textFieldBio, self.cityStateLabel ,self.textFieldPhone, self.textFieldWeb];
+        newToolbar.textFields = @[self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldUsername, self.textFieldFullName, self.textFieldBio, self.dateLabel ,self.cityStateLabel, self.textFieldWeb];
         
         NSLog(@"seg = 1");
         
@@ -495,10 +491,19 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    if(![textField isEqual:self.dateLabel]){
+        return (![textField isEqual:self.dateLabel]);
+    }else{
+        [self callDP];
+        return (![textField isEqual:self.dateLabel]);
+    }
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.dateLabel) {
-        
-        [self callDP];
+        //[self callDP];
     }
 }
 
@@ -552,6 +557,7 @@
     
     UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
     datePicker.tag = 10;
+    datePicker.backgroundColor = [UIColor whiteColor];
     datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:datePicker];

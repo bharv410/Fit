@@ -25,7 +25,7 @@
     // Do any additional setup after loading the view from its nib.
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Your Intro Video!"
-                                                    message:@"Upload a video on YouTube and then paste the embed link for the video here."
+                                                    message:@"Upload a video on YouTube, copy the link, then paste the link for the video here. Trainers must have a video on their profile to complete registration."
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
@@ -44,23 +44,33 @@
      lastName = [[UITextField alloc] initWithFrame:CGRectMake(10, 100, 300, 30)];
     [self.view addSubview:lastName];
     
-        lastName.placeholder = @"Enter your Youtube Link here";   //for place holder
+        lastName.placeholder = @"  Enter your Youtube Link here";   //for place holder
         lastName.textAlignment = UITextAlignmentLeft;          //for text Alignment
         lastName.font = [UIFont fontWithName:@"MarkerFelt-Thin" size:14.0]; // text font
         lastName.adjustsFontSizeToFitWidth = YES;     //adjust the font size to fit width.
         lastName.textColor = [UIColor blackColor];             //text color
         lastName.keyboardType = UIKeyboardTypeAlphabet;        //keyboard type of ur choice
         lastName.returnKeyType = UIReturnKeyDone;              //returnKey type for keyboard
+    
+    lastName.layer.cornerRadius=8.0f;
+    lastName.layer.masksToBounds=YES;
+    lastName.layer.borderColor=[[self colorWithHexString:@"5cadff"]CGColor];
+    lastName.layer.borderWidth= 1.0f;
     lastName.delegate = self;
     
-//        UIButton *butn = [[UIButton alloc]initWithFrame:CGRectMake(10, 150, self.uploadButton.frame.size.width, self.uploadButton.frame.size.height)];
-//    [self.view addSubview: butn];
+    
+        UIButton *butn = [[UIButton alloc]initWithFrame:CGRectMake(10, 135, 300, 40)];
+    [butn addTarget:self
+                 action:@selector(onUploadClicked)
+       forControlEvents:UIControlEventTouchUpInside];
+    [butn setTitle: @"Submit Video" forState: UIControlStateNormal];
+    [butn setTitleColor:[self colorWithHexString:@"5cadff"] forState:UIControlStateNormal];
+    [self.view addSubview: butn];
     
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self updateUserYoutubeLink:lastName.text];
     return [textField resignFirstResponder];
 }
 
@@ -148,7 +158,43 @@
 }
 */
 
-- (IBAction)onUploadClicked:(id)sender {
+- (void)onUploadClicked {
     [self updateUserYoutubeLink:lastName.text];
+}
+
+-(UIColor*)colorWithHexString:(NSString*)hex
+{
+    NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    
+    // String should be 6 or 8 characters
+    if ([cString length] < 6) return [UIColor grayColor];
+    
+    // strip 0X if it appears
+    if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
+    
+    if ([cString length] != 6) return  [UIColor grayColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    
+    // Scan values
+    unsigned int r, g, b;
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.0f];
 }
 @end

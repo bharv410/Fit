@@ -11,6 +11,5 @@
 @interface WLIChooseVideoViewController : UIViewController
 
 @property (strong, nonatomic) NSString *usersName;
-- (IBAction)onUploadClicked:(id)sender;
-
+- (void)onUploadClicked;
 @end

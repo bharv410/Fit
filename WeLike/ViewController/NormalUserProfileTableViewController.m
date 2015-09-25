@@ -38,12 +38,7 @@
     
     if([self.currentUser.userUsername containsString:@"xyzxyz"] || (self.currentUser == nil)){
         self.currentUser = [WLIConnect sharedConnect].currentUser;
-        NSLog(@"wli connect is %@", [WLIConnect sharedConnect].currentUser.userUsername);
-    }else{
-        NSLog(@"name is %@", self.currentUser.userUsername);
     }
-    
-    
     self.loading = NO;
     
     [self reloadData:YES];

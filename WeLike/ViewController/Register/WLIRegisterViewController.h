@@ -33,7 +33,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *textFieldBio;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldFullName;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControlUserType;
-@property (strong, nonatomic) IBOutlet UITextField *textFieldPhone;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldWeb;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldAddress;
 @property (strong, nonatomic) IBOutlet MKMapView *mapViewLocation;

@@ -76,28 +76,13 @@
 
 
 -(void)updateUserYoutubeLink:(NSString *) youtubeString{
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Users"];
     [query whereKey:@"username" equalTo:self.usersName];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject * userStats, NSError *error) {
         if (!error) {
-            // Found UserStats
-            
-            NSString *regexString = @"(?<=v(=|/))([-a-zA-Z0-9_]+)|(?<=youtu.be/)([-a-zA-Z0-9_]+)";
-            
-            NSError *error = NULL;
-            NSRegularExpression *regex =
-            [NSRegularExpression regularExpressionWithPattern:regexString
-                                                      options:NSRegularExpressionCaseInsensitive
-                                                        error:&error];
-            NSTextCheckingResult *match = [regex firstMatchInString:youtubeString
-                                                            options:0
-                                                              range:NSMakeRange(0, [youtubeString length])];
-            if (match) {
-                NSRange videoIDRange = [match rangeAtIndex:1];
-                NSString *substringForFirstMatch = [youtubeString substringWithRange:videoIDRange];
-                [userStats setObject:substringForFirstMatch forKey:@"youtubeString"];
-                NSLog(@"youtube id is %@", substringForFirstMatch);
-            }
+                [userStats setObject:youtubeString forKey:@"youtubeString"];
+                NSLog(@"youtube id is %@", youtubeString);
             
             // Save
             [userStats saveInBackground];
@@ -107,6 +92,21 @@
             NSLog(@"Error: %@", error);
         }
     }];
+}
+
+- (NSString *)extractYoutubeIdFromLink:(NSString *)link {
+    
+    NSString *regexString = @"((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)";
+    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:regexString
+                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                              error:nil];
+    
+    NSArray *array = [regExp matchesInString:link options:0 range:NSMakeRange(0,link.length)];
+    if (array.count > 0) {
+        NSTextCheckingResult *result = array.firstObject;
+        return [link substringWithRange:result.range];
+    }
+    return nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -159,7 +159,7 @@
 */
 
 - (void)onUploadClicked {
-    [self updateUserYoutubeLink:lastName.text];
+    [self updateUserYoutubeLink:[self extractYoutubeIdFromLink:lastName.text]];
 }
 
 -(UIColor*)colorWithHexString:(NSString*)hex

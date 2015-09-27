@@ -459,11 +459,17 @@
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     self.headerView = [[CustomHeaderView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240 + screenWidth)];
     
-    UILabel *headingLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 30)];
+    UILabel *headingLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
     [headingLabel setFont:[UIFont systemFontOfSize:9]];
     [headingLabel setTextColor:[UIColor grayColor]];
     headingLabel.text = self.currentUser.companyAddress;
     [self.headerView addSubview:headingLabel];
+    
+    UILabel *websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 300, 20)];
+    [websiteLabel setFont:[UIFont systemFontOfSize:9]];
+    [websiteLabel setTextColor:[UIColor grayColor]];
+    websiteLabel.text = self.currentUser.companyWeb;
+    [self.headerView addSubview:websiteLabel];
     
     
     [self.headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
@@ -486,9 +492,8 @@
     NSString *usernameWithoutSpaces=[self.currentUser.userUsername
                                      stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    NSURL *url =[[NSURL alloc]initWithString:self.currentUser.youtubeString];
     
-    moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:@"9bZkp7q19f0"];
+    moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:self.currentUser.youtubeString];
     [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];
     [moviePlayerController presentInView:videoPlaceHolderVIew];
     

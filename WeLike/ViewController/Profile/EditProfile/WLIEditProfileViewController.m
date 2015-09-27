@@ -31,6 +31,11 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"Edit Profile";
     
+    UIEdgeInsets adjustForTabbarInsets = UIEdgeInsetsMake(0, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0);
+    self.scrollViewEditProfile.contentInset = adjustForTabbarInsets;
+    self.scrollViewEditProfile.scrollIndicatorInsets = adjustForTabbarInsets;
+    
+    
     UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
     saveButton.adjustsImageWhenHighlighted = NO;
     saveButton.frame = CGRectMake(0.0f, 0.0f, 40.0f, 30.0f);

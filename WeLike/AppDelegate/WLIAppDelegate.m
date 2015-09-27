@@ -95,19 +95,6 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
         NSLog(@"opened app not from push");
     }
     
-    
-    
-    
-    
-    
-    //benmark
-    NSLog(@"benmark");
-    WLIChooseVideoViewController *wcv = [[WLIChooseVideoViewController alloc]init];
-    wcv.usersName = @"Fitovate";
-    [self.tabBarController presentViewController:wcv animated:YES completion:^{
-        NSLog(@"presntd");
-    }];
-    
     return YES;
 }
 

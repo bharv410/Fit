@@ -46,17 +46,15 @@
     [self.scrollViewEditProfile addSubview:self.viewContentEditProfile];
     toolbar.mainScrollView = self.scrollViewEditProfile;
     
-    if (sharedConnect.currentUser.userType == WLIUserTypeCompany) {
+    if ([self userIsTrainer]) {
         self.viewCompany.hidden = NO;
         self.viewContentEditProfile.frame = CGRectMake(self.viewContentEditProfile.frame.origin.x, self.viewContentEditProfile.frame.origin.y, self.viewContentEditProfile.frame.size.width, CGRectGetMaxY(self.viewCompany.frame));
         toolbar.textFields = @[self.textFieldUsername, self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldFullName, self.textFieldPhone, self.textFieldWeb];
         [self.mapViewLocation addAnnotation:sharedConnect.currentUser];
-    } else if (sharedConnect.currentUser.userType == WLIUserTypePerson) {
+    } else{
         self.viewCompany.hidden = YES;
         self.viewContentEditProfile.frame = CGRectMake(self.viewContentEditProfile.frame.origin.x, self.viewContentEditProfile.frame.origin.y, self.viewContentEditProfile.frame.size.width, CGRectGetMaxY(self.textFieldFullName.frame) +20.0f);
         toolbar.textFields = @[self.textFieldUsername, self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldFullName];
-    } else {
-        NSLog(@"unknown user type");
     }
     
     self.scrollViewEditProfile.contentSize = self.viewContentEditProfile.frame.size;
@@ -71,7 +69,7 @@
     self.textFieldFullName.text = sharedConnect.currentUser.userFullName;
     self.textFieldUsername.text = sharedConnect.currentUser.userUsername;
     self.textFieldWeb.text = sharedConnect.currentUser.companyWeb;
-    self.textFieldPhone.text = sharedConnect.currentUser.companyPhone;
+    self.textFieldPhone.text = sharedConnect.currentUser.youtubeString;
     self.textFieldAddress.text = sharedConnect.currentUser.companyAddress;
 }
 
@@ -108,9 +106,9 @@
             }
         }
         
-        if (sharedConnect.currentUser.userType == WLIUserTypeCompany) {
+        if ([self userIsTrainer]) {
             if (!self.textFieldPhone.text.length) {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Phone is required for companies." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Youtube is required for companies." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else if (!self.textFieldWeb.text.length) {
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Website is required for companies" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else {
@@ -312,6 +310,16 @@
     
     self.mapViewLocation.delegate = nil;
     self.mapViewLocation.userTrackingMode = MKUserTrackingModeNone;
+}
+
+-(BOOL)userIsTrainer{
+    if([sharedConnect.currentUser.userType isEqualToString:@"trainer"] ){
+        NSLog(@"is a trainer");
+        return YES;
+    }else{
+        NSLog(@"is a trainee");
+        return NO;
+    }
 }
 
 

@@ -286,7 +286,11 @@
                 //if its my post delete it. if not then report it
     }else{
         if ([MFMailComposeViewController canSendMail]) {
-            [[[UIAlertView alloc] initWithTitle:@"Report" message:@"Are you sure you want to report this post?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Report!", nil] show];
+            
+            UIAlertView *alrt = [[UIAlertView alloc] initWithTitle:@"Report" message:@"Are you sure you want to report this post?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Report!", nil];
+            [alrt dismissWithClickedButtonIndex:[alrt cancelButtonIndex] animated:YES];
+            [alrt show];
+            
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Report" message:@"This device is not configured to send mails, please enable mail and contact us at report@foodspotting.com" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
@@ -309,13 +313,18 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        NSLog(@"The cancel button was clicked for alertView");
+        [alertView dismissWithClickedButtonIndex:[alertView cancelButtonIndex] animated:YES];
+    }else{
+    
 
         MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
         mailComposeViewController.navigationBar.tintColor = [UIColor whiteColor];
         mailComposeViewController.mailComposeDelegate = self;
         [mailComposeViewController setToRecipients:@[@"claytonminott29@gmail.com"]];
         [mailComposeViewController setSubject:@"Report"];
-        NSString *message = [NSString stringWithFormat:@"Reporting post with id: %d\n\nDescription: %@", self.post.postID, self.post.postTitle];
+        NSString *message = [NSString stringWithFormat:@"Reporting post with id: %d\n\nDescription: %@  from username = %@", self.post.postID, self.post.postTitle, self.post.user.userUsername];
         [mailComposeViewController setMessageBody:message isHTML:NO];
         [self presentViewController:mailComposeViewController animated:YES completion:^{
             [[mailComposeViewController navigationBar] setTintColor:[UIColor blackColor]];
@@ -345,8 +354,8 @@
             {
                 NSLog(@"%@",error);
             }
-            
         }];
+    }
     }
 }
 

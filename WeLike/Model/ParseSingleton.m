@@ -24,6 +24,7 @@ newActivity[@"userID"] = userId;
     NSLog(activityType);
 newActivity[@"activityType"] = activityType;
     
+    newActivity[@"read"] = [NSNumber numberWithBool:NO];
 
 [newActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     if (succeeded) {

@@ -47,6 +47,9 @@
             NSMutableArray *postIds = [[NSMutableArray alloc]initWithCapacity:10];
             
             for (PFObject *object in objects) {
+                [object setObject:[NSNumber numberWithBool:YES] forKey:@"read"];
+                [object saveInBackground];
+                
                 NSString *activityType = object[@"activityType"];
                 NSString *sourceId = object[@"userID"];
                 NSNumberFormatter *f = [[NSNumberFormatter alloc] init];

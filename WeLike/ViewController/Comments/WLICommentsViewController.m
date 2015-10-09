@@ -71,9 +71,10 @@
     if(!self.loaded){
     [self getComments:^{
         NSLog(@"got comments from parse");
+        [hud hide:YES];
     }];
     }else{
-        
+        [hud hide:YES];
     }
 }
 
@@ -106,6 +107,7 @@
                 
             }
             self.loaded = YES;
+            [hud hide:YES];
             [self.tableViewRefresh reloadData];
             [refreshManager tableViewReloadFinishedAnimated:YES];
         } else {
@@ -173,6 +175,7 @@
         [sharedConnect removeCommentWithCommentID:comment.commentID onCompletion:^(ServerResponse serverResponseCode) {
             [self getComments:^{
                 NSLog(@"got comments from parse");
+                [hud hide:YES];
             }];
         }];
     }

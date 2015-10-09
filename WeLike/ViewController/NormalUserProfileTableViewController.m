@@ -242,12 +242,15 @@
 //        
 //        [myData unfollowUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
 //    } else {
+        [self.headerView.buttonFollow setBackgroundColor:[UIColor greenColor]];
+    
         self.currentUser.followingUser = YES;
         self.currentUser.followersCount++;
 
         FitovateData *myData = [FitovateData sharedFitovateData];
+    
         [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-        [self.headerView.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+//        [self.headerView.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     
         [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
     //}

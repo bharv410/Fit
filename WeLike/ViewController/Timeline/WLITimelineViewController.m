@@ -325,6 +325,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Activity"];
     [query addDescendingOrder:@"createdAt"];
     [query whereKey:@"sourceId" equalTo:[WLIConnect sharedConnect].currentUser.userUsername];
+    [query whereKey:@"read" equalTo:[NSNumber numberWithBool:NO]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
     
         UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];

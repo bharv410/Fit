@@ -318,8 +318,7 @@
         NSString *message = [NSString stringWithFormat:@"Reporting post with id: %d\n\nDescription: %@", self.post.postID, self.post.postTitle];
         [mailComposeViewController setMessageBody:message isHTML:NO];
         [self presentViewController:mailComposeViewController animated:YES completion:^{
-            
-            
+            [[mailComposeViewController navigationBar] setTintColor:[UIColor blackColor]];
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         }];
     

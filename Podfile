@@ -7,6 +7,7 @@ pod 'Atlas'
 pod 'Haneke', '~> 1.0'
 pod 'Google/Analytics'
 pod "XCDYouTubeKit", "~> 2.2.0"
+pod 'JSBadgeView'
 
 end
 

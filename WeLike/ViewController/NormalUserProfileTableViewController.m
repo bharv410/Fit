@@ -20,6 +20,7 @@
 #import "WLIEditProfileViewController.h"
 #import <XCDYouTubeKit/XCDYouTubeKit.h>
 #import <ParseSingleton.h>
+#import "WLICommentsViewController.h"
 
 @interface NormalUserProfileTableViewController (){
     BOOL playing;
@@ -130,6 +131,8 @@
         
         if([self.allFollowings containsObject:[NSNumber numberWithInt:self.currentUser.userID]]){
             [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+//            [self.headerView.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+            //[self.headerView.buttonFollow setBackgroundColor:[UIColor greenColor]];
         }else{
             [self.headerView.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
         }
@@ -244,7 +247,8 @@
 
         FitovateData *myData = [FitovateData sharedFitovateData];
         [self.headerView.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
-        
+        [self.headerView.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    
         [myData followUserIdWithUserId:[NSNumber numberWithInt:myData.currentUser.userID]:[NSNumber numberWithInt:self.currentUser.userID]];
     //}
 }
@@ -492,6 +496,7 @@
     NSString *usernameWithoutSpaces=[self.currentUser.userUsername
                                      stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
+    NSLog(@"video id = %@, ", self.currentUser.youtubeString);
     
     moviePlayerController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:self.currentUser.youtubeString];
     [moviePlayerController.view setFrame:videoPlaceHolderVIew.bounds];
@@ -545,6 +550,12 @@
     }
 }
 
+- (void)showCommentsForPost:(WLIPost*)post sender:(WLIPostCell*)senderCell {
+    
+    WLICommentsViewController *commentsViewController = [[WLICommentsViewController alloc] initWithNibName:@"WLICommentsViewController" bundle:nil];
+    commentsViewController.post = post;
+    [self.navigationController pushViewController:commentsViewController animated:YES];
+}
 
 
 

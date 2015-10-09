@@ -56,6 +56,7 @@ MPMoviePlayerController *moviePlayerController;
     } else {
         if (self.user.followingUser) {
             [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+            [self.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
             NSLog(@"Set to following2");
         } else {
             [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
@@ -110,6 +111,7 @@ MPMoviePlayerController *moviePlayerController;
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
         if([self.allFollowings containsObject:[NSNumber numberWithInt:self.user.userID]]){
             [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+            [self.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
             NSLog(@"Set to following1");
         }else{
             [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
@@ -180,6 +182,7 @@ MPMoviePlayerController *moviePlayerController;
     self.labelName.text = self.user.userUsername;
     if (self.user.followingUser) {
         [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+        [self.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     } else {
         [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
     }
@@ -228,6 +231,7 @@ MPMoviePlayerController *moviePlayerController;
         self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
             if([self.allFollowings containsObject:[NSNumber numberWithInt:self.user.userID]]){
                 [self.buttonFollow setTitle:@"Following" forState:UIControlStateNormal];
+                [self.buttonFollow setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
             }else{
                 [self.buttonFollow setTitle:@"Follow!" forState:UIControlStateNormal];
             }

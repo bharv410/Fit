@@ -317,54 +317,38 @@ static WLIConnect *sharedConnect;
     if (userID < 1) {
         completion(nil, BAD_REQUEST);
     } else {
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        [parameters setObject:[NSString stringWithFormat:@"%d", userID] forKey:@"userID"];
-        if (userType) {
-            [parameters setObject:[NSString stringWithFormat:@"%d", userType] forKey:@"userTypeID"];
-        }
-        if (userEmail.length) {
-            [parameters setObject:userEmail forKey:@"email"];
-        }
-        if (password.length) {
-            [parameters setObject:password forKey:@"password"];
-        }
-        if (userFullName.length) {
-            [parameters setObject:userFullName forKey:@"userFullname"];
-        }
-        if (userInfo.length) {
-            [parameters setObject:userInfo forKey:@"userInfo"];
-        }
-        [parameters setObject:[NSString stringWithFormat:@"%f", latitude] forKey:@"userLat"];
-        [parameters setObject:[NSString stringWithFormat:@"%f", longitude] forKey:@"userLong"];
-        if (companyAddress.length) {
-            [parameters setObject:companyAddress forKey:@"userAddress"];
-        }
-        if (companyPhone.length) {
-            [parameters setObject:companyPhone forKey:@"userPhone"];
-        }
-        if (companyWeb.length) {
-            [parameters setObject:companyWeb forKey:@"userWeb"];
-        }
         
-        [httpClient POST:@"setProfile" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            if (userAvatar) {
-                NSData *imageData = UIImageJPEGRepresentation(userAvatar, kCompressionQuality);
-                if (imageData) {
-                    [formData appendPartWithFileData:imageData name:@"userAvatar" fileName:@"image.jpg" mimeType:@"image/jpeg"];
+        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+        [query whereKey:@"userID" equalTo:[NSNumber numberWithInt:userID]];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            for (PFObject *example in objects) {
+
+                WLIUser *updatedUser = sharedConnect.currentUser;
+                if (userEmail.length) {
+                    [example setObject:userEmail forKey:@"email"];
+                    updatedUser.userEmail = userEmail;
                 }
+                if (password.length) {
+                    [example setObject:password forKey:@"password"];
+                    updatedUser.userPassword = password;
+                }
+                if (userFullName.length) {
+                    [example setObject:userFullName forKey:@"fullname"];
+                    updatedUser.userFullName = userFullName;
+                }
+                if (companyPhone.length) {
+                    [example setObject:companyPhone forKey:@"youtubeString"];
+                    updatedUser.youtubeString = companyPhone;
+                }
+                if (companyWeb.length) {
+                    [example setObject:companyWeb forKey:@"website"];
+                    updatedUser.companyWeb = companyWeb;
+                }
+                [example saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                    NSLog(@"updated");
+                    completion(updatedUser, OK);
+                }];
             }
-        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSDictionary *rawUser = [responseObject objectForKey:@"item"];
-            WLIUser *user = [[WLIUser alloc] initWithDictionary:rawUser];
-            self.currentUser = user;
-            if(self.currentUser.userUsername!=nil)
-                [self saveCurrentUser];
-            
-            [self debugger:parameters.description methodLog:@"api/setProfile" dataLogFormatted:responseObject];
-            completion(user, OK);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [self debugger:parameters.description methodLog:@"api/setProfile" dataLog:error.description];
-            completion(nil, UNKNOWN_ERROR);
         }];
     }
 }

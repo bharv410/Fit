@@ -152,12 +152,16 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
         [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+
+            [self dismissViewControllerAnimated:NO completion:Nil];
             
-            [[[UIAlertView alloc] initWithTitle:self.title
-                                        message:[NSString stringWithFormat:NSLocalizedString(@"Error - %@", nil), reason]
-                                       delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                              otherButtonTitles:nil] show];
+            
+            
+//            [[[UIAlertView alloc] initWithTitle:self.title
+//                                        message:[NSString stringWithFormat:NSLocalizedString(@"Error - %@", nil), reason]
+//                                       delegate:nil
+//                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
+//                              otherButtonTitles:nil] show];
             
         }];
     });

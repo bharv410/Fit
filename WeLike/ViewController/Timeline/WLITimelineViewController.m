@@ -20,6 +20,7 @@
 #import "MainViewController.h"
 #import "PGConversationListViewController.h"
 #import "WLINearbyViewController.h"
+#import "JSBadgeView.h"
 
 @implementation WLITimelineViewController
 
@@ -45,10 +46,7 @@
     if([WLIConnect sharedConnect].currentUser!=nil)//required
         [self firstLogin];
     
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"activityicon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
-    
-    self.navigationItem.leftBarButtonItem = anotherButton;
-    
+//    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"activityicon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goToActivity)];
    }
 
 
@@ -197,6 +195,7 @@
     self.allFollowings = [myData getAllIdsThatUsersFollowing:^{
         [self getPosts];
     }];
+    [self performSelector:@selector(setupActivityBadge) withObject:nil afterDelay:2.0];
     [self performSelector:@selector(showMessagesButton) withObject:nil afterDelay:2.0];
     NSLog(@"username is %@", [WLIConnect sharedConnect].currentUser.userUsername);
     //[WLIConnect sharedConnect].currentUser.userUsername = @"xyzxyz";
@@ -314,8 +313,30 @@
     UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
     [button setImage:[UIImage imageNamed:@"messagesbutton.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
+    
+    JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:button alignment:JSBadgeViewAlignmentTopRight];
+    badgeView.badgeText=@"0";
+    
     UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem =back;
+    }
+
+-(void)setupActivityBadge{
+    PFQuery *query = [PFQuery queryWithClassName:@"Activity"];
+    [query addDescendingOrder:@"createdAt"];
+    [query whereKey:@"sourceId" equalTo:[WLIConnect sharedConnect].currentUser.userUsername];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    
+        UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0, 0, 30, 30);
+        [button setImage:[UIImage imageNamed:@"activityicon.png"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(goToActivity)forControlEvents:UIControlEventTouchUpInside];
+        
+        JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:button alignment:JSBadgeViewAlignmentTopLeft];
+        badgeView.badgeText=[NSString stringWithFormat:@"%lu", (unsigned long)objects.count];
+        UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        self.navigationItem.leftBarButtonItem = anotherButton;
+    }];
 }
 
 @end

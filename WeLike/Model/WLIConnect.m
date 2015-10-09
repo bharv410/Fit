@@ -312,7 +312,7 @@ static WLIConnect *sharedConnect;
     }
 }
 
-- (void)updateUserWithUserID:(int)userID userType:(WLIUserType)userType userEmail:(NSString*)userEmail password:(NSString*)password userAvatar:(UIImage*)userAvatar userFullName:(NSString*)userFullName userInfo:(NSString*)userInfo latitude:(float)latitude longitude:(float)longitude companyAddress:(NSString*)companyAddress companyPhone:(NSString*)companyPhone companyWeb:(NSString*)companyWeb onCompletion:(void (^)(WLIUser *user, ServerResponse serverResponseCode))completion {
+- (void)updateUserWithUserID:(int)userID userType:(WLIUserType)userType userEmail:(NSString*)userEmail password:(NSString*)password userAvatar:(UIImage*)userAvatar userFullName:(NSString*)userFullName userInfo:(NSString*)userInfo latitude:(float)latitude longitude:(float)longitude companyAddress:(NSString*)companyAddress companyPhone:(NSString*)companyPhone companyWeb:(NSString*)companyWeb companyBio:(NSString*)companyBio onCompletion:(void (^)(WLIUser *user, ServerResponse serverResponseCode))completion {
     
     if (userID < 1) {
         completion(nil, BAD_REQUEST);
@@ -343,6 +343,11 @@ static WLIConnect *sharedConnect;
                 if (companyWeb.length) {
                     [example setObject:companyWeb forKey:@"website"];
                     updatedUser.companyWeb = companyWeb;
+                }
+                
+                if (companyBio.length) {
+                    [example setObject:companyBio forKey:@"userinfo"];
+                    updatedUser.userInfo = companyBio;
                 }
                 [example saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                     NSLog(@"updated");

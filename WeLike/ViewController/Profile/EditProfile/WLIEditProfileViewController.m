@@ -49,7 +49,7 @@
     if ([self userIsTrainer]) {
         self.viewCompany.hidden = NO;
         self.viewContentEditProfile.frame = CGRectMake(self.viewContentEditProfile.frame.origin.x, self.viewContentEditProfile.frame.origin.y, self.viewContentEditProfile.frame.size.width, CGRectGetMaxY(self.viewCompany.frame));
-        toolbar.textFields = @[self.textFieldUsername, self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldFullName, self.textFieldPhone, self.textFieldWeb];
+        toolbar.textFields = @[self.textFieldUsername, self.textFieldEmail, self.textFieldPassword, self.textFieldRepassword, self.textFieldFullName,self.textFieldBio, self.textFieldPhone, self.textFieldWeb];
         [self.mapViewLocation addAnnotation:sharedConnect.currentUser];
     } else{
         self.viewCompany.hidden = YES;
@@ -71,6 +71,7 @@
     self.textFieldWeb.text = sharedConnect.currentUser.companyWeb;
     self.textFieldPhone.text = sharedConnect.currentUser.youtubeString;
     self.textFieldAddress.text = sharedConnect.currentUser.companyAddress;
+    self.textFieldBio.text = sharedConnect.currentUser.userInfo;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,6 +108,7 @@
         }
         
         if ([self userIsTrainer]) {
+            
             if (!self.textFieldPhone.text.length) {
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Youtube is required for companies." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else if (!self.textFieldWeb.text.length) {

@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIView *viewContentEditProfile;
 @property (strong, nonatomic) IBOutlet UIView *viewCompany;
 
+@property (strong, nonatomic) IBOutlet UITextField *textFieldBio;
 @property (strong, nonatomic) IBOutlet UIImageView *imageViewAvatar;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldUsername;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldEmail;

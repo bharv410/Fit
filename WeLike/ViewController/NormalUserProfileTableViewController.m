@@ -437,16 +437,16 @@
     self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
     self.headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
     
-    UILabel *websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 90, 90, 20)];
-    websiteLabel.textAlignment = NSTextAlignmentCenter;
-    websiteLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    websiteLabel.numberOfLines = 0;
-    [websiteLabel setFont:[UIFont systemFontOfSize:9]];
-    [websiteLabel setTextColor:[UIColor grayColor]];
-    websiteLabel.text = self.currentUser.userInfo;
+    UILabel *bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 90, 90, 20)];
+    bioLabel.textAlignment = NSTextAlignmentCenter;
+    bioLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    bioLabel.numberOfLines = 0;
+    [bioLabel setFont:[UIFont systemFontOfSize:9]];
+    [bioLabel setTextColor:[UIColor grayColor]];
+    bioLabel.text = self.currentUser.userInfo;
     NSLog(@"%@", self.currentUser.userInfo);
-    [websiteLabel sizeToFit];
-    [self.headerView addSubview:websiteLabel];
+    [bioLabel sizeToFit];
+    [self.headerView addSubview:bioLabel];
     
     
     self.headerView.labelBio.text = self.currentUser.userBio;
@@ -488,8 +488,14 @@
     [websiteLabel setFont:[UIFont systemFontOfSize:9]];
     [websiteLabel setTextColor:[UIColor grayColor]];
     websiteLabel.text = self.currentUser.companyWeb;
-    [self.headerView addSubview:websiteLabel];
+    [websiteLabel setUserInteractionEnabled:YES];
     
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openUserWebSite)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    [websiteLabel addGestureRecognizer:tapGestureRecognizer];
+    websiteLabel.userInteractionEnabled = YES;
+    
+    [self.headerView addSubview:websiteLabel];
     
     [self.headerView.imageViewUser hnk_setImageFromURL:[[NSURL alloc]initWithString:self.currentUser.userAvatarPath]];
     
@@ -572,6 +578,11 @@
     [self.navigationController pushViewController:commentsViewController animated:YES];
 }
 
-
+- (void) openUserWebSite
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.currentUser.companyWeb]];
+    
+    [self becomeFirstResponder];
+}
 
 @end

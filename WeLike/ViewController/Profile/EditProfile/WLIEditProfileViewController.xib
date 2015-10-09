@@ -11,6 +11,7 @@
                 <outlet property="mapViewLocation" destination="dNd-Ci-mds" id="0db-Je-qeC"/>
                 <outlet property="scrollViewEditProfile" destination="mQa-fn-KF3" id="JXF-KG-ioW"/>
                 <outlet property="textFieldAddress" destination="JhX-HL-t5P" id="Kjm-M2-m35"/>
+                <outlet property="textFieldBio" destination="mnP-7M-HcD" id="DhW-SL-KAE"/>
                 <outlet property="textFieldEmail" destination="ncO-DD-iS9" id="2EJ-dD-Q5r"/>
                 <outlet property="textFieldFullName" destination="SYl-qX-ErP" id="EhR-qM-DCp"/>
                 <outlet property="textFieldPassword" destination="cGv-wh-KW1" id="56E-ml-76k"/>
@@ -69,6 +70,12 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="bio" minimumFontSize="17" id="mnP-7M-HcD">
+                    <rect key="frame" x="20" y="368" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="SiW-e0-vJf">
                     <rect key="frame" x="110" y="20" width="100" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -85,7 +92,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" id="PVB-0e-ccI">
-                    <rect key="frame" x="0.0" y="360" width="320" height="310"/>
+                    <rect key="frame" x="0.0" y="406" width="320" height="310"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="youtube video id" minimumFontSize="17" id="QGD-dG-zDe">

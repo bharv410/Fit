@@ -437,6 +437,18 @@
     self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
     self.headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
     
+    UILabel *websiteLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 90, 90, 20)];
+    websiteLabel.textAlignment = NSTextAlignmentCenter;
+    websiteLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    websiteLabel.numberOfLines = 0;
+    [websiteLabel setFont:[UIFont systemFontOfSize:9]];
+    [websiteLabel setTextColor:[UIColor grayColor]];
+    websiteLabel.text = self.currentUser.userInfo;
+    NSLog(@"%@", self.currentUser.userInfo);
+    [websiteLabel sizeToFit];
+    [self.headerView addSubview:websiteLabel];
+    
+    
     self.headerView.labelBio.text = self.currentUser.userBio;
     self.tableView.tableHeaderView = self.headerView;
     [self setupMyPage];

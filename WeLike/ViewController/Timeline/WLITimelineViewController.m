@@ -196,7 +196,7 @@
         [self getPosts];
     }];
     [self performSelector:@selector(setupActivityBadge) withObject:nil afterDelay:2.0];
-    [self performSelector:@selector(showMessagesButton) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(showMessagesButton:) withObject:0 afterDelay:2.0];
     NSLog(@"username is %@", [WLIConnect sharedConnect].currentUser.userUsername);
     //[WLIConnect sharedConnect].currentUser.userUsername = @"xyzxyz";
 }
@@ -309,13 +309,15 @@
         [ParseSingleton recordActivity:sharedConnect.currentUser.userUsername forSource:post.user.userUsername withActivitytype:@"like" withPostId:[NSString stringWithFormat:@"%d",post.postID]];
     }
 }
--(void)showMessagesButton{
+-(void)showMessagesButton: (int)unreadMessages{
     UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 35, 35)];
     [button setImage:[UIImage imageNamed:@"messagesbutton.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(goToMessages) forControlEvents:UIControlEventTouchUpInside];
     
+    if(unreadMessages>0){
     JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:button alignment:JSBadgeViewAlignmentTopRight];
-    badgeView.badgeText=@"0";
+    badgeView.badgeText=[NSString stringWithFormat:@"%d",unreadMessages];
+    }
     
     UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem =back;
@@ -327,14 +329,17 @@
     [query whereKey:@"sourceId" equalTo:[WLIConnect sharedConnect].currentUser.userUsername];
     [query whereKey:@"read" equalTo:[NSNumber numberWithBool:NO]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
     
         UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(0, 0, 30, 30);
         [button setImage:[UIImage imageNamed:@"activityicon.png"] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(goToActivity)forControlEvents:UIControlEventTouchUpInside];
         
+        if(objects.count >0){ //only show if its not 0
         JSBadgeView *badgeView = [[JSBadgeView alloc] initWithParentView:button alignment:JSBadgeViewAlignmentTopLeft];
         badgeView.badgeText=[NSString stringWithFormat:@"%lu", (unsigned long)objects.count];
+        }
         UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.leftBarButtonItem = anotherButton;
     }];

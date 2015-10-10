@@ -13,25 +13,36 @@
 
 + (void)recordActivity:(NSString *)userId forSource:(NSString *)sourceId withActivitytype:(NSString *)activityType withPostId:(NSString *)postId {
     
+    NSString *activityText = [NSString stringWithFormat:@"%@ added a %@ on your photo",sourceId,activityType];
+    
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                          activityText, @"alert",
+                          @"Increment", @"badge",
+                          nil];
+    PFPush *push = [[PFPush alloc] init];
+    [push setChannels:[NSArray arrayWithObjects:sourceId, nil]];
+    [push setData:data];
+    [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if(succeeded){
+            NSLog(@"sent this push \n %@",activityText);
+        }
+    }];
+    
+    
+    
 PFObject *newActivity = [PFObject objectWithClassName:@"Activity"];
 
-    NSLog(postId);
 newActivity[@"postID"] = postId;
-    NSLog(sourceId);
-    newActivity[@"sourceId"] = sourceId;
-    NSLog(userId);
+newActivity[@"sourceId"] = sourceId;
 newActivity[@"userID"] = userId;
-    NSLog(activityType);
 newActivity[@"activityType"] = activityType;
-    
-    newActivity[@"read"] = [NSNumber numberWithBool:NO];
+newActivity[@"read"] = [NSNumber numberWithBool:NO];
 
 [newActivity saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     if (succeeded) {
-        // The object has been saved.
-        NSLog(@"succeeded recording activity");
+        NSLog(@"sent this activity \n %@",activityText);
+
     } else {
-        // There was a problem, check error.description
         NSLog(error.description);
     }
 }];

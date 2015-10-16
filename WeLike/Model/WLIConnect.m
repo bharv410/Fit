@@ -338,7 +338,7 @@ static WLIConnect *sharedConnect;
                 }
                 if (companyPhone.length) {
                     [example setObject:companyPhone forKey:@"youtubeString"];
-                    updatedUser.youtubeString = companyPhone;
+                    updatedUser.youtubeString = [self extractYoutubeIdFromLink:companyPhone];
                 }
                 if (companyWeb.length) {
                     [example setObject:companyWeb forKey:@"website"];
@@ -357,6 +357,22 @@ static WLIConnect *sharedConnect;
         }];
     }
 }
+
+- (NSString *)extractYoutubeIdFromLink:(NSString *)link {
+    
+    NSString *regexString = @"((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)";
+    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:regexString
+                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                              error:nil];
+    
+    NSArray *array = [regExp matchesInString:link options:0 range:NSMakeRange(0,link.length)];
+    if (array.count > 0) {
+        NSTextCheckingResult *result = array.firstObject;
+        return [link substringWithRange:result.range];
+    }
+    return nil;
+}
+
 
 - (void)newUsersWithPageSize:(int)pageSize onCompletion:(void (^)(NSMutableArray *users, ServerResponse serverResponseCode))completion {
     

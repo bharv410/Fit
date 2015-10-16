@@ -41,6 +41,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *chooseSpeciality;
 @property (retain, nonatomic) NSNumber *numberOfUsers;
 
+- (IBAction)chooseSpecialtyTouchUpInside:(id)sender;
 
 - (IBAction)selectClients:(id)sender;
 

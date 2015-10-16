@@ -444,6 +444,10 @@
     self.mapViewLocation.userTrackingMode = MKUserTrackingModeNone;
 }
 
+- (IBAction)chooseSpecialtyTouchUpInside:(id)sender {
+    [self.view endEditing:YES];
+}
+
 - (IBAction)selectClients:(id)sender {
     
     NSArray *arr = [[NSArray alloc] init];

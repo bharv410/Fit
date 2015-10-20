@@ -17,7 +17,9 @@ PODS:
   - Haneke (1.0.1)
   - JSBadgeView (1.4.1)
   - LayerKit (0.13.1)
-  - SKSplashView (0.1.1)
+  - Stripe (6.0.0):
+    - Stripe/Core (= 6.0.0)
+  - Stripe/Core (6.0.0)
   - XCDYouTubeKit (2.2.0)
 
 DEPENDENCIES:
@@ -26,7 +28,7 @@ DEPENDENCIES:
   - Haneke (~> 1.0)
   - JSBadgeView
   - LayerKit
-  - SKSplashView
+  - Stripe
   - XCDYouTubeKit (~> 2.2.0)
 
 SPEC CHECKSUMS:
@@ -39,7 +41,7 @@ SPEC CHECKSUMS:
   Haneke: d60be8b96b228633b24708dd153169d6849d6f78
   JSBadgeView: 3861ddee41094284d9468e6d0af5107f703aaac5
   LayerKit: f466325b803cc311f33edd1e715685c20509a3b0
-  SKSplashView: 9cca64e4f0eb556b938b41f63879844124f1aa2c
+  Stripe: eeb348b09a3bc36ebaa99c36493635da3ad01227
   XCDYouTubeKit: 920ff5dfdf37f0f41b19610c5270b2ed23b05b13
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.39.0

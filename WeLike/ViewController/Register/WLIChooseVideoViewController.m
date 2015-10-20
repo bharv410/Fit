@@ -9,6 +9,7 @@
 #import "WLIChooseVideoViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <Parse/Parse.h>
+#import "PaymentViewController.h"
 
 @interface WLIChooseVideoViewController ()
 
@@ -85,9 +86,10 @@
                 NSLog(@"youtube id is %@", youtubeString);
             
             // Save
-            [userStats saveInBackground];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
+            [userStats saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                PaymentViewController *vc2 = [[PaymentViewController alloc] init];
+                [self.navigationController pushViewController:vc2 animated:YES];
+            }];
         } else {
             NSLog(@"Error: %@", error);
         }

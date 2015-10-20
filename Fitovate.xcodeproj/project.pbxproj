@@ -279,6 +279,7 @@
 		6BA07B0F1A5F4B6600382FF1 /* Default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B0E1A5F4B6600382FF1 /* Default.jpg */; };
 		6BA07B111A5F4B8000382FF1 /* Default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B101A5F4B8000382FF1 /* Default@2x.jpg */; };
 		6BA07B131A5F4BB900382FF1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B121A5F4BB900382FF1 /* Default-568h@2x.png */; };
+		6BA0DFF11BD6EACD004C584B /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA0DFF01BD6EACD004C584B /* PaymentViewController.m */; settings = {ASSET_TAGS = (); }; };
 		6BA374E91A8031A000250A62 /* LQSChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA374E81A8031A000250A62 /* LQSChatMessageCell.m */; };
 		6BA9D6AA1B86839D00A989D1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9D6A91B86839D00A989D1 /* WebViewController.m */; };
 		6BCFD4771AE56D2600622F01 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCFD4761AE56D2600622F01 /* Social.framework */; };
@@ -721,6 +722,8 @@
 		6BA07B0E1A5F4B6600382FF1 /* Default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Default.jpg; sourceTree = "<group>"; };
 		6BA07B101A5F4B8000382FF1 /* Default@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Default@2x.jpg"; sourceTree = "<group>"; };
 		6BA07B121A5F4BB900382FF1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6BA0DFEF1BD6EACD004C584B /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		6BA0DFF01BD6EACD004C584B /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		6BA374E71A8031A000250A62 /* LQSChatMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQSChatMessageCell.h; sourceTree = "<group>"; };
 		6BA374E81A8031A000250A62 /* LQSChatMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQSChatMessageCell.m; sourceTree = "<group>"; };
 		6BA9D6A81B86839D00A989D1 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
@@ -1329,6 +1332,8 @@
 				6B5E08A71A609B160020D78B /* WLIChooseVideoViewController.xib */,
 				6B1D25501AAB823C003D9EB5 /* NIDropDown.h */,
 				6B1D25511AAB823C003D9EB5 /* NIDropDown.m */,
+				6BA0DFEF1BD6EACD004C584B /* PaymentViewController.h */,
+				6BA0DFF01BD6EACD004C584B /* PaymentViewController.m */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -1932,6 +1937,7 @@
 				2CCE1A9317ECD32B00680126 /* Resources */,
 				BB84E6168D8F3AF8EBC821D7 /* Copy Pods Resources */,
 				6B9DE8B71B43501D00BD0D0E /* ShellScript */,
+				E24C598A8403F91BFED0F770 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2214,6 +2220,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fitovate/Pods-Fitovate-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E24C598A8403F91BFED0F770 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fitovate/Pods-Fitovate-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2239,6 +2260,7 @@
 				2C6D27BF1896BACA00C459CB /* SBJsonStreamTokeniser.m in Sources */,
 				2C6D27BC1896BACA00C459CB /* SBJsonStreamParserAccumulator.m in Sources */,
 				2C6D27E71896BACA00C459CB /* WLILoginViewController.m in Sources */,
+				6BA0DFF11BD6EACD004C584B /* PaymentViewController.m in Sources */,
 				2C6D27EB1896BACA00C459CB /* WLINewPostViewController.m in Sources */,
 				6B1190841B5B0C1900AAF9A6 /* JSMessageSoundEffect.m in Sources */,
 				2C6D27FC1896BACA00C459CB /* WLIWelcomeViewController.m in Sources */,
@@ -2462,6 +2484,21 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeLike/Fitovate-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Atlas\"/**",
+					"\"${PODS_ROOT}/Headers/Public/Google\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleNetworkingUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/Haneke\"",
+					"\"${PODS_ROOT}/Headers/Public/JSBadgeView\"",
+					"\"${PODS_ROOT}/Headers/Public/LayerKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Stripe\"",
+					"\"${PODS_ROOT}/Headers/Public/XCDYouTubeKit\"",
+				);
 				INFOPLIST_FILE = "WeLike/Fitovate-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2471,7 +2508,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
@@ -2509,6 +2546,21 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeLike/Fitovate-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Atlas\"/**",
+					"\"${PODS_ROOT}/Headers/Public/Google\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleNetworkingUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/Haneke\"",
+					"\"${PODS_ROOT}/Headers/Public/JSBadgeView\"",
+					"\"${PODS_ROOT}/Headers/Public/LayerKit\"",
+					"\"${PODS_ROOT}/Headers/Public/Stripe\"",
+					"\"${PODS_ROOT}/Headers/Public/XCDYouTubeKit\"",
+				);
 				INFOPLIST_FILE = "WeLike/Fitovate-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2518,7 +2570,7 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",

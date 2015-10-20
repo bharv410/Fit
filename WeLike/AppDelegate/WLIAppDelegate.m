@@ -20,9 +20,12 @@
 #import "MainViewController.h"
 #import "WLIChooseVideoViewController.h"
 #import "NormalUserProfileTableViewController.h"
+#import "Stripe.h"
 
 NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsException";
 NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE%2FTxwzvba3Wy%2FupvESaKZhg1ngT4E8V7bqvT1RpL5F0UIW8FKbWarcsUJ51Nx%2BGwlHpeETeLbU4B8AYBUSRsopL5aGEZx7OrKL%2B%2B60kOeKuNLZuf%2FTVdRXKNLa1LuXU%3D";
+
+NSString * const StripePublishableKey = @"pk_live_xDtI56GmM3R1KsxSayML0iYY";
 
 @implementation WLIAppDelegate
 
@@ -213,6 +216,10 @@ NSString *const OOVOOToken = @"MDAxMDAxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoE
       NSFontAttributeName, nil]];
 }
 - (void)initSDKs {
+    
+    [Stripe setDefaultPublishableKey:StripePublishableKey];
+    
+    
     //benmark parse
     [Parse enableLocalDatastore];
     

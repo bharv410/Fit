@@ -12,6 +12,7 @@
 #import "NIDropDown.h"
 #import "QuartzCore/QuartzCore.h"
 #import <Parse/Parse.h>
+#import "MKStoreKit.h"
 #import "FitovateData.h"
 
 @interface WLIRegisterViewController ()
@@ -266,7 +267,22 @@
 
 - (IBAction)segmentedControlUserTypeValueChanged:(UISegmentedControl *)sender {
     
-    [self adjustViewFrames];
+    if ([[MKStoreKit sharedKit] isProductPurchased:@"trainerSubscribed"]) {
+        [self adjustViewFrames];
+    }else{
+        [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"trainerSubscribed"];
+        [[NSNotificationCenter defaultCenter] addObserverForName:kMKStoreKitProductPurchasedNotification
+                                                          object:nil
+                                                           queue:[[NSOperationQueue alloc] init]
+                                                      usingBlock:^(NSNotification *note) {
+                                                          
+                                                          NSLog(@"Purchased/Subscribed to product with id: %@", [note object]);
+                                                          
+                                                          NSLog(@"%@", [[MKStoreKit sharedKit] valueForKey:@"purchaseRecord"]);
+                                                          [self adjustViewFrames];
+                                                      }];
+    }
+
 }
 
 - (IBAction)handleLongTapGesture:(UILongPressGestureRecognizer *)sender {

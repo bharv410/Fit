@@ -144,10 +144,10 @@
 		6B0DECBC1B2E46710057033C /* PGConversationListViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB61B2E41950057033C /* PGConversationListViewController.h */; };
 		6B0DECBD1B2E46760057033C /* PGConversationViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECB91B2E42970057033C /* PGConversationViewController.h */; };
 		6B0DECC01B2E5CF00057033C /* PGAvater.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0DECBF1B2E5CF00057033C /* PGAvater.m */; };
-		6B0E7A9B1BB33B31009BCDA1 /* reportimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A991BB33B31009BCDA1 /* reportimage.jpeg */; settings = {ASSET_TAGS = (); }; };
-		6B0E7A9C1BB33B31009BCDA1 /* reportimage@2x.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9A1BB33B31009BCDA1 /* reportimage@2x.jpeg */; settings = {ASSET_TAGS = (); }; };
-		6B0E7A9F1BB33C47009BCDA1 /* reportphotoimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9D1BB33C47009BCDA1 /* reportphotoimage.png */; settings = {ASSET_TAGS = (); }; };
-		6B0E7AA01BB33C47009BCDA1 /* reportphotoimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9E1BB33C47009BCDA1 /* reportphotoimage@2x.png */; settings = {ASSET_TAGS = (); }; };
+		6B0E7A9B1BB33B31009BCDA1 /* reportimage.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A991BB33B31009BCDA1 /* reportimage.jpeg */; };
+		6B0E7A9C1BB33B31009BCDA1 /* reportimage@2x.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9A1BB33B31009BCDA1 /* reportimage@2x.jpeg */; };
+		6B0E7A9F1BB33C47009BCDA1 /* reportphotoimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9D1BB33C47009BCDA1 /* reportphotoimage.png */; };
+		6B0E7AA01BB33C47009BCDA1 /* reportphotoimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B0E7A9E1BB33C47009BCDA1 /* reportphotoimage@2x.png */; };
 		6B1190191B5B060300AAF9A6 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B1190181B5B060300AAF9A6 /* MainStoryboard_iPhone.storyboard */; };
 		6B11901C1B5B0A1E00AAF9A6 /* FileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B11901B1B5B0A1E00AAF9A6 /* FileLogger.m */; };
 		6B11901F1B5B0ACC00AAF9A6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B11901E1B5B0ACC00AAF9A6 /* MainViewController.m */; };
@@ -247,6 +247,8 @@
 		6B32A4471B050249002E172C /* ConversationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B32A4451B050249002E172C /* ConversationTableViewController.xib */; };
 		6B33EB911B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B33EB8F1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m */; };
 		6B33EB921B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B33EB901B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib */; };
+		6B369BDA1BE9355100D903ED /* MKStoreKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B369BD91BE9355100D903ED /* MKStoreKit.m */; };
+		6B369BDC1BE939D200D903ED /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B369BDB1BE939D200D903ED /* StoreKit.framework */; };
 		6B37FE9F1AE41BD700021F4F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B37FE9E1AE41BD700021F4F /* Parse.framework */; };
 		6B59A2FB1B1A597800F1F92A /* AppIcon29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B59A2F21B1A597800F1F92A /* AppIcon29x29.png */; };
 		6B59A2FC1B1A597800F1F92A /* AppIcon29x29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B59A2F31B1A597800F1F92A /* AppIcon29x29@2x.png */; };
@@ -279,7 +281,7 @@
 		6BA07B0F1A5F4B6600382FF1 /* Default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B0E1A5F4B6600382FF1 /* Default.jpg */; };
 		6BA07B111A5F4B8000382FF1 /* Default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B101A5F4B8000382FF1 /* Default@2x.jpg */; };
 		6BA07B131A5F4BB900382FF1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BA07B121A5F4BB900382FF1 /* Default-568h@2x.png */; };
-		6BA0DFF11BD6EACD004C584B /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA0DFF01BD6EACD004C584B /* PaymentViewController.m */; settings = {ASSET_TAGS = (); }; };
+		6BA0DFF11BD6EACD004C584B /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA0DFF01BD6EACD004C584B /* PaymentViewController.m */; };
 		6BA374E91A8031A000250A62 /* LQSChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA374E81A8031A000250A62 /* LQSChatMessageCell.m */; };
 		6BA9D6AA1B86839D00A989D1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9D6A91B86839D00A989D1 /* WebViewController.m */; };
 		6BCFD4771AE56D2600622F01 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCFD4761AE56D2600622F01 /* Social.framework */; };
@@ -683,6 +685,9 @@
 		6B33EB8E1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIUserPhotoControllerTableViewController.h; sourceTree = "<group>"; };
 		6B33EB8F1B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIUserPhotoControllerTableViewController.m; sourceTree = "<group>"; };
 		6B33EB901B67F04800C7C053 /* WLIUserPhotoControllerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLIUserPhotoControllerTableViewController.xib; sourceTree = "<group>"; };
+		6B369BD81BE9355100D903ED /* MKStoreKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKStoreKit.h; sourceTree = "<group>"; };
+		6B369BD91BE9355100D903ED /* MKStoreKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKStoreKit.m; sourceTree = "<group>"; };
+		6B369BDB1BE939D200D903ED /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		6B37FE9E1AE41BD700021F4F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6B410FD51A5E12D8004B4823 /* ooVooSDK-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "ooVooSDK-iOS.framework"; sourceTree = "<group>"; };
 		6B59A2F21B1A597800F1F92A /* AppIcon29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon29x29.png; sourceTree = "<group>"; };
@@ -789,6 +794,7 @@
 				6B0A19D91A69ED86002A35C2 /* libstdc++.dylib in Frameworks */,
 				AD71601D1A38B9E40043E740 /* libz.dylib in Frameworks */,
 				AD71601B1A38B9D60043E740 /* libsqlite3.dylib in Frameworks */,
+				6B369BDC1BE939D200D903ED /* StoreKit.framework in Frameworks */,
 				2C8AF2801A1B772F0003B22E /* QuartzCore.framework in Frameworks */,
 				2C8AF27E1A1B77220003B22E /* OpenGLES.framework in Frameworks */,
 				2C8AF27B1A1B76BB0003B22E /* Accelerate.framework in Frameworks */,
@@ -1052,6 +1058,8 @@
 		2C6D26DC1896BACA00C459CB /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				6B369BD81BE9355100D903ED /* MKStoreKit.h */,
+				6B369BD91BE9355100D903ED /* MKStoreKit.m */,
 				2C6D26DD1896BACA00C459CB /* WLIAppDelegate.h */,
 				2C6D26DE1896BACA00C459CB /* WLIAppDelegate.m */,
 			);
@@ -1573,6 +1581,7 @@
 		2CCE1A9717ECD32B00680126 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6B369BDB1BE939D200D903ED /* StoreKit.framework */,
 				6BCFD4781AE56D3100622F01 /* Accounts.framework */,
 				6BCFD4761AE56D2600622F01 /* Social.framework */,
 				6B37FE9E1AE41BD700021F4F /* Parse.framework */,
@@ -1965,7 +1974,7 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.SafariKeychain = {
 								enabled = 1;
@@ -2288,6 +2297,7 @@
 				6B0DECBB1B2E42970057033C /* PGConversationViewController.m in Sources */,
 				6BA9D6AA1B86839D00A989D1 /* WebViewController.m in Sources */,
 				2C6D27EF1896BACA00C459CB /* WLIPostViewController.m in Sources */,
+				6B369BDA1BE9355100D903ED /* MKStoreKit.m in Sources */,
 				2C6D27B21896BACA00C459CB /* MBProgressHUD.m in Sources */,
 				2C6D27CF1896BACA00C459CB /* WLIUser.m in Sources */,
 				6B1190861B5B0C1900AAF9A6 /* JSMessageTextView.m in Sources */,

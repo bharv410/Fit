@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomHeaderView">
@@ -14,6 +14,7 @@
                 <outlet property="labelFollowersCount" destination="s6j-Sz-nHL" id="rsa-HS-0jf"/>
                 <outlet property="labelFollowingCount" destination="tko-GJ-EHO" id="7fN-cC-wah"/>
                 <outlet property="labelName" destination="lT7-7V-Fcw" id="iSH-A5-BUU"/>
+                <outlet property="siteText" destination="buh-m2-lxL" id="yZe-yM-8sx"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -53,13 +54,13 @@
                         <rect key="frame" x="8" y="106" width="280" height="21"/>
                     </variation>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fA-mH-yS6">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fA-mH-yS6">
                     <rect key="frame" x="20" y="216" width="280" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="204" width="280" height="21"/>
+                        <rect key="frame" x="8" y="235" width="280" height="21"/>
                     </variation>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icr-UW-Z2R">
@@ -91,6 +92,19 @@
                         <rect key="frame" x="8" y="175" width="126" height="21"/>
                     </variation>
                 </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="www.fitovateapp.com" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="buh-m2-lxL">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <accessibility key="accessibilityConfiguration" hint="www.fitovateapp.com" label="www.fitovateapp.com">
+                        <accessibilityTraits key="traits" link="YES"/>
+                    </accessibility>
+                    <color key="textColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="8" y="195" width="280" height="32"/>
+                    </variation>
+                </textView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <variation key="default">
@@ -103,6 +117,7 @@
                     <exclude reference="icr-UW-Z2R"/>
                     <exclude reference="tko-GJ-EHO"/>
                     <exclude reference="s6j-Sz-nHL"/>
+                    <exclude reference="buh-m2-lxL"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -115,6 +130,7 @@
                     <include reference="icr-UW-Z2R"/>
                     <include reference="tko-GJ-EHO"/>
                     <include reference="s6j-Sz-nHL"/>
+                    <include reference="buh-m2-lxL"/>
                 </mask>
             </variation>
         </view>

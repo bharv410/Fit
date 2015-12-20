@@ -318,6 +318,11 @@ static WLIConnect *sharedConnect;
         completion(nil, BAD_REQUEST);
     } else {
         
+        
+        
+        
+        
+        
         PFQuery *query = [PFQuery queryWithClassName:@"Users"];
         [query whereKey:@"userID" equalTo:[NSNumber numberWithInt:userID]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

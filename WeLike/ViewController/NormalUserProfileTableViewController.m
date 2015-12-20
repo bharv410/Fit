@@ -444,12 +444,17 @@
     [bioLabel setFont:[UIFont systemFontOfSize:9]];
     [bioLabel setTextColor:[UIColor grayColor]];
     bioLabel.text = self.currentUser.userInfo;
-    NSLog(@"%@", self.currentUser.userInfo);
+    
     [bioLabel sizeToFit];
     [self.headerView addSubview:bioLabel];
     
     
     self.headerView.labelBio.text = self.currentUser.userBio;
+    self.headerView.siteText.text = self.currentUser.companyWeb;
+    self.headerView.siteText.editable = NO;
+    self.headerView.siteText.dataDetectorTypes = UIDataDetectorTypeAll;
+    NSLog(@"web = %@", self.currentUser.companyWeb);
+    
     self.tableView.tableHeaderView = self.headerView;
     [self setupMyPage];
 }
@@ -489,6 +494,7 @@
     [websiteLabel setTextColor:[UIColor grayColor]];
     websiteLabel.text = self.currentUser.companyWeb;
     [websiteLabel setUserInteractionEnabled:YES];
+    NSLog(@"benmarkswag");
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openUserWebSite)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
@@ -505,7 +511,13 @@
     self.headerView.labelFollowingCount.text = [NSString stringWithFormat:@"following %d", self.currentUser.followingCount];
     self.headerView.labelFollowersCount.text = [NSString stringWithFormat:@"followers %d", self.currentUser.followersCount];
     
+
     self.headerView.labelBio.text = self.currentUser.userBio;
+    self.headerView.siteText.text = self.currentUser.companyWeb;
+    self.headerView.siteText.editable = NO;
+    self.headerView.siteText.dataDetectorTypes = UIDataDetectorTypeAll;
+    NSLog(@"web = %@", self.currentUser.companyWeb);
+    
     
     UIView *videoPlaceHolderVIew = [[UIView alloc]initWithFrame:CGRectMake(0, 240, screenWidth, screenWidth)];
     

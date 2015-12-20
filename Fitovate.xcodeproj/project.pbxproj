@@ -2478,8 +2478,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Fitovate.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"Users/benjamin.harvey/Desktop/stuff/Fitovate/wlinew/wli/ooVooSDK-iOS.framework",
@@ -2523,8 +2523,9 @@
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fitovate.Fitovate;
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "d518d5b8-3c11-452e-9d76-7b9ef54843d0";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "armv7 armv7s i386 arm64";
@@ -2540,8 +2541,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Fitovate.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Benjamin Harvey (PVPM3TLMVF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"Users/benjamin.harvey/Desktop/stuff/Fitovate/wlinew/wli/ooVooSDK-iOS.framework",
@@ -2585,8 +2586,9 @@
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fitovate.Fitovate;
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "d518d5b8-3c11-452e-9d76-7b9ef54843d0";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				VALID_ARCHS = "armv7 armv7s i386 arm64";
 				WRAPPER_EXTENSION = app;

@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelBio;
 @property (strong, nonatomic) IBOutlet UIButton *editProfileButton;
 
+@property (weak, nonatomic) IBOutlet UITextView *siteText;
 @property (strong, nonatomic) IBOutlet UIButton *buttonFollow;
 @property (strong, nonatomic) IBOutlet UIButton *buttonMessage;
 

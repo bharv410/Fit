@@ -35,13 +35,7 @@
     self.scrollViewEditProfile.contentInset = adjustForTabbarInsets;
     self.scrollViewEditProfile.scrollIndicatorInsets = adjustForTabbarInsets;
     
-    
-    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    saveButton.adjustsImageWhenHighlighted = NO;
-    saveButton.frame = CGRectMake(0.0f, 0.0f, 40.0f, 30.0f);
-    [saveButton setImage:[UIImage imageNamed:@"nav-btn-edit.png"] forState:UIControlStateNormal];
-    [saveButton addTarget:self action:@selector(barButtonItemSaveTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonSystemItemSave target:self action:@selector(barButtonItemSaveTouchUpInside:)];
     
     [self.scrollViewEditProfile addSubview:self.viewContentEditProfile];
     toolbar.mainScrollView = self.scrollViewEditProfile;
@@ -89,13 +83,19 @@
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Email is required." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else if (!self.textFieldUsername.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Username is required." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    } else if (![self.textFieldPassword.text isEqualToString:self.textFieldRepassword.text]) {
+    } else if (![self.textFieldPassword.text isEqualToString:self.textFieldRepassword.text] || !self.textFieldPassword.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Password and repassword doesn't match." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else if (!self.textFieldFullName.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Full Name is required." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else if (!self.imageViewAvatar.image) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Avatar image is required." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
+        NSLog(@"benmark ben forced exit");
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        //benmark hah
+        return;
+        
         
         NSString *password;
         if (self.textFieldPassword.text.length) {
@@ -151,6 +151,7 @@
             if (imageReplaced) {
                 image = self.imageViewAvatar.image;
             }
+            
             
             [sharedConnect updateUserWithUserID:sharedConnect.currentUser.userID userType:WLIUserTypePerson userEmail:self.textFieldEmail.text password:password userAvatar:image userFullName:self.textFieldFullName.text userInfo:@"" latitude:0 longitude:0 companyAddress:@"" companyPhone:@"" companyWeb:@"" onCompletion:^(WLIUser *user, ServerResponse serverResponseCode) {
                 [hud hide:YES];

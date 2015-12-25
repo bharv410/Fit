@@ -1968,12 +1968,15 @@
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					2CCE1A9417ECD32B00680126 = {
-						DevelopmentTeam = 7ULHJW5669;
+						DevelopmentTeam = 5RP2877EJ2;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.SafariKeychain = {
@@ -2525,7 +2528,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitovate.Fitovate;
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "98536ab9-7f7b-4211-961e-d6111924b680";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "armv7 armv7s i386 arm64";
@@ -2588,7 +2591,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitovate.Fitovate;
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "98536ab9-7f7b-4211-961e-d6111924b680";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				VALID_ARCHS = "armv7 armv7s i386 arm64";
 				WRAPPER_EXTENSION = app;

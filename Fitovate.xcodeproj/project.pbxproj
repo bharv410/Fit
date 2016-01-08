@@ -322,6 +322,7 @@
 		C7B424B7183D2519003B51D0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B424B6183D2519003B51D0 /* MessageUI.framework */; };
 		C7B424B9183D2540003B51D0 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B424B8183D2540003B51D0 /* libsqlite3.0.dylib */; };
 		C7B424BB183D254C003B51D0 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B424BA183D254C003B51D0 /* libz.1.2.5.dylib */; };
+		FA4CBDDB1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA4CBDDA1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -773,6 +774,7 @@
 		C7B424B6183D2519003B51D0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C7B424B8183D2540003B51D0 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C7B424BA183D254C003B51D0 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		FA4CBDDA1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MKStoreKitConfigs.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1058,6 +1060,7 @@
 		2C6D26DC1896BACA00C459CB /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				FA4CBDDA1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist */,
 				6B369BD81BE9355100D903ED /* MKStoreKit.h */,
 				6B369BD91BE9355100D903ED /* MKStoreKit.m */,
 				2C6D26DD1896BACA00C459CB /* WLIAppDelegate.h */,
@@ -2132,6 +2135,7 @@
 				6B774ED71A6A1509007A8277 /* tabbarnearby.png in Resources */,
 				2C6D282A1896BACA00C459CB /* custom-activity.png in Resources */,
 				6B11909B1B5B0C1900AAF9A6 /* button-photo.png in Resources */,
+				FA4CBDDB1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist in Resources */,
 				6B267D371A65EE5000F0C056 /* nav-btn-close@2x.png in Resources */,
 				6B11909A1B5B0C1900AAF9A6 /* send-button@2x.png in Resources */,
 				6B2A7ABD1B96182400AEC1D7 /* activityicon@3x.png in Resources */,
@@ -2481,8 +2485,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Fitovate.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"Users/benjamin.harvey/Desktop/stuff/Fitovate/wlinew/wli/ooVooSDK-iOS.framework",
@@ -2521,14 +2525,14 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitovate.Fitovate;
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "98536ab9-7f7b-4211-961e-d6111924b680";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALID_ARCHS = "armv7 armv7s i386 arm64";
@@ -2544,8 +2548,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Fitovate.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Fitovate, LLC (7ULHJW5669)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"Users/benjamin.harvey/Desktop/stuff/Fitovate/wlinew/wli/ooVooSDK-iOS.framework",
@@ -2584,14 +2588,14 @@
 					"$(PROJECT_DIR)/WeLike/3rdParty/AviarySDK",
 					"$(PROJECT_DIR)/Pods/LayerKit/LayerKit.embeddedframework/LayerKit.framework/Versions/A",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitovate.Fitovate;
 				PRODUCT_NAME = Fitovate;
-				PROVISIONING_PROFILE = "98536ab9-7f7b-4211-961e-d6111924b680";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WeLike/ViewController/Nearby/Fitovate-Bridging-Header.h";
 				VALID_ARCHS = "armv7 armv7s i386 arm64";
 				WRAPPER_EXTENSION = app;

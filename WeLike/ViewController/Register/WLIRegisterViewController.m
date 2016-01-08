@@ -267,6 +267,7 @@
 
 - (IBAction)segmentedControlUserTypeValueChanged:(UISegmentedControl *)sender {
     
+    
     if ([[MKStoreKit sharedKit] isProductPurchased:@"trainerSubscribed"]) {
         [self adjustViewFrames];
     }else{

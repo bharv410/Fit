@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Consumables</key>
+	<dict>
+		<key>com.steinlogic.iapdemo.consumable</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<integer>500</integer>
+			<key>ConsumableId</key>
+			<string>MyVirtualCurrencyWallet</string>
+		</dict>
+	</dict>
+	<key>Others</key>
+	<array>
+		<string>trainerSubscribed</string>
+		<string>com.fitovateapp.fitovate.trainer</string>
+	</array>
+	<key>SharedSecret</key>
+	<string>e9884ef2c90e4222a5a956edae480fc3</string>
+</dict>
+</plist>

@@ -182,7 +182,7 @@
     headerView.backgroundColor = [UIColor grayColor];
     UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 40)];
     labelView.textAlignment = NSTextAlignmentCenter;
-    labelView.text = @"Fitness tips and motivation";
+    labelView.text = @"Fitness Articles | Fitness Videos";
     labelView.textColor = [UIColor whiteColor];
     [headerView addSubview:labelView];
     [headerView addGestureRecognizer:gesRecognizer];
@@ -202,7 +202,19 @@
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
+    CGPoint tappedPoint = [gestureRecognizer locationInView:self.view];
+    CGFloat xCoordinate = tappedPoint.x;
+    CGFloat yCoordinate = tappedPoint.y;
+    
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat halfScreenWidth = screenRect.size.width/2;
+    if(xCoordinate>halfScreenWidth){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
+    }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.youtube.com/"]];
+    }
+    
     
 //    WebViewController *webViewController = [[WebViewController alloc] init];
 //    [webViewController setURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];

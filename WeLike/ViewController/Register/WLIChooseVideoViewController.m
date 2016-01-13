@@ -9,6 +9,7 @@
 #import "WLIChooseVideoViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <Parse/Parse.h>
+#import "MKStoreKit.h"
 #import "PaymentViewController.h"
 
 @interface WLIChooseVideoViewController ()
@@ -78,22 +79,42 @@
 
 -(void)updateUserYoutubeLink:(NSString *) youtubeString{
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
-    [query whereKey:@"username" equalTo:self.usersName];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject * userStats, NSError *error) {
-        if (!error) {
+    if ([[MKStoreKit sharedKit] isProductPurchased:@"trainerSubscribed"]) {
+        
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+        [query whereKey:@"username" equalTo:self.usersName];
+        [query getFirstObjectInBackgroundWithBlock:^(PFObject * userStats, NSError *error) {
+            if (!error) {
                 [userStats setObject:youtubeString forKey:@"youtubeString"];
                 NSLog(@"youtube id is %@", youtubeString);
-            
-            // Save
-            [userStats saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                PaymentViewController *vc2 = [[PaymentViewController alloc] init];
-                [self.navigationController pushViewController:vc2 animated:YES];
-            }];
-        } else {
-            NSLog(@"Error: %@", error);
-        }
-    }];
+                
+                // Save
+                [userStats saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                    NSLog(@"super success");
+//                    PaymentViewController *vc2 = [[PaymentViewController alloc] init];
+//                    [self.navigationController pushViewController:vc2 animated:YES];
+                    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+                }];
+            } else {
+                NSLog(@"Error: %@", error);
+            }
+        }];
+        
+    }else{
+        NSLog(@"please purchase");
+        [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"trainerSubscribed"];
+        [[NSNotificationCenter defaultCenter] addObserverForName:kMKStoreKitProductPurchasedNotification
+                                                          object:nil
+                                                           queue:[[NSOperationQueue alloc] init]
+                                                      usingBlock:^(NSNotification *note) {
+                                                          
+                                                          NSLog(@"Purchased/Subscribed to product with id: %@", [note object]);
+                                                          
+                                                          NSLog(@"%@", [[MKStoreKit sharedKit] valueForKey:@"purchaseRecord"]);
+                                                          [self updateUserYoutubeLink:youtubeString];
+                                                      }];
+    }
 }
 
 - (NSString *)extractYoutubeIdFromLink:(NSString *)link {

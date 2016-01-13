@@ -6,7 +6,6 @@
 //
 //
 #import <Stripe/Stripe.h>
-
 #import "PaymentViewController.h"
 
 @interface PaymentViewController () <STPPaymentCardTextFieldDelegate>
@@ -23,6 +22,7 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
     
     
     self.amount = [NSDecimalNumber decimalNumberWithString:@"15.99"];

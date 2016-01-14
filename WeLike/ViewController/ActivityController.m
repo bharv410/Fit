@@ -68,7 +68,45 @@
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
+    
+    
+    
+    
+    
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    
+    UITapGestureRecognizer *gesRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)]; // Declare the Gesture.
+    gesRecognizer.delegate = self;
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 40)];
+    headerView.backgroundColor = [UIColor grayColor];
+    UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 40)];
+    labelView.textAlignment = NSTextAlignmentCenter;
+    labelView.text = @"Who viewed your profile";
+    labelView.textColor = [UIColor whiteColor];
+    [headerView addSubview:labelView];
+    [headerView addGestureRecognizer:gesRecognizer];
+    self.tableViewRefresh.tableHeaderView = headerView;
 
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer{
+    PFQuery *query = [PFQuery queryWithClassName:@"Views"];
+    [query addDescendingOrder:@"createdAt"];
+    [query whereKey:@"viewed" equalTo:[WLIConnect sharedConnect].currentUser.userUsername];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            
+            
+            for (PFObject *object in objects) {
+                
+                NSString *username = object[@"viewer"];
+                NSLog(@" %@ ", username);
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

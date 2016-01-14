@@ -182,7 +182,7 @@
     headerView.backgroundColor = [UIColor grayColor];
     UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 40)];
     labelView.textAlignment = NSTextAlignmentCenter;
-    labelView.text = @"Fitness Articles | Fitness Videos";
+    labelView.text = @"Fitness Articles   |   Fitness Videos";
     labelView.textColor = [UIColor whiteColor];
     [headerView addSubview:labelView];
     [headerView addGestureRecognizer:gesRecognizer];
@@ -210,9 +210,9 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat halfScreenWidth = screenRect.size.width/2;
     if(xCoordinate>halfScreenWidth){
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.youtube.com/channel/UCDHPje8XtRC8mo3XemFeIPw/playlists?shelf_id=0&sort=dd&view=1"]];
     }else{
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.youtube.com/"]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.fitovateapp.com/blog"]];
     }
     
     

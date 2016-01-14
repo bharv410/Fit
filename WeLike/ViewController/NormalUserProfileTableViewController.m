@@ -44,6 +44,23 @@
     
     [self reloadData:YES];
     
+    
+    NSLog(@"%@ ,,, %@",self.currentUser.userType ,self.currentUser.userSpecialty);
+    [self trackView];
+}
+
+-(void)trackView{
+    PFObject *gameScore = [PFObject objectWithClassName:@"Views"];
+    gameScore[@"viewer"] = [WLIConnect sharedConnect].currentUser.userUsername;
+    gameScore[@"viewed"] = self.currentUser.userUsername;
+    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"viewed");
+        } else {
+            // There was a problem, check error.description
+            NSLog(@"error following");
+        }
+    }];
 }
 
 - (void)buttonLogoutTouchUpInside {

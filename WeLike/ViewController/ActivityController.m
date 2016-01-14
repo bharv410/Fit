@@ -12,6 +12,7 @@
 #import "WLIPostViewController.h"
 #import "WLIConnect.h"
 #import "GlobalDefines.h"
+#import "WLIViewsControllerTableViewController.h"
 #import "FitovateData.h"
 
 @interface ActivityController ()
@@ -90,23 +91,9 @@
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer{
-    PFQuery *query = [PFQuery queryWithClassName:@"Views"];
-    [query addDescendingOrder:@"createdAt"];
-    [query whereKey:@"viewed" equalTo:[WLIConnect sharedConnect].currentUser.userUsername];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            
-            
-            for (PFObject *object in objects) {
-                
-                NSString *username = object[@"viewer"];
-                NSLog(@" %@ ", username);
-            }
-        } else {
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-    }];
+    
+    WLIViewsControllerTableViewController *newVc = [[WLIViewsControllerTableViewController alloc]init];
+    [self.navigationController pushViewController:newVc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

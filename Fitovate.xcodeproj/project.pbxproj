@@ -323,6 +323,8 @@
 		C7B424B9183D2540003B51D0 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B424B8183D2540003B51D0 /* libsqlite3.0.dylib */; };
 		C7B424BB183D254C003B51D0 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B424BA183D254C003B51D0 /* libz.1.2.5.dylib */; };
 		FA4CBDDB1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA4CBDDA1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist */; };
+		FA6E247E1C483A88004DB467 /* WLIViewsControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6E247C1C483A88004DB467 /* WLIViewsControllerTableViewController.m */; };
+		FA6E247F1C483A88004DB467 /* WLIViewsControllerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6E247D1C483A88004DB467 /* WLIViewsControllerTableViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -775,6 +777,9 @@
 		C7B424B8183D2540003B51D0 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C7B424BA183D254C003B51D0 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		FA4CBDDA1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MKStoreKitConfigs.plist; sourceTree = "<group>"; };
+		FA6E247B1C483A88004DB467 /* WLIViewsControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIViewsControllerTableViewController.h; sourceTree = "<group>"; };
+		FA6E247C1C483A88004DB467 /* WLIViewsControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIViewsControllerTableViewController.m; sourceTree = "<group>"; };
+		FA6E247D1C483A88004DB467 /* WLIViewsControllerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLIViewsControllerTableViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1878,6 +1883,9 @@
 				6B30FBA51AEEBBE100BEBAD2 /* ActivityController.h */,
 				6B30FBA61AEEBBE100BEBAD2 /* ActivityController.m */,
 				6B30FBA71AEEBBE100BEBAD2 /* ActivityController.xib */,
+				FA6E247B1C483A88004DB467 /* WLIViewsControllerTableViewController.h */,
+				FA6E247C1C483A88004DB467 /* WLIViewsControllerTableViewController.m */,
+				FA6E247D1C483A88004DB467 /* WLIViewsControllerTableViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -2097,6 +2105,7 @@
 				2C6D28041896BACA00C459CB /* btn-like.png in Resources */,
 				2C6D27EC1896BACA00C459CB /* WLINewPostViewController.xib in Resources */,
 				6B1190911B5B0C1900AAF9A6 /* bubble.png in Resources */,
+				FA6E247F1C483A88004DB467 /* WLIViewsControllerTableViewController.xib in Resources */,
 				2C6D281D1896BACA00C459CB /* nav-btn-back@2x.png in Resources */,
 				6B59A2FF1B1A597800F1F92A /* AppIcon60x60.png in Resources */,
 				2C6D27D51896BACA00C459CB /* WLILoadingCell.xib in Resources */,
@@ -2261,6 +2270,7 @@
 				6B0DECBD1B2E46760057033C /* PGConversationViewController.h in Sources */,
 				6B0DECBC1B2E46710057033C /* PGConversationListViewController.h in Sources */,
 				ADD1E6381A423FD100E1F8D4 /* MNMPullToRefreshManager.m in Sources */,
+				FA6E247E1C483A88004DB467 /* WLIViewsControllerTableViewController.m in Sources */,
 				6B7368D21AF6ACA0008B9495 /* FitovateData.m in Sources */,
 				6B1190321B5B0B3700AAF9A6 /* ParticipantsController.m in Sources */,
 				6B11901C1B5B0A1E00AAF9A6 /* FileLogger.m in Sources */,

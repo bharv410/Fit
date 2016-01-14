@@ -9,7 +9,9 @@
 #import "WLIViewsControllerTableViewController.h"
 #import <Parse/Parse.h>
 #import "WLIConnect.h"
-
+#import "NormalUserProfileTableViewController.h"
+#import "FitovateData.h"
+#import "WLIUser.h"
 
 
 @interface WLIViewsControllerTableViewController ()
@@ -113,21 +115,51 @@
 }
 */
 
-/*
+
 #pragma mark - Table view delegate
 
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here, for example:
     // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
     
-    // Pass the selected object to the new view controller.
+    PFObject *parseObject = [self.booksArray objectAtIndex:indexPath.row];
+    NSString *username = parseObject[@"viewer"];
+    NSLog(@"no user");
     
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    PFQuery *query = [PFQuery queryWithClassName:@"Users"];
+    [query whereKey:@"username" equalTo:username];
+    NSArray *returnedObkecs = [query findObjects];
+    if([returnedObkecs count]>0){
+        
+        PFObject *loggedInUserParse = [returnedObkecs objectAtIndex:0];
+        WLIUser *thisuser = [self pfobjectToWLIUser:loggedInUserParse];
+        NSLog(@" %@", thisuser.userEmail);
+        
+        NormalUserProfileTableViewController *profileViewController = [[NormalUserProfileTableViewController alloc] initWithNibName:@"NormalUserProfileTableViewController" bundle:nil];
+        
+        profileViewController.currentUser = thisuser;
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }else{
+        NSLog(@"no user");
+    }
 }
-*/
+
+- (WLIUser *) pfobjectToWLIUser : (PFObject *) userFromParse {
+    FitovateData *myData = [FitovateData sharedFitovateData];
+    WLIUser *currUser = [[WLIUser alloc]initFromParse:[myData parseUserToDictionary:userFromParse]];
+    //inits it to parse and then fixes the userAvatar by using pffile data and pfgeopint data
+    currUser.youtubeString = userFromParse[@"youtubeString"];
+    currUser.companyAddress = userFromParse[@"citystate"];
+    
+    PFFile *imageUrl = userFromParse[@"userAvatar"];
+    currUser.userAvatarPath = imageUrl.url;
+    
+    PFGeoPoint *selectedLocation = [userFromParse objectForKey:@"location"];
+    float selectedLatitude = selectedLocation.latitude; // returns object latitude float
+    float selectedLongitude = selectedLocation.longitude; // returns object longitude
+    currUser.coordinate = CLLocationCoordinate2DMake(selectedLatitude, selectedLongitude);
+    return currUser;
+}
 
 /*
 #pragma mark - Navigation

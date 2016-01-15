@@ -323,6 +323,8 @@
 		C7B424B9183D2540003B51D0 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B424B8183D2540003B51D0 /* libsqlite3.0.dylib */; };
 		C7B424BB183D254C003B51D0 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7B424BA183D254C003B51D0 /* libz.1.2.5.dylib */; };
 		FA4CBDDB1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA4CBDDA1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist */; };
+		FA64ABF11C49AC8B00DF9BB6 /* MyCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA64ABF01C49AC8B00DF9BB6 /* MyCustomCell.xib */; };
+		FA64ABF41C49AD7D00DF9BB6 /* MyCustomCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA64ABF31C49AD7D00DF9BB6 /* MyCustomCellTableViewCell.m */; };
 		FA6E247E1C483A88004DB467 /* WLIViewsControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA6E247C1C483A88004DB467 /* WLIViewsControllerTableViewController.m */; };
 		FA6E247F1C483A88004DB467 /* WLIViewsControllerTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6E247D1C483A88004DB467 /* WLIViewsControllerTableViewController.xib */; };
 /* End PBXBuildFile section */
@@ -777,6 +779,9 @@
 		C7B424B8183D2540003B51D0 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C7B424BA183D254C003B51D0 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		FA4CBDDA1C3F3CA20099D2A0 /* MKStoreKitConfigs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MKStoreKitConfigs.plist; sourceTree = "<group>"; };
+		FA64ABF01C49AC8B00DF9BB6 /* MyCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyCustomCell.xib; sourceTree = "<group>"; };
+		FA64ABF21C49AD7D00DF9BB6 /* MyCustomCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCustomCellTableViewCell.h; sourceTree = "<group>"; };
+		FA64ABF31C49AD7D00DF9BB6 /* MyCustomCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCustomCellTableViewCell.m; sourceTree = "<group>"; };
 		FA6E247B1C483A88004DB467 /* WLIViewsControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WLIViewsControllerTableViewController.h; sourceTree = "<group>"; };
 		FA6E247C1C483A88004DB467 /* WLIViewsControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WLIViewsControllerTableViewController.m; sourceTree = "<group>"; };
 		FA6E247D1C483A88004DB467 /* WLIViewsControllerTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WLIViewsControllerTableViewController.xib; sourceTree = "<group>"; };
@@ -1886,6 +1891,9 @@
 				FA6E247B1C483A88004DB467 /* WLIViewsControllerTableViewController.h */,
 				FA6E247C1C483A88004DB467 /* WLIViewsControllerTableViewController.m */,
 				FA6E247D1C483A88004DB467 /* WLIViewsControllerTableViewController.xib */,
+				FA64ABF01C49AC8B00DF9BB6 /* MyCustomCell.xib */,
+				FA64ABF21C49AD7D00DF9BB6 /* MyCustomCellTableViewCell.h */,
+				FA64ABF31C49AD7D00DF9BB6 /* MyCustomCellTableViewCell.m */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -2046,6 +2054,7 @@
 				2C6D28171896BACA00C459CB /* map-pin@2x.png in Resources */,
 				6B66C77C1A8C1FA20057962A /* WLIActivityViewController.xib in Resources */,
 				6B1190961B5B0C1900AAF9A6 /* input-field-cover@2x.png in Resources */,
+				FA64ABF11C49AC8B00DF9BB6 /* MyCustomCell.xib in Resources */,
 				AD7160491A38BAC60043E740 /* sdb-2009-04-15.json in Resources */,
 				6B130BDC1A730BBC00FE0E0C /* tabbarnewpost@2x.png in Resources */,
 				6B30FBA91AEEBBE100BEBAD2 /* ActivityController.xib in Resources */,
@@ -2377,6 +2386,7 @@
 				2C5B5C831A1A8F9500175A58 /* UIRefreshControl+AFNetworking.m in Sources */,
 				6B32A4461B050249002E172C /* ConversationTableViewController.m in Sources */,
 				6B130BE41A730E9300FE0E0C /* LQSViewController.m in Sources */,
+				FA64ABF41C49AD7D00DF9BB6 /* MyCustomCellTableViewCell.m in Sources */,
 				2C6D27DB1896BACA00C459CB /* WLIPostCollectionViewCell.m in Sources */,
 				2C6D27DD1896BACA00C459CB /* WLIUserCell.m in Sources */,
 				2C5B5C821A1A8F9500175A58 /* UIProgressView+AFNetworking.m in Sources */,

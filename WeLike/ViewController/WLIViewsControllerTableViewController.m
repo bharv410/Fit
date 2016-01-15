@@ -11,6 +11,7 @@
 #import "WLIConnect.h"
 #import "NormalUserProfileTableViewController.h"
 #import "FitovateData.h"
+#import "MyCustomCellTableViewCell.h"
 #import "WLIUser.h"
 
 
@@ -22,6 +23,7 @@
 
 
 @synthesize booksArray;
+@synthesize imageArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,10 +41,20 @@
         if (!error) {
             
             self.booksArray = objects;
-            [self.tableView reloadData];
+            self.imageArray = [[NSMutableArray alloc]init];
+            
             for (PFObject *object in objects) {
-                
                 NSString *username = object[@"viewer"];
+                
+                PFFile *imageFile = object[@"photo"];
+                [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    if (!error) {
+                        UIImage *image = [UIImage imageWithData:data];
+                        [self.imageArray addObject:image];
+                        [self.tableView reloadData];
+                    }
+                }];
+                
                 NSLog(@" %@ ", username);
             }
         } else {
@@ -68,17 +80,23 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"myCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MyCustomCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [tableView registerNib:[UINib nibWithNibName:@"MyCustomCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     }
     
     // Configure the cell.
     PFObject *parseObject = [self.booksArray objectAtIndex:indexPath.row];
     NSString *username = parseObject[@"viewer"];
-    cell.textLabel.text = username;
+    cell.trainerName.text = username;
+    
+    if(self.imageArray.count > indexPath.row)
+        cell.imageView.image = [self.imageArray objectAtIndex:indexPath.row];
+    
+    
     return cell;
 }
 /*

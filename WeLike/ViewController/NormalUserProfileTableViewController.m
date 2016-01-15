@@ -50,16 +50,30 @@
 }
 
 -(void)trackView{
-    PFObject *gameScore = [PFObject objectWithClassName:@"Views"];
-    gameScore[@"viewer"] = [WLIConnect sharedConnect].currentUser.userUsername;
-    gameScore[@"viewed"] = self.currentUser.userUsername;
-    [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"viewed");
+    
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.currentUser.userAvatarPath]]];
+    
+    NSData *imageData = UIImagePNGRepresentation(image);
+    PFFile *imageFile = [PFFile fileWithName:@"Profileimage.png" data:imageData];
+    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            if (succeeded) {
+                PFObject *gameScore = [PFObject objectWithClassName:@"Views"];
+                gameScore[@"viewer"] = [WLIConnect sharedConnect].currentUser.userUsername;
+                gameScore[@"viewed"] = self.currentUser.userUsername;
+                gameScore[@"photo"] = imageFile;
+                [gameScore saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        NSLog(@"viewed");
+                    } else {
+                        // There was a problem, check error.description
+                        NSLog(@"error following");
+                    }
+                }];
+            }
         } else {
-            // There was a problem, check error.description
-            NSLog(@"error following");
-        }
+            // Handle error
+        }        
     }];
 }
 

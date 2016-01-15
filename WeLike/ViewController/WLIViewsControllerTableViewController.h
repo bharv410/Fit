@@ -13,6 +13,7 @@
 
 
 @property (nonatomic, retain) NSArray *booksArray;
+@property (nonatomic, retain) NSMutableArray *imageArray;
 
 
 @end
